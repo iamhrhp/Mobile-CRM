@@ -1,4 +1,4 @@
-package com.mynewproject
+package com.parvejcrm
 
 import android.app.Application
 import com.facebook.react.PackageList

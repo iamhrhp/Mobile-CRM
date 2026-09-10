@@ -1,0 +1,198 @@
+diff --git a/node_modules/@react-native-community/checkbox/android/.gradle/5.6.4/fileChanges/last-build.bin b/node_modules/@react-native-community/checkbox/android/.gradle/5.6.4/fileChanges/last-build.bin
+new file mode 100644
+index 0000000..f76dd23
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/.gradle/5.6.4/fileChanges/last-build.bin differ
+diff --git a/node_modules/@react-native-community/checkbox/android/.gradle/5.6.4/fileHashes/fileHashes.lock b/node_modules/@react-native-community/checkbox/android/.gradle/5.6.4/fileHashes/fileHashes.lock
+new file mode 100644
+index 0000000..a3a3319
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/.gradle/5.6.4/fileHashes/fileHashes.lock differ
+diff --git a/node_modules/@react-native-community/checkbox/android/.gradle/5.6.4/gc.properties b/node_modules/@react-native-community/checkbox/android/.gradle/5.6.4/gc.properties
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/@react-native-community/checkbox/android/build.gradle b/node_modules/@react-native-community/checkbox/android/build.gradle
+index 743c7d1..cdc12b8 100644
+--- a/node_modules/@react-native-community/checkbox/android/build.gradle
++++ b/node_modules/@react-native-community/checkbox/android/build.gradle
+@@ -48,6 +48,10 @@ android {
+     compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+     buildToolsVersion getExtOrDefault('buildToolsVersion')
+ 
++    buildFeatures {
++        buildConfig = true
++    }
++
+     defaultConfig {
+         minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+         targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
+diff --git a/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/results.bin b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/results.bin
+new file mode 100644
+index 0000000..7ed749e
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/results.bin
+@@ -0,0 +1 @@
++o/bundleLibRuntimeToDirDebug
+diff --git a/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/BuildConfig.dex b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/BuildConfig.dex
+new file mode 100644
+index 0000000..abaf910
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/BuildConfig.dex differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBox.dex b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBox.dex
+new file mode 100644
+index 0000000..84aff17
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBox.dex differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.dex b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.dex
+new file mode 100644
+index 0000000..c08c6b2
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.dex differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.dex b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.dex
+new file mode 100644
+index 0000000..ee36ef8
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.dex differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxManager.dex b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxManager.dex
+new file mode 100644
+index 0000000..3c9f144
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxManager.dex differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.dex b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.dex
+new file mode 100644
+index 0000000..1ee820a
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.dex differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin
+new file mode 100644
+index 0000000..1f27bc5
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/.transforms/0178a67b16513a02ff5691e9912d86cd/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/generated/source/buildConfig/debug/com/reactnativecommunity/checkbox/BuildConfig.java b/node_modules/@react-native-community/checkbox/android/build/generated/source/buildConfig/debug/com/reactnativecommunity/checkbox/BuildConfig.java
+new file mode 100644
+index 0000000..bd9dfb1
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/generated/source/buildConfig/debug/com/reactnativecommunity/checkbox/BuildConfig.java
+@@ -0,0 +1,12 @@
++/**
++ * Automatically generated file. DO NOT MODIFY
++ */
++package com.reactnativecommunity.checkbox;
++
++public final class BuildConfig {
++  public static final boolean DEBUG = Boolean.parseBoolean("true");
++  public static final String LIBRARY_PACKAGE_NAME = "com.reactnativecommunity.checkbox";
++  public static final String BUILD_TYPE = "debug";
++  // Field from default config.
++  public static final boolean IS_NEW_ARCHITECTURE_ENABLED = true;
++}
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json b/node_modules/@react-native-community/checkbox/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+new file mode 100644
+index 0000000..9e26dfe
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+@@ -0,0 +1 @@
++{}
+\ No newline at end of file
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar b/node_modules/@react-native-community/checkbox/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar
+new file mode 100644
+index 0000000..e7a5a4f
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/@react-native-community/checkbox/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar
+new file mode 100644
+index 0000000..34b8cd0
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt b/node_modules/@react-native-community/checkbox/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties b/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..294afa7
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Mon Sep 07 19:13:46 IST 2026
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml b/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+new file mode 100644
+index 0000000..1a006f2
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/admin/Desktop/demo app/DemoApp/MyNewProject/node_modules/@react-native-community/checkbox/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~:!&lt;dir>navigation"><source path="/Users/admin/Desktop/demo app/DemoApp/MyNewProject/node_modules/@react-native-community/checkbox/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/admin/Desktop/demo app/DemoApp/MyNewProject/node_modules/@react-native-community/checkbox/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~:!&lt;dir>navigation"><source path="/Users/admin/Desktop/demo app/DemoApp/MyNewProject/node_modules/@react-native-community/checkbox/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~:!&lt;dir>navigation"/><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/mergeDebugAssets/merger.xml b/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/mergeDebugAssets/merger.xml
+new file mode 100644
+index 0000000..8800499
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/intermediates/incremental/mergeDebugAssets/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/admin/Desktop/demo app/DemoApp/MyNewProject/node_modules/@react-native-community/checkbox/android/src/main/assets"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/admin/Desktop/demo app/DemoApp/MyNewProject/node_modules/@react-native-community/checkbox/android/src/debug/assets"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/BuildConfig.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/BuildConfig.class
+new file mode 100644
+index 0000000..e2d7a5a
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/BuildConfig.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBox.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBox.class
+new file mode 100644
+index 0000000..ac13bb6
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBox.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.class
+new file mode 100644
+index 0000000..b4790d5
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.class
+new file mode 100644
+index 0000000..38cc78f
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxManager.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxManager.class
+new file mode 100644
+index 0000000..72030d7
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxManager.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.class
+new file mode 100644
+index 0000000..41f6da1
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt b/node_modules/@react-native-community/checkbox/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+new file mode 100644
+index 0000000..78ac5b8
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+@@ -0,0 +1,2 @@
++R_DEF: Internal format may change without notice
++local
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt b/node_modules/@react-native-community/checkbox/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+new file mode 100644
+index 0000000..08f4ebe
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+@@ -0,0 +1 @@
++0 Warning/Error
+\ No newline at end of file
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/BuildConfig.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/BuildConfig.class
+new file mode 100644
+index 0000000..e2d7a5a
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/BuildConfig.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBox.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBox.class
+new file mode 100644
+index 0000000..ac13bb6
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBox.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.class
+new file mode 100644
+index 0000000..b4790d5
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxEvent.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.class
+new file mode 100644
+index 0000000..38cc78f
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxManager$1.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxManager.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxManager.class
+new file mode 100644
+index 0000000..72030d7
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxManager.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.class b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.class
+new file mode 100644
+index 0000000..41f6da1
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/reactnativecommunity/checkbox/ReactCheckBoxPackage.class differ
+diff --git a/node_modules/@react-native-community/checkbox/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt b/node_modules/@react-native-community/checkbox/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+new file mode 100644
+index 0000000..8044807
+--- /dev/null
++++ b/node_modules/@react-native-community/checkbox/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+@@ -0,0 +1 @@
++com.reactnativecommunity.checkbox
+diff --git a/node_modules/@react-native-community/checkbox/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin b/node_modules/@react-native-community/checkbox/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin
+new file mode 100644
+index 0000000..0b56a39
+Binary files /dev/null and b/node_modules/@react-native-community/checkbox/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin differ

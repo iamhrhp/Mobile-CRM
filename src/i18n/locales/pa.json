@@ -1,0 +1,65 @@
+{
+  "tabs": {
+    "dashboard": "ਡੈਸ਼ਬੋਰਡ",
+    "users": "ਉਪਭੋਗਤਾ",
+    "pipeline": "ਪਾਈਪਲਾਈਨ",
+    "forecast": "ਭਵਿੱਖਬਾਣੀ",
+    "insights": "ਅੰਤਰਦ੍ਰਿਸ਼ਟੀ"
+  },
+  "header": {
+    "dashboard": "ਡੈਸ਼ਬੋਰਡ",
+    "aiLeadIntelligence": "ਏਆਈ ਲੀਡ ਇੰਟੈਲੀਜੈਂਸ",
+    "pipelineOverview": "ਪਾਈਪਲਾਈਨ ਸੰਖੇਪ ਜਾਣਕਾਰੀ",
+    "revenueForecast": "ਮਾਲੀਆ ਭਵਿੱਖਬਾਣੀ",
+    "clientInsights": "ਗਾਹਕ ਅੰਤਰਦ੍ਰਿਸ਼ਟੀ",
+    "aiClientOverview": "ਏਆਈ ਕਲਾਇੰਟ ਸੰਖੇਪ ਜਾਣਕਾਰੀ"
+  },
+  "dashboard": {
+    "addNewLead": "ਨਵਾਂ ਲੀਡ ਸ਼ਾਮਲ ਕਰੋ",
+    "totalLeads": "ਕੁੱਲ ਲੀਡਸ",
+    "conversionRate": "ਪਰਿਵਰਤਨ ਦਰ",
+    "revenueGrowth": "ਮਾਲੀਆ ਵਾਧਾ",
+    "monthlyRecurring": "ਮਾਸਿਕ ਆਵਰਤੀ ਮਾਲੀਆ",
+    "overview": "ਸੰਖੇਪ ਜਾਣਕਾਰੀ"
+  },
+  "users": {
+    "newLeads": "ਨਵੇਂ ਲੀਡਸ",
+    "recentlyRequested": "ਹਾਲ ਹੀ ਵਿੱਚ ਪ੍ਰਸਤਾਵ ਦੀ ਬੇਨਤੀ ਕੀਤੀ",
+    "interestedEnterprise": "ਐਂਟਰਪ੍ਰਾਈਜ਼ ਯੋਜਨਾ ਵਿੱਚ ਦਿਲਚਸਪੀ",
+    "highInterest": "ਉੱਚ ਦਿਲਚਸਪੀ",
+    "source": "ਸਰੋਤ",
+    "referral": "ਹਵਾਲਾ",
+    "agentAdded": "ਏਜੰਟ ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ",
+    "status": "ਸਥਿਤੀ",
+    "callScheduled": "ਕਾਲ ਤਹਿ ਕੀਤੀ ਗਈ",
+    "inProgress": "ਪ੍ਰਗਤੀ ਵਿੱਚ",
+    "closed": "ਬੰਦ"
+  },
+  "pipeline": {
+    "europe": "ਯੂਰਪ",
+    "kanbanView": "ਕਾਨਬਨ ਦ੍ਰਿਸ਼",
+    "contacted": "ਸੰਪਰਕ ਕੀਤਾ",
+    "marketingProposal": "ਮਾਰਕੀਟਿੰਗ ਪ੍ਰਸਤਾਵ",
+    "followUp": "ਫਾਲੋ ਅਪ"
+  },
+  "forecast": {
+    "projection90Day": "90-ਦਿਨ ਦਾ ਅਨੁਮਾਨ",
+    "recurringRevenue": "ਆਵਰਤੀ ਮਾਲੀਆ",
+    "newCustomers": "ਨਵੇਂ ਗਾਹਕ",
+    "closedWon": "ਬੰਦ/ਜਿੱਤਿਆ"
+  },
+  "insights": {
+    "topNewLead": "ਚੋਟੀ ਦਾ ਨਵਾਂ ਲੀਡ",
+    "newMessages": "ਨਵੇਂ ਸੁਨੇਹੇ",
+    "needsAttention": "ਧਿਆਨ ਦੇਣ ਦੀ ਲੋੜ ਹੈ"
+  },
+  "placeholders": {
+    "addNewLead": "ਨਵਾਂ ਲੀਡ ਸ਼ਾਮਲ ਕਰੋ",
+    "totalLeads": "ਕੁੱਲ ਲੀਡਸ ਵੇਰਵੇ",
+    "conversionRate": "ਪਰਿਵਰਤਨ ਦਰ ਵੇਰਵੇ",
+    "revenueGrowth": "ਮਾਲੀਆ ਵਾਧਾ ਵੇਰਵੇ",
+    "notifications": "ਸੂਚਨਾਵਾਂ",
+    "settings": "ਸੈਟਿੰਗਾਂ",
+    "filterSort": "ਫਿਲਟਰ ਅਤੇ ਕ੍ਰਮਬੱਧ ਕਰੋ"
+  }
+}

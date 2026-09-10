@@ -1,0 +1,65 @@
+{
+  "tabs": {
+    "dashboard": "கட்டுப்பாட்டகம்",
+    "users": "பயனர்கள்",
+    "pipeline": "பைப்லைன்",
+    "forecast": "முன்னறிவிப்பு",
+    "insights": "நுண்ணறிவுகள்"
+  },
+  "header": {
+    "dashboard": "கட்டுப்பாட்டகம்",
+    "aiLeadIntelligence": "AI முன்னணி நுண்ணறிவு",
+    "pipelineOverview": "பைப்லைன் மேலோட்டம்",
+    "revenueForecast": "வருவாய் முன்னறிவிப்பு",
+    "clientInsights": "வாடிக்கையாளர் நுண்ணறிவு",
+    "aiClientOverview": "AI வாடிக்கையாளர் மேலோட்டம்"
+  },
+  "dashboard": {
+    "addNewLead": "புதிய லீட்டைச் சேர்க்கவும்",
+    "totalLeads": "மொத்த லீட்ஸ்",
+    "conversionRate": "மாற்று விகிதம்",
+    "revenueGrowth": "வருவாய் வளர்ச்சி",
+    "monthlyRecurring": "மாதாந்திர தொடர் வருவாய்",
+    "overview": "கண்ணோட்டம்"
+  },
+  "users": {
+    "newLeads": "புதிய லீட்ஸ்",
+    "recentlyRequested": "சமீபத்தில் ஒரு திட்டத்தைக் கோரினார்",
+    "interestedEnterprise": "நிறுவனத் திட்டத்தில் ஆர்வம்",
+    "highInterest": "அதிக ஆர்வம்",
+    "source": "ஆதாரம்",
+    "referral": "பரிந்துரை",
+    "agentAdded": "முகவர் சேர்க்கப்பட்டார்",
+    "status": "நிலை",
+    "callScheduled": "அழைப்பு திட்டமிடப்பட்டுள்ளது",
+    "inProgress": "செயல்பாட்டில் உள்ளது",
+    "closed": "மூடப்பட்டது"
+  },
+  "pipeline": {
+    "europe": "ஐரோப்பா",
+    "kanbanView": "கான்பன் பார்வை",
+    "contacted": "தொடர்பு கொள்ளப்பட்டது",
+    "marketingProposal": "சந்தைப்படுத்தல் திட்டம்",
+    "followUp": "பின்தொடர்தல்"
+  },
+  "forecast": {
+    "projection90Day": "90 நாள் மதிப்பீடு",
+    "recurringRevenue": "தொடர் வருவாய்",
+    "newCustomers": "புதிய வாடிக்கையாளர்கள்",
+    "closedWon": "மூடப்பட்டது/வெற்றி"
+  },
+  "insights": {
+    "topNewLead": "சிறந்த புதிய லீட்",
+    "newMessages": "புதிய செய்திகள்",
+    "needsAttention": "கவனம் தேவை"
+  },
+  "placeholders": {
+    "addNewLead": "புதிய லீட்டைச் சேர்க்கவும்",
+    "totalLeads": "மொத்த லீட்ஸ் விவரங்கள்",
+    "conversionRate": "மாற்று விகித விவரங்கள்",
+    "revenueGrowth": "வருவாய் வளர்ச்சி விவரங்கள்",
+    "notifications": "அறிவிப்புகள்",
+    "settings": "அமைப்புகள்",
+    "filterSort": "வடிகட்டி & வரிசைப்படுத்து"
+  }
+}

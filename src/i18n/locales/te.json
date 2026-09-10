@@ -1,0 +1,65 @@
+{
+  "tabs": {
+    "dashboard": "డాష్‌బోర్డ్",
+    "users": "వినియోగదారులు",
+    "pipeline": "పైప్‌లైన్",
+    "forecast": "సూచన",
+    "insights": "అంతర్దృష్టులు"
+  },
+  "header": {
+    "dashboard": "డాష్‌బోర్డ్",
+    "aiLeadIntelligence": "AI లీడ్ ఇంటెలిజెన్స్",
+    "pipelineOverview": "పైప్‌లైన్ అవలోకనం",
+    "revenueForecast": "ఆదాయ సూచన",
+    "clientInsights": "క్లయింట్ అంతర్దృష్టులు",
+    "aiClientOverview": "AI క్లయింట్ అవలోకనం"
+  },
+  "dashboard": {
+    "addNewLead": "కొత్త లీడ్‌ను జోడించండి",
+    "totalLeads": "మొత్తం లీడ్స్",
+    "conversionRate": "మార్పిడి రేటు",
+    "revenueGrowth": "ఆదాయ వృద్ధి",
+    "monthlyRecurring": "నెలవారీ పునరావృత ఆదాయం",
+    "overview": "అవలోకనం"
+  },
+  "users": {
+    "newLeads": "కొత్త లీడ్స్",
+    "recentlyRequested": "ఇటీవల ప్రతిపాదనను అభ్యర్థించారు",
+    "interestedEnterprise": "ఎంటర్‌ప్రైజ్ ప్లాన్‌లో ఆసక్తి",
+    "highInterest": "అధిక ఆసక్తి",
+    "source": "మూలం",
+    "referral": "రిఫరల్",
+    "agentAdded": "ఏజెంట్ జోడించబడ్డారు",
+    "status": "స్థితి",
+    "callScheduled": "కాల్ షెడ్యూల్ చేయబడింది",
+    "inProgress": "పురోగతిలో ఉంది",
+    "closed": "మూసివేయబడింది"
+  },
+  "pipeline": {
+    "europe": "యూరప్",
+    "kanbanView": "కాన్బన్ వీక్షణ",
+    "contacted": "సంప్రదించారు",
+    "marketingProposal": "మార్కెటింగ్ ప్రతిపాదన",
+    "followUp": "ఫాలో అప్"
+  },
+  "forecast": {
+    "projection90Day": "90-రోజుల అంచనా",
+    "recurringRevenue": "పునరావృత ఆదాయం",
+    "newCustomers": "కొత్త కస్టమర్‌లు",
+    "closedWon": "మూసివేయబడింది/గెలిచింది"
+  },
+  "insights": {
+    "topNewLead": "టాప్ కొత్త లీడ్",
+    "newMessages": "కొత్త సందేశాలు",
+    "needsAttention": "శ్రద్ధ అవసరం"
+  },
+  "placeholders": {
+    "addNewLead": "కొత్త లీడ్‌ను జోడించండి",
+    "totalLeads": "మొత్తం లీడ్స్ వివరాలు",
+    "conversionRate": "మార్పిడి రేటు వివరాలు",
+    "revenueGrowth": "ఆదాయ వృద్ధి వివరాలు",
+    "notifications": "నోటిఫికేషన్‌లు",
+    "settings": "సెట్టింగ్‌లు",
+    "filterSort": "ఫిల్టర్ & క్రమబద్ధీకరించు"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "tabs": {
+    "dashboard": "لوحة القيادة",
+    "users": "المستخدمين",
+    "pipeline": "مسار العميل",
+    "forecast": "توقعات",
+    "insights": "رؤى"
+  },
+  "header": {
+    "dashboard": "لوحة القيادة",
+    "aiLeadIntelligence": "ذكاء العملاء الاصطناعي",
+    "pipelineOverview": "نظرة عامة على المسار",
+    "revenueForecast": "توقعات الإيرادات",
+    "clientInsights": "رؤى العملاء",
+    "aiClientOverview": "نظرة عامة على العملاء"
+  },
+  "dashboard": {
+    "addNewLead": "إضافة عميل محتمل جديد",
+    "totalLeads": "إجمالي العملاء المحتملين",
+    "conversionRate": "معدل التحويل",
+    "revenueGrowth": "نمو الإيرادات",
+    "monthlyRecurring": "الإيرادات المتكررة الشهرية",
+    "overview": "نظرة عامة"
+  },
+  "users": {
+    "newLeads": "عملاء محتملون جدد",
+    "recentlyRequested": "طلب عرضًا مؤخرًا",
+    "interestedEnterprise": "مهتم بخطة المؤسسة",
+    "highInterest": "اهتمام كبير",
+    "source": "المصدر",
+    "referral": "إحالة",
+    "agentAdded": "تمت إضافة الوكيل",
+    "status": "الحالة",
+    "callScheduled": "مكالمة مجدولة",
+    "inProgress": "قيد التقدم",
+    "closed": "مغلق"
+  },
+  "pipeline": {
+    "europe": "أوروبا",
+    "kanbanView": "عرض كانبان",
+    "contacted": "تم الاتصال به",
+    "marketingProposal": "اقتراح تسويق",
+    "followUp": "متابعة"
+  },
+  "forecast": {
+    "projection90Day": "توقعات 90 يومًا",
+    "recurringRevenue": "الإيرادات المتكررة",
+    "newCustomers": "عملاء جدد",
+    "closedWon": "مغلق/تم الفوز"
+  },
+  "insights": {
+    "topNewLead": "أهم عميل محتمل جديد",
+    "newMessages": "رسائل جديدة",
+    "needsAttention": "بحاجة للاهتمام"
+  },
+  "placeholders": {
+    "addNewLead": "إضافة عميل محتمل جديد",
+    "totalLeads": "تفاصيل إجمالي العملاء المحتملين",
+    "conversionRate": "تفاصيل معدل التحويل",
+    "revenueGrowth": "تفاصيل نمو الإيرادات",
+    "notifications": "إشعارات",
+    "settings": "إعدادات",
+    "filterSort": "تصفية وفرز"
+  }
+}

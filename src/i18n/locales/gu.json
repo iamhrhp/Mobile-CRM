@@ -1,0 +1,65 @@
+{
+  "tabs": {
+    "dashboard": "ડેશબોર્ડ",
+    "users": "વપરાશકર્તાઓ",
+    "pipeline": "પાઇપલાઇન",
+    "forecast": "આગાહી",
+    "insights": "આંતરદૃષ્ટિ"
+  },
+  "header": {
+    "dashboard": "ડેશબોર્ડ",
+    "aiLeadIntelligence": "AI લીડ ઇન્ટેલિજન્સ",
+    "pipelineOverview": "પાઇપલાઇન વિહંગાવલોકન",
+    "revenueForecast": "આવકની આગાહી",
+    "clientInsights": "ગ્રાહક આંતરદૃષ્ટિ",
+    "aiClientOverview": "AI ગ્રાહક વિહંગાવલોકન"
+  },
+  "dashboard": {
+    "addNewLead": "નવી લીડ ઉમેરો",
+    "totalLeads": "કુલ લીડ્સ",
+    "conversionRate": "રૂપાંતરણ દર",
+    "revenueGrowth": "આવક વૃદ્ધિ",
+    "monthlyRecurring": "માસિક રિકરિંગ આવક",
+    "overview": "વિહંગાવલોકન"
+  },
+  "users": {
+    "newLeads": "નવી લીડ્સ",
+    "recentlyRequested": "તાજેતરમાં દરખાસ્તની વિનંતી કરી",
+    "interestedEnterprise": "એન્ટરપ્રાઇઝ પ્લાનમાં રસ",
+    "highInterest": "ઉચ્ચ રસ",
+    "source": "સ્ત્રોત",
+    "referral": "સંદર્ભ",
+    "agentAdded": "એજન્ટ ઉમેરાયો",
+    "status": "સ્થિતિ",
+    "callScheduled": "કોલ સુનિશ્ચિત",
+    "inProgress": "પ્રગતિમાં છે",
+    "closed": "બંધ"
+  },
+  "pipeline": {
+    "europe": "યુરોપ",
+    "kanbanView": "કાનબન દૃશ્ય",
+    "contacted": "સંપર્ક કર્યો",
+    "marketingProposal": "માર્કેટિંગ દરખાસ્ત",
+    "followUp": "ફોલો અપ"
+  },
+  "forecast": {
+    "projection90Day": "90-દિવસનું અનુમાન",
+    "recurringRevenue": "રિકરિંગ આવક",
+    "newCustomers": "નવા ગ્રાહકો",
+    "closedWon": "બંધ/જીત્યા"
+  },
+  "insights": {
+    "topNewLead": "ટોચની નવી લીડ",
+    "newMessages": "નવા સંદેશાઓ",
+    "needsAttention": "ધ્યાન આપવાની જરૂર છે"
+  },
+  "placeholders": {
+    "addNewLead": "નવી લીડ ઉમેરો",
+    "totalLeads": "કુલ લીડ્સ વિગતો",
+    "conversionRate": "રૂપાંતરણ દર વિગતો",
+    "revenueGrowth": "આવક વૃદ્ધિ વિગતો",
+    "notifications": "સૂચનાઓ",
+    "settings": "સેટિંગ્સ",
+    "filterSort": "ફિલ્ટર અને સોર્ટ કરો"
+  }
+}

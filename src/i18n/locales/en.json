@@ -1,0 +1,80 @@
+{
+  "tabs": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "pipeline": "Pipeline",
+    "forecast": "Forecast",
+    "insights": "Insights"
+  },
+  "header": {
+    "dashboard": "Dashboard",
+    "aiLeadIntelligence": "AI Lead Intelligence",
+    "pipelineOverview": "Pipeline Overview",
+    "revenueForecast": "Revenue Forecast",
+    "clientInsights": "Client Insights",
+    "aiClientOverview": "AI Client Overview"
+  },
+  "dashboard": {
+    "addNewLead": "Add New Lead",
+    "totalLeads": "Total Leads",
+    "conversionRate": "Conversion Rate",
+    "revenueGrowth": "Revenue Growth",
+    "monthlyRecurring": "Monthly Recurring Revenue",
+    "overview": "Overview"
+  },
+  "users": {
+    "newLeads": "NEW LEADS",
+    "recentlyRequested": "Recently requested a proposal",
+    "interestedEnterprise": "Interested in enterprise plan",
+    "highInterest": "High Interest",
+    "mediumInterest": "Medium Interest",
+    "source": "Source",
+    "referral": "Referral",
+    "agentAdded": "Agent Added",
+    "organicSearch": "Organic Search",
+    "webinar": "Webinar",
+    "status": "Status",
+    "callScheduled": "Call Scheduled",
+    "followUpEmail": "Follow-up Email",
+    "proposalSent": "Proposal Sent",
+    "converted": "Converted",
+    "inProgress": "In Progress",
+    "closed": "Closed"
+  },
+  "pipeline": {
+    "europe": "Europe",
+    "kanbanView": "Kanban View",
+    "contacted": "Contacted",
+    "marketingProposal": "Marketing Proposal",
+    "followUp": "Follow up"
+  },
+  "forecast": {
+    "projection90Day": "90-Day Projection",
+    "recurringRevenue": "Recurring Revenue",
+    "newCustomers": "New Customers",
+    "closedWon": "Closed Won",
+    "increasedThisMonth": "Increased this month",
+    "week1": "Week 1",
+    "week2": "Week 2",
+    "week3": "Week 3"
+  },
+  "insights": {
+    "topNewLead": "Top New Lead",
+    "newMessages": "New Messages",
+    "needsAttention": "Needs Attention",
+    "totalClients": "Total Clients",
+    "activeClients": "Active Clients",
+    "engagementVsLtv": "Engagement vs Lifetime Value",
+    "thisWeek": "This Week",
+    "allRegions": "All Regions"
+  },
+  "placeholders": {
+    "addNewLead": "Add New Lead",
+    "totalLeads": "Total Leads Details",
+    "conversionRate": "Conversion Rate Details",
+    "revenueGrowth": "Revenue Growth Details",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "filterSort": "Filter & Sort"
+  }
+}

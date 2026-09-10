@@ -1,0 +1,75 @@
+{
+  "tabs": {
+    "dashboard": "डैशबोर्ड",
+    "users": "उपयोगकर्ता",
+    "pipeline": "पाइपलाइन",
+    "forecast": "पूर्वानुमान",
+    "insights": "अंतर्दृष्टि"
+  },
+  "header": {
+    "dashboard": "डैशबोर्ड",
+    "aiLeadIntelligence": "एआई लीड इंटेलिजेंस",
+    "pipelineOverview": "पाइपलाइन अवलोकन",
+    "revenueForecast": "राजस्व पूर्वानुमान",
+    "clientInsights": "ग्राहक अंतर्दृष्टि",
+    "aiClientOverview": "एआई क्लाइंट अवलोकन"
+  },
+  "dashboard": {
+    "addNewLead": "नया लीड जोड़ें",
+    "totalLeads": "कुल लीड्स",
+    "conversionRate": "रूपांतरण दर",
+    "revenueGrowth": "राजस्व वृद्धि",
+    "monthlyRecurring": "मासिक आवर्ती राजस्व",
+    "overview": "अवलोकन"
+  },
+  "users": {
+    "newLeads": "नए लीड्स",
+    "recentlyRequested": "हाल ही में प्रस्ताव मांगा",
+    "interestedEnterprise": "एंटरप्राइज प्लान में रुचि",
+    "highInterest": "उच्च रुचि",
+    "mediumInterest": "मध्यम रुचि",
+    "source": "स्रोत",
+    "referral": "रेफरल",
+    "agentAdded": "एजेंट जोड़ा गया",
+    "organicSearch": "ऑर्गेनिक खोज",
+    "webinar": "वेबिनार",
+    "status": "स्थिति",
+    "callScheduled": "कॉल निर्धारित",
+    "followUpEmail": "फॉलो-अप ईमेल",
+    "proposalSent": "प्रस्ताव भेजा गया",
+    "converted": "रूपांतरित",
+    "inProgress": "प्रगति पर",
+    "closed": "बंद"
+  },
+  "pipeline": {
+    "europe": "यूरोप",
+    "kanbanView": "कानबन दृश्य",
+    "contacted": "संपर्क किया",
+    "marketingProposal": "विपणन प्रस्ताव",
+    "followUp": "फ़ॉलो अप"
+  },
+  "forecast": {
+    "projection90Day": "90-दिवसीय प्रक्षेपण",
+    "recurringRevenue": "आवर्ती राजस्व",
+    "newCustomers": "नए ग्राहक",
+    "closedWon": "बंद/जीता",
+    "increasedThisMonth": "इस महीने में वृद्धि",
+    "week1": "सप्ताह 1",
+    "week2": "सप्ताह 2",
+    "week3": "सप्ताह 3"
+  },
+  "insights": {
+    "topNewLead": "शीर्ष नया लीड",
+    "newMessages": "नए संदेश",
+    "needsAttention": "ध्यान देने की आवश्यकता है"
+  },
+  "placeholders": {
+    "addNewLead": "नया लीड जोड़ें",
+    "totalLeads": "कुल लीड्स विवरण",
+    "conversionRate": "रूपांतरण दर विवरण",
+    "revenueGrowth": "राजस्व वृद्धि विवरण",
+    "notifications": "सूचनाएं",
+    "settings": "सेटिंग्स",
+    "filterSort": "फ़िल्टर और सॉर्ट करें"
+  }
+}

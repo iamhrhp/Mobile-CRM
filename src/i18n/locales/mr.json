@@ -1,0 +1,65 @@
+{
+  "tabs": {
+    "dashboard": "डॅशबोर्ड",
+    "users": "वापरकर्ते",
+    "pipeline": "पाइपलाइन",
+    "forecast": "अंदाज",
+    "insights": "अंतर्दृष्टी"
+  },
+  "header": {
+    "dashboard": "डॅशबोर्ड",
+    "aiLeadIntelligence": "एआय लीड इंटेलिजन्स",
+    "pipelineOverview": "पाइपलाइन विहंगावलोकन",
+    "revenueForecast": "महसूल अंदाज",
+    "clientInsights": "क्लायंट अंतर्दृष्टी",
+    "aiClientOverview": "एआय क्लायंट विहंगावलोकन"
+  },
+  "dashboard": {
+    "addNewLead": "नवीन लीड जोडा",
+    "totalLeads": "एकूण लीड्स",
+    "conversionRate": "रूपांतरण दर",
+    "revenueGrowth": "महसूल वाढ",
+    "monthlyRecurring": "मासिक आवर्ती महसूल",
+    "overview": "विहंगावलोकन"
+  },
+  "users": {
+    "newLeads": "नवीन लीड्स",
+    "recentlyRequested": "नुकतीच प्रस्तावाची विनंती केली",
+    "interestedEnterprise": "एंटरप्राइझ योजनेत स्वारस्य",
+    "highInterest": "उच्च स्वारस्य",
+    "source": "स्रोत",
+    "referral": "संदर्भ",
+    "agentAdded": "एजंट जोडला",
+    "status": "स्थिती",
+    "callScheduled": "कॉल शेड्यूल केला",
+    "inProgress": "प्रगतीपथावर",
+    "closed": "बंद"
+  },
+  "pipeline": {
+    "europe": "युरोप",
+    "kanbanView": "कानबन दृश्य",
+    "contacted": "संपर्क साधला",
+    "marketingProposal": "मार्केटिंग प्रस्ताव",
+    "followUp": "फॉलो अप"
+  },
+  "forecast": {
+    "projection90Day": "90-दिवसीय अंदाज",
+    "recurringRevenue": "आवर्ती महसूल",
+    "newCustomers": "नवीन ग्राहक",
+    "closedWon": "बंद/जिंकले"
+  },
+  "insights": {
+    "topNewLead": "शीर्ष नवीन लीड",
+    "newMessages": "नवीन संदेश",
+    "needsAttention": "लक्ष देण्याची गरज आहे"
+  },
+  "placeholders": {
+    "addNewLead": "नवीन लीड जोडा",
+    "totalLeads": "एकूण लीड्स तपशील",
+    "conversionRate": "रूपांतरण दर तपशील",
+    "revenueGrowth": "महसूल वाढ तपशील",
+    "notifications": "सूचना",
+    "settings": "सेटिंग्ज",
+    "filterSort": "फिल्टर आणि क्रमवारी लावा"
+  }
+}
