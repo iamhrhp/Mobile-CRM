@@ -12,7 +12,10 @@
     "pipelineOverview": "نظرة عامة على المسار",
     "revenueForecast": "توقعات الإيرادات",
     "clientInsights": "رؤى العملاء",
-    "aiClientOverview": "نظرة عامة على العملاء"
+    "aiClientOverview": "نظرة عامة على العملاء",
+    "settings": "الإعدادات",
+    "totalLeads": "إجمالي العملاء",
+    "conversionRate": "معدل التحويل"
   },
   "dashboard": {
     "addNewLead": "إضافة عميل محتمل جديد",
@@ -61,5 +64,88 @@
     "notifications": "إشعارات",
     "settings": "إعدادات",
     "filterSort": "تصفية وفرز"
+  },
+  "settings": {
+    "account": "الحساب",
+    "profileInfo": "معلومات الملف الشخصي",
+    "updateProfile": "قم بتحديث اسمك وبريدك الإلكتروني",
+    "passwordSecurity": "كلمة المرور والأمان",
+    "manageSecurity": "إدارة إعدادات الأمان الخاصة بك",
+    "preferences": "التفضيلات",
+    "notifications": "الإشعارات",
+    "emailPush": "إشعارات البريد الإلكتروني والدفع",
+    "theme": "المظهر",
+    "systemDefault": "النظام الافتراضي",
+    "darkMode": "الوضع الداكن",
+    "lightMode": "الوضع الفاتح",
+    "logout": "تسجيل الخروج",
+    "logoutConfirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "language": "اللغة",
+    "changeLanguage": "تغيير لغة التطبيق"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "markAll": "تحديد الكل كمقروء",
+    "today": "اليوم",
+    "earlier": "سابقاً",
+    "newLead": "تم تعيين عميل محتمل جديد",
+    "newLeadDesc": "تم تعيين Sarah Jenkins من Acme Corp لك.",
+    "time2h": "قبل ساعتين",
+    "dealClosed": "تم إغلاق الصفقة",
+    "dealClosedDesc": "تم توقيع عقد TechFlow Enterprise. القيمة: {{currency}}45,000.",
+    "time4h": "قبل 4 ساعات",
+    "meetingReminder": "تذكير بالاجتماع",
+    "meetingReminderDesc": "ستبدأ المراجعة ربع السنوية مع فريق Alpha في غضون 15 دقيقة.",
+    "time1d": "قبل يوم واحد",
+    "systemUpdate": "تحديث النظام",
+    "systemUpdateDesc": "صيانة CRM مجدولة يوم السبت الساعة 2:00 صباحًا بتوقيت المحيط الهادئ.",
+    "time2d": "قبل يومين",
+    "leadFollowUp": "متابعة العميل المحتمل",
+    "leadFollowUpDesc": "لم تتواصل مع Mark Johnson منذ 7 أيام.",
+    "time3d": "قبل 3 أيام"
+  },
+  "filter": {
+    "sortBy": "ترتيب حسب",
+    "leadStatus": "حالة العميل المحتمل",
+    "timeframe": "الإطار الزمني",
+    "newestFirst": "الأحدث أولاً",
+    "highestValue": "الأعلى قيمة",
+    "closingSoon": "سيغلق قريباً",
+    "highPriority": "أولوية عالية"
+  },
+  "status": {
+    "new": "جديد",
+    "contacted": "تم الاتصال به",
+    "proposalSent": "تم إرسال الاقتراح",
+    "negotiation": "تفاوض",
+    "closedWon": "مغلق (فوز)",
+    "closedLost": "مغلق (خسارة)"
+  },
+  "timeframe": {
+    "thisWeek": "هذا الأسبوع",
+    "thisMonth": "هذا الشهر",
+    "last30Days": "آخر 30 يوماً",
+    "thisQuarter": "هذا الربع",
+    "thisYear": "هذا العام"
+  },
+  "common": {
+    "reset": "إعادة تعيين",
+    "applyFilters": "تطبيق الفلاتر",
+    "cancel": "إلغاء",
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "addLead": {
+    "title": "إضافة عميل محتمل جديد",
+    "subtitle": "أدخل تفاصيل العميل المحتمل الجديد",
+    "leadName": "اسم العميل المحتمل",
+    "leadNamePlaceholder": "John Doe",
+    "companyName": "اسم الشركة",
+    "companyNamePlaceholder": "Acme Corp",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "john@example.com",
+    "expectedValue": "القيمة المتوقعة ({{currency}})",
+    "expectedValuePlaceholder": "{{currency}}10,000",
+    "save": "حفظ العميل المحتمل"
   }
 }

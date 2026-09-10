@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { changeLanguage } from '../i18n';
-import colors from '../constants/colors';
+import { ThemeColors } from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
 import { XIcon } from './icons/Icons';
 
 const LANGUAGES = [
@@ -11,15 +13,16 @@ const LANGUAGES = [
   { code: 'te', name: 'Telugu (తెలుగు)' },
   { code: 'ta', name: 'Tamil (தமிழ்)' },
   { code: 'gu', name: 'Gujarati (ગુજરાતી)' },
-  { code: 'bn', name: 'Bengali (বাংলা)' },
-  { code: 'mr', name: 'Marathi (मराठी)' },
-  { code: 'pa', name: 'Punjabi (ਪੰਜਾਬੀ)' },
-  { code: 'ur', name: 'Urdu (اردو)' },
-  { code: 'ar', name: 'Arabic (العربية)' }
+  { code: 'it', name: 'Italian (Italiano)' },
+  { code: 'fr', name: 'French (Français)' },
+  { code: 'ar', name: 'Arabic (العربية)' },
+  { code: 'ml', name: 'Malayalam (മലയാളം)' }
 ];
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
+  const { colors, isDark } = useTheme();
+  const styles = getStyles(colors, isDark);
   const [modalVisible, setModalVisible] = useState(false);
 
   const currentLang = LANGUAGES.find(l => l.code === i18n.language) || LANGUAGES[0];
@@ -79,7 +82,7 @@ const LanguageSwitcher = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   triggerButton: {
     paddingHorizontal: 8,
     paddingVertical: 4,
@@ -132,17 +135,23 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
   },
   langItemActive: {
-    backgroundColor: colors.cardBackground,
+    backgroundColor: isDark ? colors.secondaryBackground : '#FFFFFF',
+    shadowColor: isDark ? 'transparent' : '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: isDark ? 0 : 2,
     borderRadius: 12,
     borderBottomWidth: 0,
     paddingHorizontal: 16,
   },
   langText: {
-    fontSize: 16,
+    fontSize: 15,
+    fontWeight: '500',
     color: colors.textSecondary,
   },
   langTextActive: {
-    color: colors.primary,
+    color: colors.textPrimary,
     fontWeight: '700',
   }
 });

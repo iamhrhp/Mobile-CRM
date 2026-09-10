@@ -13,9 +13,9 @@
     "revenueForecast": "Revenue Forecast",
     "clientInsights": "Client Insights",
     "aiClientOverview": "AI Client Overview",
-    "settings": "Settings",
-    "totalLeads": "Total Leads",
-    "conversionRate": "Conversion Rate"
+    "settings": "Paramètres",
+    "totalLeads": "Total des prospects",
+    "conversionRate": "Taux de conversion"
   },
   "dashboard": {
     "addNewLead": "Add New Lead",
@@ -95,8 +95,8 @@
     "lightMode": "Light Mode",
     "logout": "Log Out",
     "logoutConfirm": "Are you sure you want to log out?",
-    "language": "Language",
-    "changeLanguage": "Change application language"
+    "language": "Langue",
+    "changeLanguage": "Changer la langue de l'application"
   },
   "notifications": {
     "title": "Notifications",

@@ -2,11 +2,16 @@ import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FilterIcon, ChevronDownIcon, CalendarIcon, PencilIcon, MoreHorizontalIcon, PlusIcon } from '../components/icons/Icons';
-import colors from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
+import { ThemeColors } from '../constants/colors';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../hooks/useCurrency';
 
 const PipelineScreen = () => {
   const { t } = useTranslation();
+  const currency = useCurrency();
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
   
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const barAnim = useRef(new Animated.Value(0)).current;
@@ -55,7 +60,7 @@ const PipelineScreen = () => {
               <View style={[styles.mapTooltipLine, { width: 10, marginRight: 4 }]} />
               <View style={styles.mapTooltip}>
                 <Text style={styles.mapTooltipTitle}>{t('pipeline.europe')}</Text>
-                <Text style={styles.mapTooltipValue}>$17.4M</Text>
+                <Text style={styles.mapTooltipValue}>{currency}17.4M</Text>
               </View>
             </View>
           </Marker>
@@ -110,7 +115,7 @@ const PipelineScreen = () => {
           </View>
           
           <View style={styles.pipelineCardBottom}>
-            <Text style={styles.pipelineValue}>$15.5K</Text>
+            <Text style={styles.pipelineValue}>{currency}15.5K</Text>
             
             {/* Custom Bar Chart 1 */}
             <View style={styles.customChartContainer}>
@@ -150,7 +155,7 @@ const PipelineScreen = () => {
           </View>
           
           <View style={styles.pipelineCardBottom}>
-            <Text style={styles.pipelineValue}>$12.5K</Text>
+            <Text style={styles.pipelineValue}>{currency}12.5K</Text>
             
             {/* Custom Bar Chart 2 */}
             <View style={styles.customChartContainer}>
@@ -176,7 +181,7 @@ const PipelineScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   scrollContent: {
     paddingBottom: 110,
   },

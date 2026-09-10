@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
-import colors from '../constants/colors';
+import { ThemeColors } from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
 
 interface MetricCardProps {
   title: string;
@@ -27,6 +28,9 @@ const MetricCard: React.FC<MetricCardProps> = ({
   activeFlex,
   onPress,
 }) => {
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
+
   return (
     <Animated.View style={[styles.metricCard, { opacity: fadeAnim }]}>
       <TouchableOpacity activeOpacity={0.8} style={styles.touchableArea} onPress={onPress}>
@@ -72,7 +76,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   metricCard: {
     flex: 1,
     backgroundColor: colors.cardBackground,

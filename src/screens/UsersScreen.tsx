@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, TouchableWithoutFeedback } from 'react-native';
 import { FilterIcon, PlusIcon, UsersIcon, FireIcon, ArrowUpRightIcon, MailIcon, PhoneIcon, ChevronDownIcon, VideoCameraIcon } from '../components/icons/Icons';
-import colors from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
+import { ThemeColors } from '../constants/colors';
 import { useTranslation } from 'react-i18next';
 
 interface StatusDropdownProps {
@@ -14,6 +15,9 @@ interface StatusDropdownProps {
 }
 
 const StatusDropdown = ({ initialStatus, avatarUri, direction = 'down', isOpen, onToggle, onClose }: StatusDropdownProps) => {
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
+  
   const { t } = useTranslation();
   const [statusId, setStatusId] = React.useState(initialStatus);
   const options = [
@@ -52,6 +56,9 @@ const StatusDropdown = ({ initialStatus, avatarUri, direction = 'down', isOpen, 
 
 const UsersScreen = () => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
+  
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const barAnim = useRef(new Animated.Value(0)).current;
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
@@ -283,7 +290,7 @@ const UsersScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   scrollContent: {
     paddingBottom: 110,
     paddingHorizontal: 20,

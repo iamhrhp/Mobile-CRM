@@ -38,6 +38,29 @@ export const MenuIcon = ({ size = 20, color = colors.textPrimary }) => (
   </View>
 );
 
+export const SearchIcon = ({ size = 20, color = colors.textPrimary }) => (
+  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ 
+      width: size * 0.7, 
+      height: size * 0.7, 
+      borderRadius: size * 0.35, 
+      borderWidth: 2, 
+      borderColor: color,
+      marginRight: size * 0.2,
+      marginBottom: size * 0.2
+    }} />
+    <View style={{
+      width: 2,
+      height: size * 0.4,
+      backgroundColor: color,
+      position: 'absolute',
+      bottom: size * 0.1,
+      right: size * 0.25,
+      transform: [{ rotate: '-45deg' }]
+    }} />
+  </View>
+);
+
 export const FilterIcon = ({ size = 18, color = colors.textPrimary }) => (
   <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center', gap: 3 }}>
     <View style={{ width: size * 0.85, height: 1.5, backgroundColor: color, borderRadius: 1, justifyContent: 'center' }}>

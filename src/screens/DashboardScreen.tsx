@@ -3,7 +3,8 @@ import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated }
 import { FilterIcon, PlusIcon, UsersIcon, ConversionIcon } from '../components/icons/Icons';
 import MetricCard from '../components/MetricCard';
 import RevenueChart from '../components/RevenueChart';
-import colors from '../constants/colors';
+import { ThemeColors } from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
 import { TabType } from '../components/BottomNavBar';
 import { useTranslation } from 'react-i18next';
 
@@ -13,6 +14,8 @@ interface DashboardScreenProps {
 
 const DashboardScreen: React.FC<DashboardScreenProps> = ({ onNavigate }) => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
   
   // Animation Values
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -97,7 +100,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onNavigate }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   scrollContent: {
     paddingBottom: 110,
   },

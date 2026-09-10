@@ -12,7 +12,10 @@
     "pipelineOverview": "பைப்லைன் மேலோட்டம்",
     "revenueForecast": "வருவாய் முன்னறிவிப்பு",
     "clientInsights": "வாடிக்கையாளர் நுண்ணறிவு",
-    "aiClientOverview": "AI வாடிக்கையாளர் மேலோட்டம்"
+    "aiClientOverview": "AI வாடிக்கையாளர் மேலோட்டம்",
+    "settings": "அமைப்புகள்",
+    "totalLeads": "மொத்த லீட்ஸ்",
+    "conversionRate": "மாற்று விகிதம்"
   },
   "dashboard": {
     "addNewLead": "புதிய லீட்டைச் சேர்க்கவும்",
@@ -61,5 +64,88 @@
     "notifications": "அறிவிப்புகள்",
     "settings": "அமைப்புகள்",
     "filterSort": "வடிகட்டி & வரிசைப்படுத்து"
+  },
+  "settings": {
+    "account": "கணக்கு",
+    "profileInfo": "சுயவிவர தகவல்",
+    "updateProfile": "உங்கள் பெயர் மற்றும் மின்னஞ்சலை புதுப்பிக்கவும்",
+    "passwordSecurity": "கடவுச்சொல் மற்றும் பாதுகாப்பு",
+    "manageSecurity": "உங்கள் பாதுகாப்பு அமைப்புகளை நிர்வகிக்கவும்",
+    "preferences": "விருப்பங்கள்",
+    "notifications": "அறிவிப்புகள்",
+    "emailPush": "மின்னஞ்சல் மற்றும் புஷ் அறிவிப்புகள்",
+    "theme": "தீம்",
+    "systemDefault": "கணினி இயல்புநிலை",
+    "darkMode": "டார்க் மோட்",
+    "lightMode": "லைட் மோட்",
+    "logout": "வெளியேறு",
+    "logoutConfirm": "நீங்கள் நிச்சயமாக வெளியேற வேண்டுமா?",
+    "language": "மொழி",
+    "changeLanguage": "பயன்பாட்டு மொழியை மாற்றவும்"
+  },
+  "notifications": {
+    "title": "அறிவிப்புகள்",
+    "markAll": "அனைத்தையும் படித்ததாகக் குறி",
+    "today": "இன்று",
+    "earlier": "முன்பு",
+    "newLead": "புதிய லீட் ஒதுக்கப்பட்டுள்ளது",
+    "newLeadDesc": "Acme Corp நிறுவனத்தின் Sarah Jenkins உங்களுக்கு ஒதுக்கப்பட்டுள்ளார்.",
+    "time2h": "2 மணிநேரத்திற்கு முன்",
+    "dealClosed": "ஒப்பந்தம் முடிந்தது",
+    "dealClosedDesc": "TechFlow Enterprise ஒப்பந்தம் கையெழுத்தானது. மதிப்பு: {{currency}}45,000.",
+    "time4h": "4 மணிநேரத்திற்கு முன்",
+    "meetingReminder": "சந்திப்பு நினைவூட்டல்",
+    "meetingReminderDesc": "Alpha குழுவுடனான காலாண்டு மதிப்பாய்வு 15 நிமிடங்களில் தொடங்கும்.",
+    "time1d": "1 நாளுக்கு முன்",
+    "systemUpdate": "கணினி புதுப்பிப்பு",
+    "systemUpdateDesc": "CRM பராமரிப்பு சனிக்கிழமை காலை 2:00 PSTக்கு திட்டமிடப்பட்டுள்ளது.",
+    "time2d": "2 நாட்களுக்கு முன்",
+    "leadFollowUp": "லீட் பின்தொடர்தல்",
+    "leadFollowUpDesc": "நீங்கள் 7 நாட்களாக Mark Johnsonஐ தொடர்பு கொள்ளவில்லை.",
+    "time3d": "3 நாட்களுக்கு முன்"
+  },
+  "filter": {
+    "sortBy": "வரிசைப்படுத்து",
+    "leadStatus": "லீட் நிலை",
+    "timeframe": "கால அளவு",
+    "newestFirst": "புதியவை முதலில்",
+    "highestValue": "அதிக மதிப்பு",
+    "closingSoon": "விரைவில் முடிவடையும்",
+    "highPriority": "அதிக முன்னுரிமை"
+  },
+  "status": {
+    "new": "புதிய",
+    "contacted": "தொடர்பு கொள்ளப்பட்டது",
+    "proposalSent": "முன்மொழிவு அனுப்பப்பட்டது",
+    "negotiation": "பேச்சுவார்த்தை",
+    "closedWon": "வெற்றி",
+    "closedLost": "தோல்வி"
+  },
+  "timeframe": {
+    "thisWeek": "இந்த வாரம்",
+    "thisMonth": "இந்த மாதம்",
+    "last30Days": "கடந்த 30 நாட்கள்",
+    "thisQuarter": "இந்த காலாண்டு",
+    "thisYear": "இந்த ஆண்டு"
+  },
+  "common": {
+    "reset": "மீட்டமை",
+    "applyFilters": "வடிகட்டிகளைப் பயன்படுத்து",
+    "cancel": "ரத்துசெய்",
+    "yes": "ஆம்",
+    "no": "இல்லை"
+  },
+  "addLead": {
+    "title": "புதிய லீட்டைச் சேர்க்கவும்",
+    "subtitle": "உங்கள் புதிய வாய்ப்பின் விவரங்களை உள்ளிடவும்",
+    "leadName": "லீட் பெயர்",
+    "leadNamePlaceholder": "John Doe",
+    "companyName": "நிறுவனத்தின் பெயர்",
+    "companyNamePlaceholder": "Acme Corp",
+    "email": "மின்னஞ்சல் முகவரி",
+    "emailPlaceholder": "john@example.com",
+    "expectedValue": "எதிர்பார்க்கும் மதிப்பு ({{currency}})",
+    "expectedValuePlaceholder": "{{currency}}10,000",
+    "save": "லீட்டைச் சேமி"
   }
 }

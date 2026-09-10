@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import colors from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
+import { ThemeColors } from '../constants/colors';
 
 // Nav Bar Icons
-const DashboardNavIcon = ({ size = 20, color = colors.textPrimary }) => (
+const DashboardNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
   <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
     <View style={{ width: size * 0.8, height: size * 0.8, borderRadius: size * 0.25, borderWidth: 1.8, borderColor: color }} />
     <View style={{ position: 'absolute', width: size * 0.8, height: 1.8, backgroundColor: color }} />
@@ -12,7 +13,7 @@ const DashboardNavIcon = ({ size = 20, color = colors.textPrimary }) => (
   </View>
 );
 
-const UsersIcon = ({ size = 18, color = colors.textSecondary }) => (
+const UsersIcon = ({ size = 18, color = '#A0A3BD' }) => (
   <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
     <View
       style={{
@@ -38,7 +39,7 @@ const UsersIcon = ({ size = 18, color = colors.textSecondary }) => (
   </View>
 );
 
-const PieChartNavIcon = ({ size = 20, color = colors.textSecondary }) => (
+const PieChartNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
   <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
     <View style={{ width: size * 0.8, height: size * 0.8, borderRadius: size * 0.4, borderWidth: 1.8, borderColor: color }} />
     <View style={{ width: size * 0.4, height: 1.8, backgroundColor: color, position: 'absolute', top: size * 0.4, right: size * 0.1 }} />
@@ -46,7 +47,7 @@ const PieChartNavIcon = ({ size = 20, color = colors.textSecondary }) => (
   </View>
 );
 
-const BarChartNavIcon = ({ size = 20, color = colors.textSecondary }) => (
+const BarChartNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
   <View style={{ width: size, height: size, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: 2.5 }}>
     <View style={{ width: 3, height: size * 0.4, backgroundColor: color, borderRadius: 1 }} />
     <View style={{ width: 3, height: size * 0.75, backgroundColor: color, borderRadius: 1 }} />
@@ -54,7 +55,7 @@ const BarChartNavIcon = ({ size = 20, color = colors.textSecondary }) => (
   </View>
 );
 
-const LightbulbNavIcon = ({ size = 20, color = colors.textSecondary }) => (
+const LightbulbNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
   <View style={{ width: size, height: size, alignItems: 'center' }}>
     <View style={{ width: size * 0.7, height: size * 0.7, borderRadius: size * 0.35, borderWidth: 1.8, borderColor: color, borderBottomWidth: 0, top: 1 }} />
     <View style={{ width: size * 0.35, height: size * 0.2, borderWidth: 1.8, borderColor: color, borderTopWidth: 0, borderBottomLeftRadius: 2, borderBottomRightRadius: 2 }} />
@@ -73,6 +74,9 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   onTabChange,
 }) => {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
+  
   const [internalActiveTab, setInternalActiveTab] = useState<TabType>('users');
 
   const currentTab = externalActiveTab ?? internalActiveTab;
@@ -129,7 +133,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   bottomNav: {
     position: 'absolute',
     left: 24,

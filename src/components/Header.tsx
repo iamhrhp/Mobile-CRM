@@ -1,22 +1,35 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import colors from '../constants/colors';
-import { BellIcon, MenuIcon } from './icons/Icons';
-import LanguageSwitcher from './LanguageSwitcher';
+import { View, Text, TouchableOpacity, StyleSheet, I18nManager } from 'react-native';
+import { ThemeColors } from '../constants/colors';
+import { BellIcon, MenuIcon, ChevronDownIcon } from './icons/Icons';
+import { useTheme } from '../context/ThemeContext';
 
 import { TabType } from './BottomNavBar';
 
 interface HeaderProps {
   title?: string;
   onNavigate?: (screen: TabType) => void;
+  showBack?: boolean;
+  onBack?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ title = "AI Client Overview", onNavigate }) => {
+const Header: React.FC<HeaderProps> = ({ title = "AI Client Overview", onNavigate, showBack, onBack }) => {
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
+
   return (
     <View style={styles.header}>
-      <Text style={styles.headerTitle}>{title}</Text>
+      <View style={styles.leftContainer}>
+        {showBack && (
+          <TouchableOpacity activeOpacity={0.7} onPress={onBack} style={styles.backButton}>
+            <View style={{ transform: [{ rotate: '90deg' }] }}>
+              <ChevronDownIcon size={20} color={colors.textPrimary} />
+            </View>
+          </TouchableOpacity>
+        )}
+        <Text style={[styles.headerTitle, { [I18nManager.isRTL ? 'marginLeft' : 'marginRight']: 16 }]} numberOfLines={2}>{title}</Text>
+      </View>
       <View style={styles.headerActions}>
-        <LanguageSwitcher />
         <TouchableOpacity activeOpacity={0.7} style={styles.iconBtn} onPress={() => onNavigate?.('notifications')}>
           <BellIcon size={20} color={colors.textPrimary} />
           <View style={styles.notificationDot} />
@@ -30,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ title = "AI Client Overview", onNavigat
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -38,12 +51,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 12,
     paddingBottom: 12,
+    gap: 16,
+  },
+  leftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  backButton: {
+    padding: 8,
+    marginRight: 8,
+    marginLeft: -8,
   },
   headerTitle: {
     fontSize: 26,
     fontWeight: '700',
     color: colors.textPrimary,
     letterSpacing: -0.4,
+    // flexShrink: 1,
+    textAlign: I18nManager.isRTL ? 'right' : 'left',
   },
   headerActions: {
     flexDirection: 'row',

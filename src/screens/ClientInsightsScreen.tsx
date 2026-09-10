@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, TouchableOpacity, Easing } from 'react-native';
 import Svg, { Path, Circle, Defs, LinearGradient, Stop, Rect, Line } from 'react-native-svg';
-import colors from '../constants/colors';
 import { ChevronDownIcon, FilterIcon, UsersIcon, UserIcon, TrendUpIcon, CalendarIcon, XIcon } from '../components/icons/Icons';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../hooks/useCurrency';
+import { useTheme } from '../context/ThemeContext';
+import { ThemeColors } from '../constants/colors';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 52) / 2;
@@ -32,6 +34,9 @@ const CHART_WIDTH = chartData.length * 16.5 + 40; // Dynamic width based on data
 
 const ClientInsightsScreen = () => {
   const { t } = useTranslation();
+  const currency = useCurrency();
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
   const [showTooltip, setShowTooltip] = useState(true);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current;
@@ -264,7 +269,7 @@ const ClientInsightsScreen = () => {
                  <Animated.View style={[styles.tooltip, { opacity: chartProgress, left: 244 }]}>
                     <View style={styles.tooltipHeader}>
                       <View style={styles.tooltipValueRow}>
-                        <Text style={styles.tooltipValue}>$12.2</Text>
+                        <Text style={styles.tooltipValue}>{currency}12.2</Text>
                         <View style={styles.badgeLimeSmall}>
                           <Text style={styles.badgeLimeTextSmall}>+46%</Text>
                         </View>
@@ -285,7 +290,7 @@ const ClientInsightsScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,

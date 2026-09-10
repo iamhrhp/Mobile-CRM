@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Animated, TouchableOpacity, ScrollView } from 'react-native';
-import colors from '../constants/colors';
+import { View, Text, StyleSheet, Animated, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import colors, { ThemeColors } from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
 import { TrendingIcon, CalendarIcon, XIcon } from './icons/Icons';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../hooks/useCurrency';
 
 interface RevenueChartProps {
   barAnim: Animated.Value;
@@ -10,7 +12,10 @@ interface RevenueChartProps {
 }
 
 const RevenueChart: React.FC<RevenueChartProps> = ({ barAnim, onPress }) => {
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
   const { t } = useTranslation();
+  const currency = useCurrency();
   const [isTooltipVisible, setIsTooltipVisible] = useState(true);
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -47,7 +52,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({ barAnim, onPress }) => {
         </View>
       </TouchableOpacity>
 
-      <Text style={styles.revenueAmount}>$12.5M</Text>
+      <Text style={styles.revenueAmount}>{currency}12.5M</Text>
 
       {/* Chart Container */}
       <View style={styles.chartWrapper}>
@@ -117,7 +122,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({ barAnim, onPress }) => {
             <View style={[styles.tooltipCard, { left: '12%' }]}> 
               <View style={styles.tooltipHeaderRow}>
                 <View style={styles.tooltipValueRow}>
-                  <Text style={styles.tooltipValue}>$30K</Text>
+                  <Text style={styles.tooltipValue}>{currency}30K</Text>
                   <View style={styles.tooltipBadge}>
                     <Text style={styles.tooltipBadgeText}>+33%</Text>
                   </View>
@@ -145,7 +150,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({ barAnim, onPress }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   revenueCard: {
     marginHorizontal: 20,
     backgroundColor: colors.cardBackground,

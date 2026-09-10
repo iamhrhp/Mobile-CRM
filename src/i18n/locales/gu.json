@@ -12,7 +12,10 @@
     "pipelineOverview": "પાઇપલાઇન વિહંગાવલોકન",
     "revenueForecast": "આવકની આગાહી",
     "clientInsights": "ગ્રાહક આંતરદૃષ્ટિ",
-    "aiClientOverview": "AI ગ્રાહક વિહંગાવલોકન"
+    "aiClientOverview": "AI ગ્રાહક વિહંગાવલોકન",
+    "settings": "સેટિંગ્સ",
+    "totalLeads": "કુલ લીડ્સ",
+    "conversionRate": "રૂપાંતરણ દર"
   },
   "dashboard": {
     "addNewLead": "નવી લીડ ઉમેરો",
@@ -61,5 +64,88 @@
     "notifications": "સૂચનાઓ",
     "settings": "સેટિંગ્સ",
     "filterSort": "ફિલ્ટર અને સોર્ટ કરો"
+  },
+  "settings": {
+    "account": "ખાતું",
+    "profileInfo": "પ્રોફાઇલ માહિતી",
+    "updateProfile": "તમારું નામ અને ઇમેઇલ અપડેટ કરો",
+    "passwordSecurity": "પાસવર્ડ અને સુરક્ષા",
+    "manageSecurity": "તમારી સુરક્ષા સેટિંગ્સ મેનેજ કરો",
+    "preferences": "પસંદગીઓ",
+    "notifications": "સૂચનાઓ",
+    "emailPush": "ઇમેઇલ અને પુશ સૂચનાઓ",
+    "theme": "થીમ",
+    "systemDefault": "સિસ્ટમ ડિફોલ્ટ",
+    "darkMode": "ડાર્ક મોડ",
+    "lightMode": "લાઇટ મોડ",
+    "logout": "લૉગ આઉટ",
+    "logoutConfirm": "શું તમે ખરેખર લૉગ આઉટ કરવા માંગો છો?",
+    "language": "ભાષા",
+    "changeLanguage": "એપ્લિકેશન ભાષા બદલો"
+  },
+  "notifications": {
+    "title": "સૂચનાઓ",
+    "markAll": "બધાને વાંચેલા તરીકે ચિહ્નિત કરો",
+    "today": "આજે",
+    "earlier": "અગાઉ",
+    "newLead": "નવી લીડ સોંપાઈ",
+    "newLeadDesc": "Acme Corp તરફથી Sarah Jenkins તમને સોંપવામાં આવ્યા છે.",
+    "time2h": "2 કલાક પહેલા",
+    "dealClosed": "ડીલ બંધ થઈ",
+    "dealClosedDesc": "TechFlow Enterprise કરાર પર હસ્તાક્ષર થયા. મૂલ્ય: {{currency}}45,000.",
+    "time4h": "4 કલાક પહેલા",
+    "meetingReminder": "મીટિંગ રિમાઇન્ડર",
+    "meetingReminderDesc": "Alpha Team સાથે ત્રિમાસિક સમીક્ષા 15 મિનિટમાં શરૂ થશે.",
+    "time1d": "1 દિવસ પહેલા",
+    "systemUpdate": "સિસ્ટમ અપડેટ",
+    "systemUpdateDesc": "CRM જાળવણી શનિવારે સવારે 2:00 PST માટે નિર્ધારિત છે.",
+    "time2d": "2 દિવસ પહેલા",
+    "leadFollowUp": "લીડ ફોલો-અપ",
+    "leadFollowUpDesc": "તમે 7 દિવસથી Mark Johnson નો સંપર્ક કર્યો નથી.",
+    "time3d": "3 દિવસ પહેલા"
+  },
+  "filter": {
+    "sortBy": "દ્વારા સૉર્ટ કરો",
+    "leadStatus": "લીડ સ્ટેટસ",
+    "timeframe": "સમયમર્યાદા",
+    "newestFirst": "નવીનતમ પ્રથમ",
+    "highestValue": "સૌથી વધુ મૂલ્ય",
+    "closingSoon": "ટૂંક સમયમાં બંધ થશે",
+    "highPriority": "ઉચ્ચ પ્રાથમિકતા"
+  },
+  "status": {
+    "new": "નવું",
+    "contacted": "સંપર્ક કર્યો",
+    "proposalSent": "પ્રસ્તાવ મોકલ્યો",
+    "negotiation": "વાટાઘાટો",
+    "closedWon": "બંધ જીત્યો",
+    "closedLost": "બંધ હાર્યો"
+  },
+  "timeframe": {
+    "thisWeek": "આ અઠવાડિયે",
+    "thisMonth": "આ મહિને",
+    "last30Days": "છેલ્લા 30 દિવસ",
+    "thisQuarter": "આ ત્રિમાસિક ગાળામાં",
+    "thisYear": "આ વર્ષે"
+  },
+  "common": {
+    "reset": "રીસેટ",
+    "applyFilters": "ફિલ્ટર્સ લાગુ કરો",
+    "cancel": "રદ કરો",
+    "yes": "હા",
+    "no": "ના"
+  },
+  "addLead": {
+    "title": "નવી લીડ ઉમેરો",
+    "subtitle": "તમારી નવી સંભાવનાની વિગતો દાખલ કરો",
+    "leadName": "લીડનું નામ",
+    "leadNamePlaceholder": "John Doe",
+    "companyName": "કંપનીનું નામ",
+    "companyNamePlaceholder": "Acme Corp",
+    "email": "ઇમેઇલ સરનામું",
+    "emailPlaceholder": "john@example.com",
+    "expectedValue": "અપેક્ષિત મૂલ્ય ({{currency}})",
+    "expectedValuePlaceholder": "{{currency}}10,000",
+    "save": "લીડ સાચવો"
   }
 }

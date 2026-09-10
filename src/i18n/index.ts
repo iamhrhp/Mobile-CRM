@@ -10,11 +10,10 @@ import hi from './locales/hi.json';
 import te from './locales/te.json';
 import ta from './locales/ta.json';
 import gu from './locales/gu.json';
-import bn from './locales/bn.json';
-import mr from './locales/mr.json';
-import pa from './locales/pa.json';
-import ur from './locales/ur.json';
+import it from './locales/it.json';
+import fr from './locales/fr.json';
 import ar from './locales/ar.json';
+import ml from './locales/ml.json';
 
 const STORE_LANGUAGE_KEY = 'settings.lang';
 
@@ -50,11 +49,10 @@ const resources = {
   te: { translation: te },
   ta: { translation: ta },
   gu: { translation: gu },
-  bn: { translation: bn },
-  mr: { translation: mr },
-  pa: { translation: pa },
-  ur: { translation: ur },
+  it: { translation: it },
+  fr: { translation: fr },
   ar: { translation: ar },
+  ml: { translation: ml },
 };
 
 i18n

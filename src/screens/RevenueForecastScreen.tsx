@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, TouchableOpacity, Easing } from 'react-native';
-import Svg, { Path, Circle, Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
-import colors from '../constants/colors';
+import Svg, { Path, Circle, Defs, LinearGradient, Stop, Rect, Line } from 'react-native-svg';
+import { ThemeColors } from '../constants/colors';
+import { useTheme } from '../context/ThemeContext';
 import { ChevronDownIcon, FilterIcon, TrendUpIcon, EyeIcon, UsersIcon, WarningTriangleIcon, CalendarIcon, CheckCircleIcon } from '../components/icons/Icons';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../hooks/useCurrency';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 52) / 2; // Fixed math so cards fit 2 per row!
@@ -12,9 +14,14 @@ const CARD_WIDTH = (width - 52) / 2; // Fixed math so cards fit 2 per row!
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const AnimatedRect = Animated.createAnimatedComponent(Rect);
+const AnimatedLine = Animated.createAnimatedComponent(Line);
 
 const RevenueForecastScreen = () => {
   const { t } = useTranslation();
+  const currency = useCurrency();
+  const { colors } = useTheme();
+  const styles = getStyles(colors);
+  
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current;
@@ -111,7 +118,7 @@ const RevenueForecastScreen = () => {
             <Text style={styles.cardTitle}>{t('forecast.projection90Day')}</Text>
           </View>
           <View style={styles.valueRow}>
-            <Text style={styles.cardValue}>$140,250</Text>
+            <Text style={styles.cardValue}>{currency}140,250</Text>
             <Text style={styles.positiveChange}>+8%</Text>
           </View>
           
@@ -158,7 +165,7 @@ const RevenueForecastScreen = () => {
             <Text style={styles.cardTitle}>{t('forecast.recurringRevenue')}</Text>
           </View>
           <View style={styles.valueRow}>
-            <Text style={styles.cardValue}>$91,000</Text>
+            <Text style={styles.cardValue}>{currency}91,000</Text>
             <Text style={styles.negativeChange}>-6%</Text>
           </View>
           <View style={styles.horizontalBarContainer}>
@@ -226,7 +233,7 @@ const RevenueForecastScreen = () => {
                 <TrendUpIcon size={14} color={colors.textSecondary} />
                 <Text style={styles.cardTitle}>{t('dashboard.revenueGrowth', 'Revenue growth')}</Text>
               </View>
-              <Text style={[styles.cardValue, { fontSize: 28, marginTop: 4 }]}>$12.5M</Text>
+              <Text style={[styles.cardValue, { fontSize: 28, marginTop: 4 }]}>{currency}12.5M</Text>
             </View>
             <TouchableOpacity style={styles.iconButton}>
               <CalendarIcon size={18} color={colors.textSecondary} />
@@ -247,14 +254,15 @@ const RevenueForecastScreen = () => {
                      const h = 20 + Math.random() * 120;
                      const isCenter = i > 15 && i < 25;
                      return (
-                       <AnimatedRect
+                       <AnimatedLine
                          key={i}
-                         x={i * 12}
-                         y={200 - h}
-                         width="6"
-                         height={chartProgress.interpolate({ inputRange: [0, 1], outputRange: [0, h] })}
-                         fill={isCenter ? '#000000' : colors.progressInactive}
-                         rx="3"
+                         x1={i * 12 + 3}
+                         y1="200"
+                         x2={i * 12 + 3}
+                         y2={chartProgress.interpolate({ inputRange: [0, 1], outputRange: [200, 200 - h] })}
+                         stroke={isCenter ? '#000000' : colors.progressInactive}
+                         strokeWidth="6"
+                         strokeLinecap="round"
                        />
                      )
                    })}
@@ -282,7 +290,7 @@ const RevenueForecastScreen = () => {
                 {/* Tooltip Badge */}
                 <Animated.View style={[styles.tooltip, { opacity: chartProgress, transform: [{ translateY: chartProgress.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }] }]}>
                    <View style={styles.tooltipRow}>
-                     <Text style={styles.tooltipValue}>$30K</Text>
+                     <Text style={styles.tooltipValue}>{currency}30K</Text>
                      <View style={styles.tooltipBadge}>
                        <Text style={styles.tooltipBadgeText}>+33%</Text>
                      </View>
@@ -306,7 +314,7 @@ const RevenueForecastScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: ThemeColors) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,

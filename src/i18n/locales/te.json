@@ -12,7 +12,10 @@
     "pipelineOverview": "పైప్‌లైన్ అవలోకనం",
     "revenueForecast": "ఆదాయ సూచన",
     "clientInsights": "క్లయింట్ అంతర్దృష్టులు",
-    "aiClientOverview": "AI క్లయింట్ అవలోకనం"
+    "aiClientOverview": "AI క్లయింట్ అవలోకనం",
+    "settings": "సెట్టింగ్‌లు",
+    "totalLeads": "మొత్తం లీడ్స్",
+    "conversionRate": "మార్పిడి రేటు"
   },
   "dashboard": {
     "addNewLead": "కొత్త లీడ్‌ను జోడించండి",
@@ -61,5 +64,88 @@
     "notifications": "నోటిఫికేషన్‌లు",
     "settings": "సెట్టింగ్‌లు",
     "filterSort": "ఫిల్టర్ & క్రమబద్ధీకరించు"
+  },
+  "settings": {
+    "account": "ఖాతా",
+    "profileInfo": "ప్రొఫైల్ సమాచారం",
+    "updateProfile": "మీ పేరు మరియు ఈమెయిల్‌ను నవీకరించండి",
+    "passwordSecurity": "పాస్‌వర్డ్ & భద్రత",
+    "manageSecurity": "మీ భద్రతా సెట్టింగ్‌లను నిర్వహించండి",
+    "preferences": "ప్రాధాన్యతలు",
+    "notifications": "నోటిఫికేషన్‌లు",
+    "emailPush": "ఈమెయిల్ మరియు పుష్ నోటిఫికేషన్‌లు",
+    "theme": "థీమ్",
+    "systemDefault": "సిస్టమ్ డిఫాల్ట్",
+    "darkMode": "డార్క్ మోడ్",
+    "lightMode": "లైట్ మోడ్",
+    "logout": "లాగ్ అవుట్",
+    "logoutConfirm": "మీరు ఖచ్చితంగా లాగ్ అవుట్ చేయాలనుకుంటున్నారా?",
+    "language": "భాష",
+    "changeLanguage": "అప్లికేషన్ భాషను మార్చండి"
+  },
+  "notifications": {
+    "title": "నోటిఫికేషన్‌లు",
+    "markAll": "అన్నింటిని చదివినట్లుగా గుర్తించండి",
+    "today": "ఈ రోజు",
+    "earlier": "గతంలో",
+    "newLead": "కొత్త లీడ్ కేటాయించబడింది",
+    "newLeadDesc": "ఆక్మె కార్ప్ నుండి సారా జెంకిన్స్ మీకు కేటాయించబడ్డారు.",
+    "time2h": "2 గంటల క్రితం",
+    "dealClosed": "డీల్ ముగిసింది",
+    "dealClosedDesc": "టెక్‌ఫ్లో ఎంటర్‌ప్రైజ్ ఒప్పందం కుదుర్చుకుంది. విలువ: {{currency}}45,000.",
+    "time4h": "4 గంటల క్రితం",
+    "meetingReminder": "సమావేశం రిమైండర్",
+    "meetingReminderDesc": "ఆల్ఫా టీమ్‌తో త్రైమాసిక సమీక్ష 15 నిమిషాల్లో ప్రారంభమవుతుంది.",
+    "time1d": "1 రోజు క్రితం",
+    "systemUpdate": "సిస్టమ్ అప్‌డేట్",
+    "systemUpdateDesc": "CRM నిర్వహణ శనివారం ఉదయం 2:00 PST కు షెడ్యూల్ చేయబడింది.",
+    "time2d": "2 రోజుల క్రితం",
+    "leadFollowUp": "లీడ్ ఫాలో-అప్",
+    "leadFollowUpDesc": "మీరు 7 రోజులలో మార్క్ జాన్సన్‌ను సంప్రదించలేదు.",
+    "time3d": "3 రోజుల క్రితం"
+  },
+  "filter": {
+    "sortBy": "క్రమబద్ధీకరించు",
+    "leadStatus": "లీడ్ స్థితి",
+    "timeframe": "కాలవ్యవధి",
+    "newestFirst": "సరికొత్తవి ముందు",
+    "highestValue": "అత్యధిక విలువ",
+    "closingSoon": "త్వరలో ముగుస్తుంది",
+    "highPriority": "అత్యధిక ప్రాధాన్యత"
+  },
+  "status": {
+    "new": "కొత్తది",
+    "contacted": "సంప్రదించారు",
+    "proposalSent": "ప్రతిపాదన పంపబడింది",
+    "negotiation": "చర్చలు",
+    "closedWon": "విజయవంతంగా ముగిసింది",
+    "closedLost": "కోల్పోయినవి"
+  },
+  "timeframe": {
+    "thisWeek": "ఈ వారం",
+    "thisMonth": "ఈ నెల",
+    "last30Days": "గత 30 రోజులు",
+    "thisQuarter": "ఈ త్రైమాసికం",
+    "thisYear": "ఈ సంవత్సరం"
+  },
+  "common": {
+    "reset": "రీసెట్ చేయండి",
+    "applyFilters": "ఫిల్టర్‌లను వర్తించండి",
+    "cancel": "రద్దు చేయి",
+    "yes": "అవును",
+    "no": "వద్దు"
+  },
+  "addLead": {
+    "title": "కొత్త లీడ్‌ను జోడించండి",
+    "subtitle": "మీ కొత్త ప్రాస్పెక్ట్ వివరాలను నమోదు చేయండి",
+    "leadName": "లీడ్ పేరు",
+    "leadNamePlaceholder": "జాన్ డో",
+    "companyName": "కంపెనీ పేరు",
+    "companyNamePlaceholder": "ఆక్మె కార్ప్",
+    "email": "ఈమెయిల్ చిరునామా",
+    "emailPlaceholder": "john@example.com",
+    "expectedValue": "ఆశించిన విలువ ({{currency}})",
+    "expectedValuePlaceholder": "{{currency}}10,000",
+    "save": "లీడ్‌ను సేవ్ చేయండి"
   }
 }
