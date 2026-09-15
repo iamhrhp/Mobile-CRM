@@ -1,9 +1,58 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, TouchableWithoutFeedback, Modal, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { FilterIcon, PlusIcon, UsersIcon, FireIcon, ArrowUpRightIcon, MailIcon, PhoneIcon, ChevronDownIcon, VideoCameraIcon } from '../components/icons/Icons';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
 import { useTranslation } from 'react-i18next';
+
+interface Lead {
+  id: string;
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  subtext: string;
+  interestLabel: string;
+  interestValue: number;
+  sources: string[];
+  status: string;
+  avatarUri: string;
+  isHotLead: boolean;
+  dropdownDirection?: 'up' | 'down';
+}
+
+const initialLeads: Lead[] = [
+  {
+    id: 'daniel',
+    name: 'Daniel Mercer',
+    company: 'Brightway Logistics',
+    email: 'daniel.m@brightway.com',
+    phone: '+1 (312) 555-0743',
+    subtext: 'Recently requested a proposal',
+    interestLabel: 'High Interest',
+    interestValue: 86,
+    sources: ['Referral', 'Agent Added'],
+    status: 'Call Scheduled',
+    avatarUri: 'https://randomuser.me/api/portraits/men/85.jpg',
+    isHotLead: true,
+    dropdownDirection: 'down',
+  },
+  {
+    id: 'sarah',
+    name: 'Sarah Jenkins',
+    company: 'Global Tech Solutions',
+    email: 's.jenkins@gts.com',
+    phone: '+1 (415) 555-8901',
+    subtext: 'Interested in enterprise plan',
+    interestLabel: 'Medium Interest',
+    interestValue: 64,
+    sources: ['Organic Search', 'Webinar'],
+    status: 'Follow-up Email',
+    avatarUri: 'https://randomuser.me/api/portraits/women/45.jpg',
+    isHotLead: false,
+    dropdownDirection: 'up',
+  }
+];
 
 interface StatusDropdownProps {
   initialStatus: string;
@@ -21,6 +70,7 @@ const StatusDropdown = ({ initialStatus, avatarUri, direction = 'down', isOpen, 
   const { t } = useTranslation();
   const [statusId, setStatusId] = React.useState(initialStatus);
   const options = [
+    { id: 'New', label: 'New' },
     { id: 'Call Scheduled', label: t('users.callScheduled', 'Call Scheduled') },
     { id: 'Follow-up Email', label: t('users.followUpEmail', 'Follow-up Email') },
     { id: 'Proposal Sent', label: t('users.proposalSent', 'Proposal Sent') },
@@ -54,7 +104,107 @@ const StatusDropdown = ({ initialStatus, avatarUri, direction = 'down', isOpen, 
   );
 };
 
-const UsersScreen = () => {
+const LeadCard = ({ lead, barAnim, openDropdownId, setOpenDropdownId, colors, styles, t, index }: any) => {
+  return (
+    <View style={[styles.leadCard, { marginTop: index === 0 ? 0 : 16, zIndex: 100 - index }]}>
+      <View style={[styles.cardTopRow, lead.isHotLead ? {} : { justifyContent: 'flex-end' }]}>
+        {lead.isHotLead && (
+          <View style={styles.hotLeadBadge}>
+            <FireIcon size={14} />
+            <Text style={styles.hotLeadText}>HOT LEAD</Text>
+          </View>
+        )}
+        <TouchableOpacity activeOpacity={0.7} style={styles.openBtn}>
+          <ArrowUpRightIcon size={12} color={colors.textPrimary} />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.profileRow}>
+        <Image source={{ uri: lead.avatarUri }} style={styles.avatar} resizeMode="cover" />
+        <View style={styles.profileDetails}>
+          <Text style={styles.name}>{lead.name}</Text>
+          <Text style={styles.company}>{lead.company}</Text>
+          <View style={styles.contactRow}>
+            <MailIcon size={10} color={colors.textMuted} />
+            <Text style={styles.contactText}>{lead.email}</Text>
+          </View>
+          <View style={styles.contactRow}>
+            <PhoneIcon size={10} color={colors.textMuted} />
+            <Text style={styles.contactText}>{lead.phone}</Text>
+          </View>
+        </View>
+      </View>
+
+      <Text style={styles.subtext}>{lead.subtext}</Text>
+
+      <View style={styles.interestSection}>
+        <View style={styles.interestRow}>
+          <Text style={styles.interestLabel}>{lead.interestLabel}</Text>
+          <Text style={styles.interestValue}>{lead.interestValue}%</Text>
+        </View>
+        <Animated.View style={[styles.progressContainer, { opacity: barAnim }]}>
+          <View style={styles.ticksContainer}>
+            {Array.from({ length: 30 }).map((_, idx) => (
+              <View key={idx} style={styles.tickItem} />
+            ))}
+          </View>
+          <View style={styles.progressTrack}>
+            <Animated.View style={[styles.progressFill, { 
+              backgroundColor: lead.interestValue >= 80 ? colors.limeAccent : '#34C759', 
+              flex: barAnim.interpolate({ inputRange: [0, 1], outputRange: [0.0001, lead.interestValue / 100] }) 
+            }]} />
+            <View style={styles.progressHandle} />
+            <Animated.View style={[styles.progressEmpty, { 
+              flex: barAnim.interpolate({ inputRange: [0, 1], outputRange: [0.9999, 1 - (lead.interestValue / 100)] }) 
+            }]} />
+          </View>
+        </Animated.View>
+      </View>
+
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionLabel}>{t('users.source', 'Source')}</Text>
+        <View style={styles.badgesRow}>
+          {lead.sources.map((src: string, idx: number) => (
+            <View key={idx} style={styles.badge}>
+              <Text style={styles.badgeText}>{src}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+
+      <View style={[styles.statusSectionContainer, { zIndex: 20 }]}>
+        <Text style={styles.sectionLabel}>{t('users.status', 'Status')}</Text>
+        <View style={styles.statusActionRow}>
+          <StatusDropdown 
+            initialStatus={lead.status} 
+            avatarUri="https://randomuser.me/api/portraits/women/68.jpg"
+            direction={lead.dropdownDirection || 'down'}
+            isOpen={openDropdownId === lead.id}
+            onToggle={() => setOpenDropdownId(openDropdownId === lead.id ? null : lead.id)}
+            onClose={() => setOpenDropdownId(null)}
+          />
+          
+          <View style={styles.actionButtonsRow}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.actionBtnOutline}>
+              <MailIcon size={16} color={colors.textPrimary} />
+            </TouchableOpacity>
+            {lead.isHotLead && (
+              <TouchableOpacity activeOpacity={0.7} style={styles.actionBtnSolid}>
+                <VideoCameraIcon size={16} color={colors.background} />
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+interface UsersScreenProps {
+  onNavigate?: (screen: string) => void;
+}
+
+const UsersScreen: React.FC<UsersScreenProps> = ({ onNavigate }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = getStyles(colors);
@@ -62,6 +212,8 @@ const UsersScreen = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const barAnim = useRef(new Animated.Value(0)).current;
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
+
+  const [leads, setLeads] = useState<Lead[]>(initialLeads);
 
   useEffect(() => {
     fadeAnim.setValue(0);
@@ -78,7 +230,7 @@ const UsersScreen = () => {
         useNativeDriver: false,
       })
     ]).start();
-  }, [fadeAnim, barAnim]);
+  }, [fadeAnim, barAnim, leads.length]);
 
   const handleOutsidePress = () => {
     if (openDropdownId) {
@@ -87,206 +239,50 @@ const UsersScreen = () => {
   };
 
   return (
-    <Animated.ScrollView
-      showsVerticalScrollIndicator={false}
-      style={{ opacity: fadeAnim }}
-      onScrollBeginDrag={handleOutsidePress}
-      scrollEventThrottle={16}
-    >
-      <TouchableWithoutFeedback onPress={handleOutsidePress}>
-        <View style={styles.scrollContent}>
-      {/* Top Actions Row */}
-      <View style={styles.topActionsRow}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.filterBtn}>
-          <FilterIcon size={18} color={colors.textPrimary} />
-        </TouchableOpacity>
-
-        <TouchableOpacity activeOpacity={0.8} style={styles.addLeadBtn}>
-          <PlusIcon size={13} color={colors.textPrimary} />
-          <Text style={styles.addLeadText}>{t('dashboard.addNewLead')}</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* New Leads Header */}
-      <View style={styles.sectionHeaderRow}>
-        <UsersIcon size={16} color={colors.textSecondary} />
-        <Text style={styles.sectionHeaderText}>{t('users.newLeads')} <Text style={styles.sectionHeaderCount}>(2)</Text></Text>
-      </View>
-
-      {/* Hot Lead Card */}
-      <View style={[styles.leadCard, { zIndex: 2 }]}>
-        {/* Card Top Label Row */}
-        <View style={styles.cardTopRow}>
-          <View style={styles.hotLeadBadge}>
-            <FireIcon size={14} />
-            <Text style={styles.hotLeadText}>HOT LEAD</Text>
-          </View>
-          <TouchableOpacity activeOpacity={0.7} style={styles.openBtn}>
-            <ArrowUpRightIcon size={12} color={colors.textPrimary} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Profile Row */}
-        <View style={styles.profileRow}>
-          <Image source={{ uri: 'https://randomuser.me/api/portraits/men/85.jpg' }} style={styles.avatar} resizeMode="cover" />
-          <View style={styles.profileDetails}>
-            <Text style={styles.name}>Daniel Mercer</Text>
-            <Text style={styles.company}>Brightway Logistics</Text>
-            <View style={styles.contactRow}>
-              <MailIcon size={10} color={colors.textMuted} />
-              <Text style={styles.contactText}>daniel.m@brightway.com</Text>
-            </View>
-            <View style={styles.contactRow}>
-              <PhoneIcon size={10} color={colors.textMuted} />
-              <Text style={styles.contactText}>+1 (312) 555-0743</Text>
-            </View>
-          </View>
-        </View>
-
-        <Text style={styles.subtext}>{t('users.recentlyRequested', 'Recently requested a proposal')}</Text>
-
-        {/* High Interest Progress */}
-        <View style={styles.interestSection}>
-          <View style={styles.interestRow}>
-            <Text style={styles.interestLabel}>{t('users.highInterest', 'High Interest')}</Text>
-            <Text style={styles.interestValue}>86%</Text>
-          </View>
-          <Animated.View style={[styles.progressContainer, { opacity: barAnim }]}>
-            <View style={styles.ticksContainer}>
-              {Array.from({ length: 30 }).map((_, idx) => (
-                <View key={idx} style={styles.tickItem} />
-              ))}
-            </View>
-            <View style={styles.progressTrack}>
-              <Animated.View style={[styles.progressFill, { flex: barAnim.interpolate({ inputRange: [0, 1], outputRange: [0.0001, 0.86] }) }]} />
-              <View style={styles.progressHandle} />
-              <Animated.View style={[styles.progressEmpty, { flex: barAnim.interpolate({ inputRange: [0, 1], outputRange: [0.9999, 0.14] }) }]} />
-            </View>
-          </Animated.View>
-        </View>
-
-        {/* Source Badges */}
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionLabel}>{t('users.source', 'Source')}</Text>
-          <View style={styles.badgesRow}>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>{t('users.referral', 'Referral')}</Text>
-            </View>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>{t('users.agentAdded', 'Agent Added')}</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Status & Actions */}
-        <View style={[styles.statusSectionContainer, { zIndex: 20 }]}>
-          <Text style={styles.sectionLabel}>{t('users.status', 'Status')}</Text>
-          <View style={styles.statusActionRow}>
-            <StatusDropdown 
-              initialStatus="Call Scheduled" 
-              avatarUri="https://randomuser.me/api/portraits/women/68.jpg"
-              isOpen={openDropdownId === 'daniel'}
-              onToggle={() => setOpenDropdownId(openDropdownId === 'daniel' ? null : 'daniel')}
-              onClose={() => setOpenDropdownId(null)}
-            />
-            
-            <View style={styles.actionButtonsRow}>
-              <TouchableOpacity activeOpacity={0.7} style={styles.actionBtnOutline}>
-                <MailIcon size={16} color={colors.textPrimary} />
+    <View style={{ flex: 1 }}>
+      <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ opacity: fadeAnim }}
+        onScrollBeginDrag={handleOutsidePress}
+        scrollEventThrottle={16}
+      >
+        <TouchableWithoutFeedback onPress={handleOutsidePress}>
+          <View style={styles.scrollContent}>
+            {/* Top Actions Row */}
+            <View style={styles.topActionsRow}>
+              <TouchableOpacity activeOpacity={0.7} style={styles.filterBtn} onPress={() => onNavigate?.('sort')}>
+                <FilterIcon size={18} color={colors.textPrimary} />
               </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.7} style={styles.actionBtnSolid}>
-                <VideoCameraIcon size={16} color={colors.background} />
+
+              <TouchableOpacity activeOpacity={0.8} style={styles.addLeadBtn} onPress={() => onNavigate?.('add_lead')}>
+                <PlusIcon size={13} color={colors.textPrimary} />
+                <Text style={styles.addLeadText}>{t('dashboard.addNewLead', 'Add New Lead')}</Text>
               </TouchableOpacity>
             </View>
+
+            {/* New Leads Header */}
+            <View style={styles.sectionHeaderRow}>
+              <UsersIcon size={16} color={colors.textSecondary} />
+              <Text style={styles.sectionHeaderText}>{t('users.newLeads', 'NEW LEADS')} <Text style={styles.sectionHeaderCount}>({leads.length})</Text></Text>
+            </View>
+
+            {leads.map((lead, index) => (
+              <LeadCard 
+                key={lead.id} 
+                lead={lead} 
+                barAnim={barAnim} 
+                openDropdownId={openDropdownId} 
+                setOpenDropdownId={setOpenDropdownId} 
+                colors={colors} 
+                styles={styles} 
+                t={t} 
+                index={index} 
+              />
+            ))}
           </View>
-        </View>
-      </View>
-
-      {/* Second Lead Card */}
-      <View style={[styles.leadCard, { marginTop: 16, zIndex: 1 }]}>
-        {/* Card Top Label Row */}
-        <View style={[styles.cardTopRow, { justifyContent: 'flex-end' }]}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.openBtn}>
-            <ArrowUpRightIcon size={12} color={colors.textPrimary} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Profile Row */}
-        <View style={styles.profileRow}>
-          <Image source={{ uri: 'https://randomuser.me/api/portraits/women/45.jpg' }} style={styles.avatar} resizeMode="cover" />
-          <View style={styles.profileDetails}>
-            <Text style={styles.name}>Sarah Jenkins</Text>
-            <Text style={styles.company}>Global Tech Solutions</Text>
-            <View style={styles.contactRow}>
-              <MailIcon size={10} color={colors.textMuted} />
-              <Text style={styles.contactText}>s.jenkins@gts.com</Text>
-            </View>
-            <View style={styles.contactRow}>
-              <PhoneIcon size={10} color={colors.textMuted} />
-              <Text style={styles.contactText}>+1 (415) 555-8901</Text>
-            </View>
-          </View>
-        </View>
-
-        <Text style={styles.subtext}>{t('users.interestedEnterprise', 'Interested in enterprise plan')}</Text>
-
-        {/* High Interest Progress */}
-        <View style={styles.interestSection}>
-          <View style={styles.interestRow}>
-            <Text style={styles.interestLabel}>{t('users.mediumInterest', 'Medium Interest')}</Text>
-            <Text style={styles.interestValue}>64%</Text>
-          </View>
-          <Animated.View style={[styles.progressContainer, { opacity: barAnim }]}>
-            <View style={styles.ticksContainer}>
-              {Array.from({ length: 30 }).map((_, idx) => (
-                <View key={idx} style={styles.tickItem} />
-              ))}
-            </View>
-            <View style={styles.progressTrack}>
-              <Animated.View style={[styles.progressFill, { backgroundColor: '#34C759', flex: barAnim.interpolate({ inputRange: [0, 1], outputRange: [0.0001, 0.64] }) }]} />
-              <View style={styles.progressHandle} />
-              <Animated.View style={[styles.progressEmpty, { flex: barAnim.interpolate({ inputRange: [0, 1], outputRange: [0.9999, 0.36] }) }]} />
-            </View>
-          </Animated.View>
-        </View>
-
-        {/* Source Badges */}
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionLabel}>{t('users.source', 'Source')}</Text>
-          <View style={styles.badgesRow}>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>{t('users.organicSearch', 'Organic Search')}</Text>
-            </View>
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>{t('users.webinar', 'Webinar')}</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Status & Actions */}
-        <View style={[styles.statusSectionContainer, { zIndex: 10 }]}>
-          <Text style={styles.sectionLabel}>{t('users.status', 'Status')}</Text>
-          <View style={styles.statusActionRow}>
-            <StatusDropdown 
-              initialStatus="Follow-up Email" 
-              avatarUri="https://randomuser.me/api/portraits/women/68.jpg" 
-              direction="up" 
-              isOpen={openDropdownId === 'sarah'}
-              onToggle={() => setOpenDropdownId(openDropdownId === 'sarah' ? null : 'sarah')}
-              onClose={() => setOpenDropdownId(null)}
-            />
-            
-            <View style={styles.actionButtonsRow}>
-              <TouchableOpacity activeOpacity={0.7} style={styles.actionBtnOutline}>
-                <MailIcon size={16} color={colors.textPrimary} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </Animated.ScrollView>
+        </TouchableWithoutFeedback>
+      </Animated.ScrollView>
+    </View>
   );
 };
 
@@ -592,6 +588,35 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
   dropdownItemTextSelected: {
     fontWeight: '700',
   },
+  inputLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.textSecondary,
+    marginBottom: 8,
+  },
+  modalInput: {
+    backgroundColor: colors.cardBackground,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 12,
+    padding: 12,
+    fontSize: 15,
+    color: colors.textPrimary,
+    marginBottom: 20,
+  },
+  saveBtn: {
+    backgroundColor: colors.primary,
+    borderRadius: 12,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  saveBtnText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: '700',
+  }
 });
 
 export default UsersScreen;

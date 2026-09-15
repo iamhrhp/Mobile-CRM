@@ -68,7 +68,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     fontWeight: '700',
     color: colors.textPrimary,
     letterSpacing: -0.4,
-    // flexShrink: 1,
+    flexShrink: 1,
     textAlign: I18nManager.isRTL ? 'right' : 'left',
   },
   headerActions: {

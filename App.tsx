@@ -41,6 +41,7 @@ function AppContent() {
   const { isDark, colors } = useTheme();
   
   const [activeTab, setActiveTab] = useState<TabType>('key');
+  const [previousTab, setPreviousTab] = useState<TabType>('key');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(1));
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -96,6 +97,7 @@ function AppContent() {
 
   const handleTabChange = (tabId: TabType) => {
     if (tabId === activeTab) return;
+    setPreviousTab(activeTab);
     setIsTransitioning(true);
 
     Animated.sequence([
@@ -128,19 +130,19 @@ function AppContent() {
 
     switch (activeTab) {
       case 'key':
-        return <DashboardScreen onNavigate={setActiveTab} />;
+        return <DashboardScreen onNavigate={handleTabChange} />;
       case 'sort':
-        return <FilterSortScreen onNavigate={setActiveTab} />;
+        return <FilterSortScreen onApply={() => handleTabChange(previousTab)} />;
       case 'users':
-        return <UsersScreen />;
+        return <UsersScreen onNavigate={handleTabChange} />;
       case 'pie':
-        return <PipelineScreen />;
+        return <PipelineScreen onNavigate={handleTabChange} />;
       case 'bar':
         return <RevenueForecastScreen />;
       case 'lightbulb':
         return <ClientInsightsScreen />;
       case 'add_lead':
-        return <AddNewLeadScreen onCancel={() => setActiveTab('dashboard')} onSave={() => setActiveTab('dashboard')} />;
+        return <AddNewLeadScreen onCancel={() => handleTabChange(previousTab)} onSave={() => handleTabChange(previousTab)} />;
       case 'total_leads':
         return <TotalLeadsScreen onHideHeader={setIsHeaderHidden} />;
       case 'conversion_rate':
@@ -154,7 +156,7 @@ function AppContent() {
       case 'sort':
         return <PlaceholderScreen title={t('placeholders.filterSort', 'Filter & Sort')} />;
       default:
-        return <DashboardScreen onNavigate={setActiveTab} />;
+        return <DashboardScreen onNavigate={handleTabChange} />;
     }
   };
 
@@ -199,7 +201,7 @@ function AppContent() {
   return (
     <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={colors.background} />
-      {!isHeaderHidden && <Header title={getHeaderTitle()} onNavigate={setActiveTab} showBack={activeTab !== 'key'} onBack={() => setActiveTab('key')} />}
+      {!isHeaderHidden && <Header title={getHeaderTitle()} onNavigate={handleTabChange} showBack={activeTab !== 'key'} onBack={() => handleTabChange(previousTab)} />}
       <Animated.View style={{ flex: 1, opacity: fadeAnim, backgroundColor: colors.background }}>
         {renderScreen()}
       </Animated.View>

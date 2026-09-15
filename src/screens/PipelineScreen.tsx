@@ -1,20 +1,54 @@
-import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, Modal, TouchableWithoutFeedback } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FilterIcon, ChevronDownIcon, CalendarIcon, PencilIcon, MoreHorizontalIcon, PlusIcon } from '../components/icons/Icons';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '../hooks/useCurrency';
+import { TabType } from '../components/BottomNavBar';
 
-const PipelineScreen = () => {
+interface PipelineScreenProps {
+  onNavigate?: (screen: TabType) => void;
+}
+
+interface PipelineLead {
+  id: string;
+  name: string;
+  avatarUri: string;
+  days: string;
+  value: number;
+  progress: number;
+  status: string;
+  colorType: 'primary' | 'lime';
+  lat: number;
+  lng: number;
+}
+
+const MOCK_LEADS: PipelineLead[] = [
+  { id: '1', name: 'Vandelay Industries', avatarUri: 'https://randomuser.me/api/portraits/men/32.jpg', days: '1 day', value: 15.5, progress: 36, status: 'Contacted', colorType: 'primary', lat: 40.7128, lng: -74.0060 }, // NY
+  { id: '2', name: 'Globax Corporation', avatarUri: 'https://randomuser.me/api/portraits/women/44.jpg', days: '3 day', value: 12.5, progress: 34, status: 'Contacted', colorType: 'lime', lat: 34.0522, lng: -118.2437 }, // LA
+  { id: '3', name: 'Wayne Enterprises', avatarUri: 'https://randomuser.me/api/portraits/men/45.jpg', days: '2 hr', value: 25.0, progress: 10, status: 'New', colorType: 'primary', lat: 41.8781, lng: -87.6298 }, // Chicago
+  { id: '4', name: 'Stark Industries', avatarUri: 'https://randomuser.me/api/portraits/men/46.jpg', days: '5 day', value: 45.0, progress: 60, status: 'Proposal Sent', colorType: 'lime', lat: 37.7749, lng: -122.4194 }, // SF
+  { id: '5', name: 'Acme Corp', avatarUri: 'https://randomuser.me/api/portraits/women/32.jpg', days: '1 week', value: 10.0, progress: 80, status: 'Negotiation', colorType: 'primary', lat: 51.5074, lng: -0.1278 }, // London
+  { id: '6', name: 'Cyberdyne', avatarUri: 'https://randomuser.me/api/portraits/women/33.jpg', days: '1 day', value: 100.0, progress: 100, status: 'Closed Won', colorType: 'lime', lat: 48.8566, lng: 2.3522 }, // Paris
+  { id: '7', name: 'Initech', avatarUri: 'https://randomuser.me/api/portraits/men/22.jpg', days: '2 weeks', value: 5.5, progress: 0, status: 'Closed Lost', colorType: 'primary', lat: 30.2672, lng: -97.7431 }, // Austin
+];
+
+const STATUSES = ['New', 'Contacted', 'Proposal Sent', 'Negotiation', 'Closed Won', 'Closed Lost'];
+
+const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate }) => {
   const { t } = useTranslation();
   const currency = useCurrency();
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   const styles = getStyles(colors);
   
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const barAnim = useRef(new Animated.Value(0)).current;
+  const mapRef = useRef<MapView>(null);
+
+  const [selectedStatus, setSelectedStatus] = useState('Contacted');
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   useEffect(() => {
     fadeAnim.setValue(0);
@@ -31,153 +65,181 @@ const PipelineScreen = () => {
         useNativeDriver: false,
       })
     ]).start();
-  }, [fadeAnim, barAnim]);
+  }, [fadeAnim, barAnim, selectedStatus]);
+
+  const filteredLeads = MOCK_LEADS.filter(lead => lead.status === selectedStatus);
+
+  useEffect(() => {
+    if (mapRef.current && filteredLeads.length > 0) {
+      // Timeout to ensure the map layout is calculated before fitting
+      setTimeout(() => {
+        if (filteredLeads.length === 1) {
+          mapRef.current?.animateToRegion({
+            latitude: filteredLeads[0].lat,
+            longitude: filteredLeads[0].lng,
+            latitudeDelta: 10,
+            longitudeDelta: 10,
+          }, 1000);
+        } else {
+          const coords = filteredLeads.map(l => ({ latitude: l.lat, longitude: l.lng }));
+          mapRef.current?.fitToCoordinates(coords, {
+            edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+            animated: true,
+          });
+        }
+      }, 500);
+    }
+  }, [filteredLeads]);
+
+  const renderLeadCard = (lead: PipelineLead) => {
+    const barColor = lead.colorType === 'primary' ? colors.textPrimary : colors.limeAccent;
+    return (
+      <View key={lead.id} style={styles.pipelineCard}>
+        <View style={styles.pipelineCardTop}>
+          <View style={styles.pipelineProfile}>
+            <Image source={{ uri: lead.avatarUri }} style={styles.pipelineAvatar} />
+            <View>
+              <Text style={styles.pipelineName}>{lead.name}</Text>
+              <View style={styles.pipelineDateRow}>
+                <CalendarIcon size={12} color={colors.textMuted} />
+                <Text style={styles.pipelineDateText}>{lead.days}</Text>
+              </View>
+            </View>
+          </View>
+          <TouchableOpacity activeOpacity={0.7} style={styles.pencilBtn}>
+            <PencilIcon size={12} color={colors.textSecondary} />
+          </TouchableOpacity>
+        </View>
+        
+        <View style={styles.pipelineCardBottom}>
+          <Text style={styles.pipelineValue}>{currency}{lead.value}K</Text>
+          
+          <View style={styles.customChartContainer}>
+            <View style={styles.chartBarsLayer}>
+              <Animated.View style={[styles.chartBarFill, { backgroundColor: barColor, width: barAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', `${lead.progress}%`] }) }]} />
+              <View style={styles.chartBarEmpty} />
+            </View>
+            <View style={styles.chartTicksRow}>
+              <Text style={styles.chartTickText}>0</Text>
+              <Text style={styles.chartTickText}>25</Text>
+              <Text style={styles.chartTickText}>50</Text>
+              <Text style={styles.chartTickText}>75</Text>
+              <Text style={styles.chartTickText}>100</Text>
+            </View>
+          </View>
+
+          <Text style={styles.pipelinePercent}>{lead.progress}%</Text>
+        </View>
+      </View>
+    );
+  };
 
   return (
-    <Animated.ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={styles.scrollContent}
-      style={{ opacity: fadeAnim }}
-    >
-      {/* Map Section */}
-      <View style={styles.mapSection}>
-        <MapView
-          style={styles.mapImage}
-          initialRegion={{
-            latitude: 48.8566,
-            longitude: 2.3522,
-            latitudeDelta: 30,
-            longitudeDelta: 30,
-          }}
-          scrollEnabled={true}
-          zoomEnabled={true}
-          mapType="standard"
-        >
-          <Marker
-            coordinate={{ latitude: 48.8566, longitude: 2.3522 }}
+    <View style={{ flex: 1 }}>
+      <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+        style={{ opacity: fadeAnim }}
+      >
+        {/* Map Section */}
+        <View style={styles.mapSection}>
+          <MapView
+            ref={mapRef}
+            style={styles.mapImage}
+            initialRegion={{
+              latitude: 39.0,
+              longitude: -34.0,
+              latitudeDelta: 60,
+              longitudeDelta: 120,
+            }}
+            scrollEnabled={true}
+            zoomEnabled={true}
+            mapType="standard"
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={[styles.mapTooltipLine, { width: 10, marginRight: 4 }]} />
-              <View style={styles.mapTooltip}>
-                <Text style={styles.mapTooltipTitle}>{t('pipeline.europe')}</Text>
-                <Text style={styles.mapTooltipValue}>{currency}17.4M</Text>
-              </View>
-            </View>
-          </Marker>
-        </MapView>
-      </View>
-
-      {/* Kanban Header */}
-      <View style={styles.kanbanHeaderRow}>
-        <Text style={styles.kanbanTitle}>{t('pipeline.kanbanView')}</Text>
-        <View style={styles.kanbanActions}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.kanbanFilterBtn}>
-            <FilterIcon size={16} color={colors.textSecondary} />
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} style={styles.kanbanDropdownBtn}>
-            <Text style={styles.kanbanDropdownText}>{t('pipeline.contacted')}</Text>
-            <ChevronDownIcon size={12} color={colors.textPrimary} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Kanban Board Container */}
-      <View style={styles.kanbanBoardContainer}>
-        {/* Column Header */}
-        <View style={styles.columnHeaderRow}>
-          <Text style={styles.columnHeaderText}>{t('pipeline.contacted')} (4)</Text>
-          <View style={styles.columnActions}>
-            <TouchableOpacity activeOpacity={0.7}>
-              <MoreHorizontalIcon size={16} />
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}>
-              <PlusIcon size={16} color={colors.textSecondary} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Card 1 */}
-        <View style={styles.pipelineCard}>
-          <View style={styles.pipelineCardTop}>
-            <View style={styles.pipelineProfile}>
-              <Image source={{ uri: 'https://randomuser.me/api/portraits/men/32.jpg' }} style={styles.pipelineAvatar} />
-              <View>
-                <Text style={styles.pipelineName}>Vandelay Industries</Text>
-                <View style={styles.pipelineDateRow}>
-                  <CalendarIcon size={12} color={colors.textMuted} />
-                  <Text style={styles.pipelineDateText}>1 day</Text>
+            {filteredLeads.map(lead => (
+              <Marker
+                key={lead.id}
+                coordinate={{ latitude: lead.lat, longitude: lead.lng }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={[styles.mapTooltipLine, { width: 10, marginRight: 4, backgroundColor: lead.colorType === 'primary' ? colors.primary : colors.limeAccent }]} />
+                  <View style={styles.mapTooltip}>
+                    <Text style={styles.mapTooltipTitle}>{lead.name}</Text>
+                    <Text style={styles.mapTooltipValue}>{currency}{lead.value}K</Text>
+                  </View>
                 </View>
-              </View>
-            </View>
-            <TouchableOpacity activeOpacity={0.7} style={styles.pencilBtn}>
-              <PencilIcon size={12} color={colors.textSecondary} />
-            </TouchableOpacity>
-          </View>
-          
-          <View style={styles.pipelineCardBottom}>
-            <Text style={styles.pipelineValue}>{currency}15.5K</Text>
-            
-            {/* Custom Bar Chart 1 */}
-            <View style={styles.customChartContainer}>
-              <View style={styles.chartBarsLayer}>
-                <Animated.View style={[styles.chartBarFill, { backgroundColor: colors.textPrimary, width: barAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '36%'] }) }]} />
-                <View style={styles.chartBarEmpty} />
-              </View>
-              <View style={styles.chartTicksRow}>
-                <Text style={styles.chartTickText}>0</Text>
-                <Text style={styles.chartTickText}>25</Text>
-                <Text style={styles.chartTickText}>50</Text>
-                <Text style={styles.chartTickText}>75</Text>
-                <Text style={styles.chartTickText}>100</Text>
-              </View>
-            </View>
-
-            <Text style={styles.pipelinePercent}>36%</Text>
-          </View>
+              </Marker>
+            ))}
+          </MapView>
         </View>
 
-        {/* Card 2 */}
-        <View style={styles.pipelineCard}>
-          <View style={styles.pipelineCardTop}>
-            <View style={styles.pipelineProfile}>
-              <Image source={{ uri: 'https://randomuser.me/api/portraits/women/44.jpg' }} style={styles.pipelineAvatar} />
-              <View>
-                <Text style={styles.pipelineName}>Globax Corporation</Text>
-                <View style={styles.pipelineDateRow}>
-                  <CalendarIcon size={12} color={colors.textMuted} />
-                  <Text style={styles.pipelineDateText}>3 day</Text>
+        {/* Kanban Header */}
+        <View style={styles.kanbanHeaderRow}>
+          <Text style={styles.kanbanTitle}>{t('pipeline.kanbanView', 'Kanban View')}</Text>
+          <View style={styles.kanbanActions}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.kanbanFilterBtn} onPress={() => onNavigate?.('sort')}>
+              <FilterIcon size={16} color={colors.textSecondary} />
+            </TouchableOpacity>
+            
+            <View style={{ position: 'relative', zIndex: 100 }}>
+              <TouchableOpacity 
+                activeOpacity={0.7} 
+                style={styles.kanbanDropdownBtn} 
+                onPress={() => setDropdownVisible(!dropdownVisible)}
+              >
+                <Text style={styles.kanbanDropdownText}>{selectedStatus}</Text>
+                <ChevronDownIcon size={12} color={colors.textPrimary} />
+              </TouchableOpacity>
+              
+              {dropdownVisible && (
+                <View style={[styles.dropdownMenu, { backgroundColor: colors.cardBackground, shadowColor: isDark ? '#000' : '#888' }]}>
+                  {STATUSES.map(status => (
+                    <TouchableOpacity 
+                      key={status} 
+                      style={[styles.dropdownItem, selectedStatus === status && { backgroundColor: isDark ? colors.secondaryBackground : '#F0F0F0' }]}
+                      onPress={() => {
+                        setSelectedStatus(status);
+                        setDropdownVisible(false);
+                      }}
+                    >
+                      <Text style={[styles.dropdownItemText, { color: selectedStatus === status ? colors.textPrimary : colors.textSecondary }]}>
+                        {status}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
                 </View>
-              </View>
+              )}
             </View>
-            <TouchableOpacity activeOpacity={0.7} style={styles.pencilBtn}>
-              <PencilIcon size={12} color={colors.textSecondary} />
-            </TouchableOpacity>
-          </View>
-          
-          <View style={styles.pipelineCardBottom}>
-            <Text style={styles.pipelineValue}>{currency}12.5K</Text>
-            
-            {/* Custom Bar Chart 2 */}
-            <View style={styles.customChartContainer}>
-              <View style={styles.chartBarsLayer}>
-                <Animated.View style={[styles.chartBarFill, { backgroundColor: colors.limeAccent, width: barAnim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '34%'] }) }]} />
-                <View style={styles.chartBarEmpty} />
-              </View>
-              <View style={styles.chartTicksRow}>
-                <Text style={styles.chartTickText}>0</Text>
-                <Text style={styles.chartTickText}>25</Text>
-                <Text style={styles.chartTickText}>50</Text>
-                <Text style={styles.chartTickText}>75</Text>
-                <Text style={styles.chartTickText}>100</Text>
-              </View>
-            </View>
-
-            <Text style={styles.pipelinePercent}>34%</Text>
           </View>
         </View>
 
-      </View>
-    </Animated.ScrollView>
+        {/* Kanban Board Container */}
+        <View style={styles.kanbanBoardContainer}>
+          {/* Column Header */}
+          <View style={styles.columnHeaderRow}>
+            <Text style={styles.columnHeaderText}>{selectedStatus} ({filteredLeads.length})</Text>
+            <View style={styles.columnActions}>
+              <TouchableOpacity activeOpacity={0.7}>
+                <MoreHorizontalIcon size={16} />
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.7}>
+                <PlusIcon size={16} color={colors.textSecondary} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {filteredLeads.length === 0 ? (
+            <View style={{ padding: 40, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontSize: 16, fontWeight: '600', color: colors.textSecondary, marginBottom: 8 }}>Empty Pipeline</Text>
+              <Text style={{ textAlign: 'center', color: colors.textMuted, fontSize: 13 }}>There are no leads currently in this stage.</Text>
+            </View>
+          ) : (
+            filteredLeads.map(renderLeadCard)
+          )}
+
+        </View>
+      </Animated.ScrollView>
+    </View>
   );
 };
 
@@ -400,6 +462,27 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     color: colors.textMuted,
     marginBottom: 4,
   },
+  dropdownMenu: {
+    position: 'absolute',
+    top: 45,
+    right: 0,
+    width: 160,
+    borderRadius: 12,
+    paddingVertical: 8,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
+    zIndex: 100,
+  },
+  dropdownItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  dropdownItemText: {
+    fontSize: 14,
+    fontWeight: '500',
+  }
 });
 
 export default PipelineScreen;

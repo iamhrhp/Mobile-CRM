@@ -197,11 +197,11 @@ const ConversionRateScreen = () => {
 
           <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ alignItems: 'center', backgroundColor: colors.cardBackground, borderRadius: 40, width: 80, height: 80, justifyContent: 'center', shadowColor: '#000', shadowOffset: {width:0, height:2}, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3 }}>
-              <Text style={{ fontSize: 10, color: colors.textSecondary }}>Referrals</Text>
+              <Text style={{ fontSize: 10, color: colors.textSecondary, marginBottom: 2 }}>Referrals</Text>
+              <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textPrimary }}>
+                {isCurrentYear ? '45%' : '38%'}
+              </Text>
             </View>
-            <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textPrimary }}>
-              {isCurrentYear ? '45%' : '38%'}
-            </Text>
           </View>
         </Animated.View>
 

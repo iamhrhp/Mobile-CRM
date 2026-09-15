@@ -7,10 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { CheckCircleIcon, ArrowUpRightIcon } from '../components/icons/Icons'; // Assuming we can repurpose some icons
 
 interface FilterSortScreenProps {
-  onNavigate?: (screen: TabType) => void;
+  onApply?: () => void;
 }
 
-const FilterSortScreen: React.FC<FilterSortScreenProps> = ({ onNavigate }) => {
+const FilterSortScreen: React.FC<FilterSortScreenProps> = ({ onApply }) => {
   const { colors, isDark } = useTheme();
   const styles = getStyles(colors, isDark);
   const { t } = useTranslation();
@@ -124,7 +124,7 @@ const FilterSortScreen: React.FC<FilterSortScreenProps> = ({ onNavigate }) => {
           <TouchableOpacity 
             activeOpacity={0.8} 
             style={styles.applyButton}
-            onPress={() => onNavigate?.('key')} // Go back to dashboard
+            onPress={onApply}
           >
             <Text style={styles.applyButtonText}>{t('common.applyFilters', 'Apply Filters')}</Text>
           </TouchableOpacity>
