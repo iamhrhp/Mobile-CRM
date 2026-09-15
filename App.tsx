@@ -15,7 +15,6 @@ import AddNewLeadScreen from './src/screens/AddNewLeadScreen';
 import PipelineScreen from './src/screens/PipelineScreen';
 import { BottomNavBar, TabType } from './src/components/BottomNavBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import RevenueForecastScreen from './src/screens/RevenueForecastScreen';
 import ClientInsightsScreen from './src/screens/ClientInsightsScreen';
 import SkeletonScreen from './src/screens/SkeletonScreen';

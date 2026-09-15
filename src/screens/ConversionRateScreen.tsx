@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated } from 'react-native';
 import Svg, { Path, G, Circle, Text as SvgText, Line } from 'react-native-svg';
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
@@ -22,6 +24,9 @@ const PIE_DATA_YEAR = [
 
 const LINE_DATA = [26.4, 28.1, 29.5, 30.2, 33.7, 32.5];
 const LINE_DATA_YEAR = [18.2, 19.5, 21.0, 24.3, 27.5, 31.0, 32.5, 34.0, 31.5, 30.0, 33.5, 32.5];
+
+const LINE_DATA_2 = [22.1, 25.4, 27.2, 28.5, 30.1, 29.8];
+const LINE_DATA_YEAR_2 = [15.5, 17.2, 18.5, 21.0, 23.5, 28.0, 30.5, 31.0, 29.5, 28.0, 31.5, 29.5];
 
 const createPieChartArcs = (data: typeof PIE_DATA, radius: number) => {
   const total = data.reduce((sum, item) => sum + item.value, 0);
@@ -98,6 +103,7 @@ const ConversionRateScreen = () => {
   }));
 
   const currentLineData = (isCurrentYear ? LINE_DATA : LINE_DATA_YEAR).map(val => val * dataModifier);
+  const currentLineData2 = (isCurrentYear ? LINE_DATA_2 : LINE_DATA_YEAR_2).map(val => val * dataModifier);
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -109,11 +115,10 @@ const ConversionRateScreen = () => {
 
   useEffect(() => {
     chartAnim.setValue(0);
-    Animated.spring(chartAnim, {
+    Animated.timing(chartAnim, {
       toValue: 1,
-      friction: 8,
-      tension: 50,
-      useNativeDriver: true,
+      duration: 600,
+      useNativeDriver: false,
     }).start();
   }, [selectedMonth, selectedYear]);
 
@@ -163,11 +168,31 @@ const ConversionRateScreen = () => {
 
       <Text style={styles.sectionTitle}>Conversion by Source</Text>
       <View style={styles.card}>
-        <Animated.View style={{ alignItems: 'center', marginVertical: 20, position: 'relative', opacity: chartAnim, transform: [{ scale: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0.9, 1] }) }] }}>
+        <Animated.View style={{ 
+          alignItems: 'center', marginVertical: 20, position: 'relative', 
+          opacity: chartAnim, 
+          transform: [{ scale: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0.8, 1] }) }] 
+        }}>
           <Svg width={160} height={160}>
             {createPieChartArcs(currentPieData, 80).map((arc, i) => (
               <Path key={i} d={arc.d} fill={arc.color} />
             ))}
+            <AnimatedCircle
+              cx={80}
+              cy={80}
+              r={40}
+              fill="none"
+              stroke={colors.cardBackground}
+              strokeWidth={82}
+              strokeDasharray={2 * Math.PI * 40}
+              strokeDashoffset={chartAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, -(2 * Math.PI * 40)]
+              })}
+              originX={80}
+              originY={80}
+              rotation="-90"
+            />
           </Svg>
 
           <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
@@ -193,11 +218,27 @@ const ConversionRateScreen = () => {
         </View>
       </View>
 
-      <Text style={styles.sectionTitle}>{selectedMonth === 'All' ? 'Yearly' : `${selectedMonth}`} Trend</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, paddingHorizontal: 4 }}>
+        <Text style={[styles.sectionTitle, { marginBottom: 0 }]}>{selectedMonth === 'All' ? 'Yearly' : `${selectedMonth}`} Trend</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
+            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#26C6DA', marginRight: 4 }} />
+            <Text style={{ fontSize: 10, color: colors.textMuted }}>Current</Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#FF7F50', marginRight: 4 }} />
+            <Text style={{ fontSize: 10, color: colors.textMuted }}>Previous</Text>
+          </View>
+        </View>
+      </View>
       <View style={styles.card}>
-        <Animated.View style={{ alignItems: 'center', marginTop: 10, marginLeft: -10, opacity: chartAnim, transform: [{ translateY: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }] }}>
-          <Svg width={300} height={180}>
-            {[40, 35, 30, 25, 20].map((val, i) => {
+        <View style={{ alignItems: 'center', marginTop: 10, marginLeft: -10 }}>
+          <Animated.View style={{ 
+            width: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0, 300] }), 
+            overflow: 'hidden' 
+          }}>
+            <Svg width={300} height={180}>
+              {[40, 35, 30, 25, 20].map((val, i) => {
               const y = 20 + (i * (140 / 4));
               return (
                 <G key={i}>
@@ -207,13 +248,20 @@ const ConversionRateScreen = () => {
               );
             })}
             
+            {/* First Line */}
             <Path d={createSmoothLine(currentLineData, 300, 180).path} fill="none" stroke="#26C6DA" strokeWidth="2" />
-            
             {createSmoothLine(currentLineData, 300, 180).points.map((p, i) => (
               <Circle key={i} cx={p.x} cy={p.y} r="3" fill="#26C6DA" stroke={colors.cardBackground} strokeWidth="1.5" />
             ))}
-          </Svg>
-        </Animated.View>
+
+            {/* Second Line */}
+            <Path d={createSmoothLine(currentLineData2, 300, 180).path} fill="none" stroke="#FF7F50" strokeWidth="2" strokeDasharray="4,4" />
+            {createSmoothLine(currentLineData2, 300, 180).points.map((p, i) => (
+              <Circle key={i} cx={p.x} cy={p.y} r="3" fill="#FF7F50" stroke={colors.cardBackground} strokeWidth="1.5" />
+            ))}
+            </Svg>
+          </Animated.View>
+        </View>
       </View>
     </Animated.ScrollView>
   );

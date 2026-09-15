@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, TouchableOpacity } from 'react-native';
 import Svg, { Path, G, Circle, Text as SvgText, Line } from 'react-native-svg';
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
@@ -24,6 +26,9 @@ const PIE_DATA_YEAR = [
 
 const LINE_DATA = [4, 1.5, 2.5, 1, 2.5, 9, 10, 6, 14.5];
 const LINE_DATA_YEAR = [2, 3, 5, 4, 8, 12, 11, 13, 15, 14, 14.5, 15];
+
+const LINE_DATA_2 = [3, 2.5, 3.5, 2, 4.5, 7, 8, 5, 12];
+const LINE_DATA_YEAR_2 = [1, 2, 3, 3, 5, 8, 9, 10, 12, 11, 12, 13];
 
 // Helper to calculate SVG arcs for pie chart
 const createPieChartArcs = (data: typeof PIE_DATA, radius: number) => {
@@ -104,11 +109,10 @@ const RevenueGrowthScreen = () => {
 
   useEffect(() => {
     chartAnim.setValue(0);
-    Animated.spring(chartAnim, {
+    Animated.timing(chartAnim, {
       toValue: 1,
-      friction: 8,
-      tension: 50,
-      useNativeDriver: true,
+      duration: 600,
+      useNativeDriver: false, // width animation requires false
     }).start();
   }, [selectedMonth, selectedYear]);
 
@@ -122,6 +126,7 @@ const RevenueGrowthScreen = () => {
   }));
 
   const currentLineData = (isCurrentYear ? LINE_DATA : LINE_DATA_YEAR).map(val => val * dataModifier);
+  const currentLineData2 = (isCurrentYear ? LINE_DATA_2 : LINE_DATA_YEAR_2).map(val => val * dataModifier);
 
   const pieRadius = 80;
   const pieArcs = createPieChartArcs(currentPieData, pieRadius);
@@ -129,6 +134,7 @@ const RevenueGrowthScreen = () => {
   const chartWidth = 320;
   const chartHeight = 180;
   const lineChart = createSmoothLine(currentLineData, chartWidth, chartHeight);
+  const lineChart2 = createSmoothLine(currentLineData2, chartWidth, chartHeight);
 
   return (
     <Animated.ScrollView
@@ -145,32 +151,59 @@ const RevenueGrowthScreen = () => {
 
       {/* Card 1: This month sales */}
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${selectedMonth} ${selectedYear}`} sales</Text>
-        <View style={styles.salesRow}>
-          <Text style={styles.salesBig}>
-            {isCurrentYear ? '$ 6,254,490' : '$ 75,053,880'}
-          </Text>
-          <View style={styles.trendPill}>
-            <Text style={styles.trendArrow}>▼</Text>
-            <Text style={styles.trendText}>10%</Text>
+        <Animated.View style={{ 
+          opacity: chartAnim, 
+          transform: [{ translateY: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [15, 0] }) }] 
+        }}>
+          <Text style={styles.cardTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${selectedMonth} ${selectedYear}`} sales</Text>
+          <View style={styles.salesRow}>
+            <Text style={styles.salesBig}>
+              {isCurrentYear ? '$ 6,254,490' : '$ 75,053,880'}
+            </Text>
+            <View style={styles.trendPill}>
+              <Text style={styles.trendArrow}>▼</Text>
+              <Text style={styles.trendText}>10%</Text>
+            </View>
+            <View style={{ flex: 1 }} />
+            <Text style={styles.lastMonthText}>
+              Previous : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
+            </Text>
           </View>
-          <View style={{ flex: 1 }} />
-          <Text style={styles.lastMonthText}>
-            Previous : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
-          </Text>
-        </View>
+        </Animated.View>
       </View>
 
       {/* Card 2: Revenue by lead source */}
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Revenue by lead source</Text>
         
-        <Animated.View style={[styles.pieContainer, { opacity: chartAnim, transform: [{ scale: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0.9, 1] }) }] }]}>
-          <Svg width={pieRadius * 2} height={pieRadius * 2}>
-            {pieArcs.map((arc, i) => (
-              <Path key={i} d={arc.d} fill={arc.color} />
-            ))}
-          </Svg>
+        <View style={styles.pieContainer}>
+          <Animated.View style={{ 
+            opacity: chartAnim, 
+            transform: [{ scale: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0.8, 1] }) }] 
+          }}>
+            <Svg width={pieRadius * 2} height={pieRadius * 2}>
+              {pieArcs.map((arc, i) => (
+                <Path key={i} d={arc.d} fill={arc.color} />
+              ))}
+              <AnimatedCircle
+                cx={pieRadius}
+                cy={pieRadius}
+                r={pieRadius / 2}
+                fill="none"
+                stroke={colors.cardBackground}
+                strokeWidth={pieRadius + 2}
+                strokeDasharray={2 * Math.PI * (pieRadius / 2)}
+                strokeDashoffset={chartAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, -(2 * Math.PI * (pieRadius / 2))]
+                })}
+                originX={pieRadius}
+                originY={pieRadius}
+                rotation="-90"
+              />
+            </Svg>
+          </Animated.View>
+        </View>
           
           {/* Tooltip mockup for Partners slice */}
           <View style={styles.tooltip}>
@@ -182,7 +215,6 @@ const RevenueGrowthScreen = () => {
               {isCurrentYear ? '$ 154,768' : '$ 1,850,000'}
             </Text>
           </View>
-        </Animated.View>
 
         <View style={styles.legendContainer}>
           {currentPieData.slice(0, 3).map((item, i) => (
@@ -199,10 +231,26 @@ const RevenueGrowthScreen = () => {
 
       {/* Card 3: Lead Conversion */}
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Lead Conversion</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+          <Text style={[styles.cardTitle, { marginBottom: 0 }]}>Lead Conversion</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
+              <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#26C6DA', marginRight: 4 }} />
+              <Text style={{ fontSize: 10, color: colors.textMuted }}>Current</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#FF7F50', marginRight: 4 }} />
+              <Text style={{ fontSize: 10, color: colors.textMuted }}>Previous</Text>
+            </View>
+          </View>
+        </View>
         
-        <Animated.View style={[styles.lineChartContainer, { opacity: chartAnim, transform: [{ translateY: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }] }]}>
-          <Svg width={chartWidth} height={chartHeight}>
+        <View style={styles.lineChartContainer}>
+          <Animated.View style={{ 
+            width: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0, chartWidth] }), 
+            overflow: 'hidden' 
+          }}>
+            <Svg width={chartWidth} height={chartHeight}>
             {/* Grid Lines */}
             {[15, 12.5, 10, 7.5, 5, 2.5].map((val, i) => {
               const y = 20 + (i * ((chartHeight - 40) / 5));
@@ -214,33 +262,43 @@ const RevenueGrowthScreen = () => {
               );
             })}
             
-            {/* Smooth Line */}
+            {/* First Line */}
             <Path d={lineChart.path} fill="none" stroke="#26C6DA" strokeWidth="2" />
-            
-            {/* Data Points */}
             {lineChart.points.map((p, i) => (
               <Circle key={i} cx={p.x} cy={p.y} r="3" fill="#26C6DA" stroke={colors.cardBackground} strokeWidth="1.5" />
+            ))}
+
+            {/* Second Line */}
+            <Path d={lineChart2.path} fill="none" stroke="#FF7F50" strokeWidth="2" strokeDasharray="4,4" />
+            {lineChart2.points.map((p, i) => (
+              <Circle key={i} cx={p.x} cy={p.y} r="3" fill="#FF7F50" stroke={colors.cardBackground} strokeWidth="1.5" />
             ))}
           </Svg>
         </Animated.View>
       </View>
+    </View>
       
       {/* Card 4: Duplicate This month sales (as in mockup) */}
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${selectedMonth} ${selectedYear}`} sales</Text>
-        <View style={styles.salesRow}>
-          <Text style={styles.salesBig}>
-            {isCurrentYear ? '$ 6,254,490' : '$ 75,053,880'}
-          </Text>
-          <View style={styles.trendPill}>
-            <Text style={styles.trendArrow}>▼</Text>
-            <Text style={styles.trendText}>10%</Text>
+        <Animated.View style={{ 
+          opacity: chartAnim, 
+          transform: [{ translateY: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [15, 0] }) }] 
+        }}>
+          <Text style={styles.cardTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${selectedMonth} ${selectedYear}`} sales</Text>
+          <View style={styles.salesRow}>
+            <Text style={styles.salesBig}>
+              {isCurrentYear ? '$ 6,254,490' : '$ 75,053,880'}
+            </Text>
+            <View style={styles.trendPill}>
+              <Text style={styles.trendArrow}>▼</Text>
+              <Text style={styles.trendText}>10%</Text>
+            </View>
+            <View style={{ flex: 1 }} />
+            <Text style={styles.lastMonthText}>
+              Previous : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
+            </Text>
           </View>
-          <View style={{ flex: 1 }} />
-          <Text style={styles.lastMonthText}>
-            Previous : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
-          </Text>
-        </View>
+        </Animated.View>
       </View>
 
     </Animated.ScrollView>

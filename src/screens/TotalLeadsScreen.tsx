@@ -1,57 +1,61 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { View, Text, StyleSheet, FlatList, Animated, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Animated, TextInput, TouchableOpacity, Image, ScrollView, Alert, Modal, KeyboardAvoidingView, Platform } from 'react-native';
 import Svg, { Path, G, Circle, Text as SvgText, Line } from 'react-native-svg';
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
-import { SearchIcon, CalendarIcon, FunnelIcon, MailIcon, PhoneIcon, ChevronDownIcon } from '../components/icons/Icons';
+import { SearchIcon, CalendarIcon, MailIcon, PhoneIcon, ChevronDownIcon, MoreHorizontalIcon, CheckCircleIcon, UserIcon, PencilIcon, TrendUpIcon } from '../components/icons/Icons';
 import TimeFilter from '../components/TimeFilter';
 
 const DUMMY_LEADS = Array.from({ length: 50 }).map((_, index) => {
   const baseRevenue = (index + 1) * 1500;
+  const statusOptions = ['New', 'Contacted', 'Qualified', 'Proposal', 'Won'];
+  const status = statusOptions[index % 5];
+  const priorityOptions = ['High', 'Medium', 'Low'];
+  
   return {
     id: `lead-${index}`,
     name: `Lead #${index + 1}`,
+    company: index % 2 === 0 ? `Acme Corp ${index}` : `TechFlow ${index}`,
+    owner: index % 3 === 0 ? 'John Smith' : 'Sarah Connor',
+    status: status,
+    priority: priorityOptions[index % 3],
     source: index % 3 === 0 ? 'Outbound' : index % 2 === 0 ? 'Referrals' : 'Organic Search',
     time: `${(index % 5) + 1}d ago`,
     avatar: index < 5 ? `https://i.pravatar.cc/100?img=${index + 10}` : null,
     email: `lead${index + 1}@example.com`,
+    phone: `+1 (555) ${String(100 + index).padStart(3, '0')}-${String(1000 + index).padStart(4, '0')}`,
     country: index % 4 === 0 ? 'United Kingdom' : index % 3 === 0 ? 'Canada' : 'United States',
+    industry: index % 2 === 0 ? 'Technology' : 'Healthcare',
+    
+    // Deal Info
     revenue: `$${baseRevenue.toLocaleString()}`,
+    dealValueNumeric: baseRevenue,
     paymentStatus: index % 5 === 0 ? 'Pending' : 'Paid',
+    pendingAmount: index % 5 === 0 ? `$${(baseRevenue * 0.3).toLocaleString()}` : null,
     contractSince: `2023-${String((index % 12) + 1).padStart(2, '0')}-15`,
     profitMargin: 65 + (index % 15),
     growth: index % 4 === 0 ? -2 : 12 + (index % 10),
-    revenueData: {
-      '6M': {
-        data: [
-          baseRevenue * 0.7, 
-          baseRevenue * 0.8, 
-          baseRevenue * 0.75, 
-          baseRevenue * 0.9, 
-          baseRevenue, 
-          baseRevenue * 1.1
-        ],
-        labels: ['M1', 'M2', 'M3', 'M4', 'M5', 'M6']
-      },
-      '1Y': {
-        data: [
-          baseRevenue * 2,
-          baseRevenue * 2.2,
-          baseRevenue * 2.5,
-          baseRevenue * 3.1
-        ],
-        labels: ['Q1', 'Q2', 'Q3', 'Q4']
-      },
-      'ALL': {
-        data: [
-          baseRevenue * 5,
-          baseRevenue * 8,
-          baseRevenue * 12
-        ],
-        labels: ['2021', '2022', '2023']
-      }
-    }
+    probability: 40 + (index % 50),
+    expectedClose: `Sep ${(index % 30) + 1}, 2024`,
+    leadScore: 60 + (index % 40),
+    createdDate: `15 Aug 2024`,
+    lastContacted: `${(index % 5) + 1} days ago`,
+    
+    // Activities
+    nextFollowUp: {
+      date: 'Tomorrow',
+      time: '10:30 AM',
+      topic: 'Call about enterprise proposal'
+    },
+    activities: [
+      { id: 1, type: 'Call', title: 'Call completed', description: 'Discussed pricing and implementation timeline.', time: '10:42 AM', date: 'Today' },
+      { id: 2, type: 'Email', title: 'Email sent', description: 'Product proposal sent to lead.', time: '3:18 PM', date: 'Yesterday' },
+      { id: 3, type: 'Note', title: 'Note added', description: 'Lead requested enterprise pricing.', time: '11:20 AM', date: 'Aug 28' }
+    ],
+    notes: 'Interested in enterprise plan. Decision maker is evaluating multiple vendors. Requested implementation timeline before September.',
   };
 });
 
@@ -69,6 +73,9 @@ const PIE_DATA_YEAR = [
 
 const LINE_DATA = [4, 1.5, 2.5, 1, 2.5, 9, 10, 6, 14.5];
 const LINE_DATA_YEAR = [2, 3, 5, 4, 8, 12, 11, 13, 15, 14, 14.5, 15];
+
+const LINE_DATA_2 = [3, 2.5, 3.5, 2, 4.5, 7, 8, 5, 12];
+const LINE_DATA_YEAR_2 = [1, 2, 3, 3, 5, 8, 9, 10, 12, 11, 12, 13];
 
 const createPieChartArcs = (data: typeof PIE_DATA, radius: number) => {
   const total = data.reduce((sum, item) => sum + item.value, 0);
@@ -168,9 +175,17 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const chartAnim = useRef(new Animated.Value(1)).current;
 
+  const [leadsData, setLeadsData] = useState(DUMMY_LEADS);
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
-  const [selectedLead, setSelectedLead] = useState<typeof DUMMY_LEADS[0] | null>(null);
+  const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
+
+  // Edit States
+  const [isEditNotesVisible, setEditNotesVisible] = useState(false);
+  const [editNotesValue, setEditNotesValue] = useState('');
+  const [isTimelineVisible, setTimelineVisible] = useState(false);
+
+  const selectedLead = useMemo(() => leadsData.find(l => l.id === selectedLeadId) || null, [leadsData, selectedLeadId]);
   const [selectedMonth, setSelectedMonth] = useState('Aug');
   const [selectedYear, setSelectedYear] = useState('2024');
   const PAGE_SIZE = 10;
@@ -185,6 +200,8 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
   }));
 
   const currentLineData = (isCurrentYear ? LINE_DATA : LINE_DATA_YEAR).map(val => val * dataModifier);
+  const currentLineData2 = (isCurrentYear ? LINE_DATA_2 : LINE_DATA_YEAR_2).map(val => val * dataModifier);
+  const lineChart2 = createSmoothLine(currentLineData2, 300, 180);
 
   useEffect(() => {
     fadeAnim.setValue(0);
@@ -201,20 +218,19 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
 
   useEffect(() => {
     chartAnim.setValue(0);
-    Animated.spring(chartAnim, {
+    Animated.timing(chartAnim, {
       toValue: 1,
-      friction: 8,
-      tension: 50,
-      useNativeDriver: true,
+      duration: 600,
+      useNativeDriver: false,
     }).start();
   }, [selectedMonth, selectedYear]);
 
   const filteredLeads = useMemo(() => {
-    return DUMMY_LEADS.filter(lead => 
+    return leadsData.filter(lead => 
       lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       lead.source.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [searchQuery]);
+  }, [searchQuery, leadsData]);
 
   const displayedLeads = useMemo(() => {
     return filteredLeads.slice(0, page * PAGE_SIZE);
@@ -235,160 +251,278 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
       .toUpperCase();
 
     return (
+      <View style={{ flex: 1 }}>
       <Animated.ScrollView
         style={[styles.container, { opacity: fadeAnim }]}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { paddingHorizontal: 16, paddingBottom: 40 }]}
         showsVerticalScrollIndicator={false}
       >
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={() => setSelectedLead(null)}
-        >
-          <View style={{ transform: [{ rotate: '90deg' }] }}>
-            <ChevronDownIcon size={20} color={colors.textPrimary} />
-          </View>
-          <Text style={styles.backButtonText}>{t('common.back', 'Back to Leads')}</Text>
-        </TouchableOpacity>
+        {/* Compact Header */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, marginTop: 8 }}>
+          <TouchableOpacity 
+            style={{ padding: 12, marginLeft: -12, flexDirection: 'row', alignItems: 'center' }} 
+            onPress={() => setSelectedLeadId(null)}
+          >
+            <View style={{ transform: [{ rotate: '90deg' }] }}>
+              <ChevronDownIcon size={24} color={colors.textPrimary} />
+            </View>
+          </TouchableOpacity>
+          <Text style={{ fontSize: 18, fontWeight: '700', color: colors.textPrimary }}>Lead Profile</Text>
+          <TouchableOpacity style={{ padding: 12, marginRight: -12 }}>
+            <MoreHorizontalIcon size={24} color={colors.textPrimary} />
+          </TouchableOpacity>
+        </View>
 
-        <View style={styles.detailsHeader}>
+        {/* Lead Profile - Left Aligned for Professional Look */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
           {selectedLead.avatar ? (
-            <Image source={{ uri: selectedLead.avatar }} style={styles.detailsAvatar} />
+            <Image source={{ uri: selectedLead.avatar }} style={{ width: 72, height: 72, borderRadius: 36, marginRight: 16 }} />
           ) : (
-            <View style={styles.detailsAvatar}>
-              <Text style={{ color: colors.textSecondary, fontSize: 32, fontWeight: '700' }}>{initials}</Text>
+            <View style={{ width: 72, height: 72, borderRadius: 36, backgroundColor: colors.secondaryBackground, justifyContent: 'center', alignItems: 'center', marginRight: 16, borderWidth: 1, borderColor: colors.border }}>
+              <Text style={{ color: colors.textSecondary, fontSize: 24, fontWeight: '700' }}>{initials}</Text>
             </View>
           )}
-          <Text style={styles.detailsName}>{selectedLead.name}</Text>
-          <View style={styles.detailsPillContainer}>
-            <Text style={styles.detailsSource}>{selectedLead.source}</Text>
-            <Text style={styles.detailsSource}>{selectedLead.country}</Text>
-          </View>
-          <View style={[styles.detailsPillContainer, { marginTop: 8 }]}>
-            <Text style={styles.detailsSource}>{selectedLead.email}</Text>
-          </View>
-        </View>
-
-        <TimeFilter 
-          selectedMonth={selectedMonth} 
-          onMonthChange={setSelectedMonth} 
-          selectedYear={selectedYear} 
-          onYearChange={setSelectedYear} 
-        />
-
-        <View style={styles.detailsCard}>
-          <Text style={styles.sectionTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${selectedMonth} ${selectedYear}`} sales</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-            <Text style={{ fontSize: 24, fontWeight: '700', color: colors.textPrimary, marginRight: 8 }}>
-              {isCurrentYear ? '$ 6,254,490' : '$ 75,053,880'}
-            </Text>
-            <Text style={{ color: colors.danger, fontSize: 12, marginRight: 2 }}>▼</Text>
-            <Text style={{ color: colors.textPrimary, fontSize: 12, fontWeight: '600' }}>10%</Text>
-            <View style={{ flex: 1 }} />
-            <Text style={{ fontSize: 12, color: colors.textSecondary, fontWeight: '500' }}>
-              Previous : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
-            </Text>
-          </View>
-        </View>
-
-        <View style={styles.detailsCard}>
-          <Text style={styles.sectionTitle}>Revenue by lead source</Text>
-          <Animated.View style={{ alignItems: 'center', marginVertical: 20, position: 'relative', opacity: chartAnim, transform: [{ scale: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [0.9, 1] }) }] }}>
-            <Svg width={160} height={160}>
-              {createPieChartArcs(currentPieData, 80).map((arc, i) => (
-                <Path key={i} d={arc.d} fill={arc.color} />
-              ))}
-            </Svg>
+          <View style={{ flex: 1 }}>
+            <Text style={{ fontSize: 24, fontWeight: '800', color: colors.textPrimary, marginBottom: 4 }}>{selectedLead.name}</Text>
+            <Text style={{ fontSize: 15, color: colors.textSecondary, fontWeight: '500', marginBottom: 8 }}>{selectedLead.company}</Text>
             
-            <View style={{
-              position: 'absolute', top: 10, right: 0, backgroundColor: colors.cardBackground, 
-              padding: 8, borderRadius: 8, borderWidth: 1, borderColor: '#FF7F50',
-              shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, elevation: 4
-            }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
-                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#FF7F50', marginRight: 6 }} />
-                <Text style={{ fontSize: 10, color: colors.textSecondary }}>Partners</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <View style={{ backgroundColor: '#E6F4EA', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 16 }}>
+                <Text style={{ color: colors.success, fontSize: 12, fontWeight: '700' }}>{selectedLead.status}</Text>
               </View>
-              <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textPrimary }}>
-                {isCurrentYear ? '$ 154,768' : '$ 1,850,000'}
-              </Text>
+              <View style={{ backgroundColor: '#FEF3C7', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 16 }}>
+                <Text style={{ color: '#D97706', fontSize: 12, fontWeight: '700' }}>{selectedLead.priority}</Text>
+              </View>
             </View>
-          </Animated.View>
+          </View>
+        </View>
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 16 }}>
-            {currentPieData.slice(0, 3).map((item, i) => (
-              <View key={i} style={{ alignItems: 'flex-start' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
-                  <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: item.color, marginRight: 6 }} />
-                  <Text style={{ fontSize: 10, color: colors.textSecondary }}>{item.label}</Text>
-                </View>
-                <Text style={{ fontSize: 12, fontWeight: '700', color: colors.textPrimary }}>${Math.round(item.value).toLocaleString()}</Text>
+        {/* Action Buttons - High Prominence */}
+        <View style={{ flexDirection: 'row', gap: 12, marginBottom: 28 }}>
+          <TouchableOpacity style={{ flex: 1, height: 40, borderRadius: 12, backgroundColor: colors.primary, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', shadowColor: colors.primary, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.15, shadowRadius: 6 }}>
+            <PhoneIcon size={16} color="#FFF" />
+            <Text style={{ color: '#FFF', fontSize: 14, fontWeight: '700', marginLeft: 8 }}>Call</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ flex: 1, height: 40, borderRadius: 12, backgroundColor: colors.cardBackground, borderWidth: 1, borderColor: colors.border, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <MailIcon size={16} color={colors.textPrimary} />
+            <Text style={{ color: colors.textPrimary, fontSize: 14, fontWeight: '700', marginLeft: 8 }}>Email</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Next Follow-up - Direct Action Focus */}
+        <View style={{ marginBottom: 28 }}>
+          <Text style={{ fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', marginBottom: 12, letterSpacing: 0.5 }}>Next Action</Text>
+          <View style={{ padding: 16, backgroundColor: colors.cardBackground, borderRadius: 16, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: colors.primary + '20', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 10 }}>
+            <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: colors.secondaryBackground, justifyContent: 'center', alignItems: 'center', marginRight: 16 }}>
+              <CalendarIcon size={20} color={colors.primary} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 15, fontWeight: '700', color: colors.textPrimary, marginBottom: 2 }}>{selectedLead.nextFollowUp.topic}</Text>
+              <Text style={{ fontSize: 14, color: colors.textSecondary, fontWeight: '500' }}>{selectedLead.nextFollowUp.date} at {selectedLead.nextFollowUp.time}</Text>
+            </View>
+            <TouchableOpacity style={{ padding: 8 }}>
+              <CheckCircleIcon size={24} color={colors.textMuted} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Pipeline Visualizer */}
+        <View style={{ marginBottom: 28 }}>
+          <Text style={{ fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', marginBottom: 12, letterSpacing: 0.5 }}>Pipeline Stage</Text>
+          <View style={{ padding: 20, backgroundColor: colors.cardBackground, borderRadius: 16, borderWidth: 1, borderColor: colors.border }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+              {['New', 'Contacted', 'Qualified', 'Proposal', 'Won'].map((stage, idx, arr) => {
+                const isActive = selectedLead.status === stage;
+                const isPast = arr.indexOf(selectedLead.status) > idx;
+                const color = isActive ? colors.primary : (isPast ? colors.success : colors.border);
+                return (
+                  <View key={stage} style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+                      <View style={{ flex: 1, height: 3, backgroundColor: idx === 0 ? 'transparent' : (isPast || isActive ? colors.success : colors.border) }} />
+                      <View style={{ width: 14, height: 14, borderRadius: 7, backgroundColor: color, borderWidth: isActive ? 4 : 0, borderColor: '#FFF', shadowColor: isActive ? colors.primary : 'transparent', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.3, shadowRadius: 4 }} />
+                      <View style={{ flex: 1, height: 3, backgroundColor: idx === arr.length - 1 ? 'transparent' : (isPast ? colors.success : colors.border) }} />
+                    </View>
+                    <Text style={{ fontSize: 11, color: isActive ? colors.textPrimary : colors.textMuted, marginTop: 10, fontWeight: isActive ? '700' : '500', textAlign: 'center' }}>{stage}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        </View>
+
+        {/* Deal / Revenue */}
+        <View style={{ marginBottom: 28 }}>
+          <Text style={{ fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', marginBottom: 12, letterSpacing: 0.5 }}>Deal Value</Text>
+          <View style={{ backgroundColor: colors.cardBackground, borderRadius: 16, padding: 20, borderWidth: 1, borderColor: colors.border }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 16 }}>
+              <Text style={{ fontSize: 32, fontWeight: '800', color: colors.textPrimary, letterSpacing: -0.5 }}>{selectedLead.revenue}</Text>
+              <Text style={{ fontSize: 14, fontWeight: '600', color: colors.success }}>{selectedLead.probability}% Prob.</Text>
+            </View>
+            
+            <View style={{ height: 8, backgroundColor: colors.secondaryBackground, borderRadius: 4, marginBottom: 20, overflow: 'hidden' }}>
+              <View style={{ width: `${selectedLead.probability}%`, height: '100%', backgroundColor: colors.success, borderRadius: 4 }} />
+            </View>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View>
+                <Text style={{ color: colors.textSecondary, fontSize: 13, fontWeight: '500', marginBottom: 4 }}>Expected Close</Text>
+                <Text style={{ color: colors.textPrimary, fontSize: 15, fontWeight: '700' }}>{selectedLead.expectedClose}</Text>
+              </View>
+              <View style={{ alignItems: 'flex-end' }}>
+                <Text style={{ color: colors.textSecondary, fontSize: 13, fontWeight: '500', marginBottom: 4 }}>Lead Score</Text>
+                <Text style={{ color: selectedLead.leadScore >= 80 ? colors.success : '#D97706', fontSize: 15, fontWeight: '700' }}>{selectedLead.leadScore}/100</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/* Lead Information */}
+        <View style={{ marginBottom: 28 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+            <Text style={{ fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5 }}>Information</Text>
+            <TouchableOpacity 
+              activeOpacity={0.6}
+              onPress={() => Alert.alert('Edit', 'Edit lead information coming soon.')}
+              style={{ paddingVertical: 4, paddingHorizontal: 8, backgroundColor: colors.secondaryBackground, borderRadius: 8 }}>
+              <Text style={{ color: colors.primary, fontSize: 13, fontWeight: '700' }}>Edit</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ backgroundColor: colors.cardBackground, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: colors.border }}>
+            {[
+              { label: 'Source', value: selectedLead.source },
+              { label: 'Owner', value: selectedLead.owner },
+              { label: 'Email', value: selectedLead.email },
+              { label: 'Phone', value: selectedLead.phone },
+              { label: 'Country', value: selectedLead.country },
+              { label: 'Created', value: selectedLead.createdDate },
+            ].map((info, idx, arr) => (
+              <View key={idx} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: idx === arr.length - 1 ? 0 : 1, borderBottomColor: colors.secondaryBackground }}>
+                <Text style={{ color: colors.textSecondary, fontSize: 15, fontWeight: '500' }}>{info.label}</Text>
+                <Text style={{ color: colors.textPrimary, fontSize: 15, fontWeight: '600' }}>{info.value}</Text>
               </View>
             ))}
           </View>
         </View>
 
-        <View style={styles.detailsCard}>
-          <Text style={styles.sectionTitle}>Lead Conversion</Text>
-          <Animated.View style={{ alignItems: 'center', marginTop: 10, marginLeft: -10, opacity: chartAnim, transform: [{ translateY: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }] }}>
-            <Svg width={300} height={180}>
-              {[15, 12.5, 10, 7.5, 5, 2.5].map((val, i) => {
-                const y = 20 + (i * (140 / 5));
-                return (
-                  <G key={i}>
-                    <Line x1="30" y1={y} x2={300} y2={y} stroke={colors.border} strokeWidth="1" />
-                    <SvgText x="25" y={y + 4} fontSize="10" fill={colors.textMuted} textAnchor="end">{val}</SvgText>
-                  </G>
-                );
-              })}
-              
-              <Path d={createSmoothLine(currentLineData, 300, 180).path} fill="none" stroke="#26C6DA" strokeWidth="2" />
-              
-              {createSmoothLine(currentLineData, 300, 180).points.map((p, i) => (
-                <Circle key={i} cx={p.x} cy={p.y} r="3" fill="#26C6DA" stroke={colors.cardBackground} strokeWidth="1.5" />
-              ))}
-            </Svg>
-          </Animated.View>
-        </View>
-
-        <View style={styles.analyticsGrid}>
-          <View style={styles.analyticsCard}>
-            <Text style={styles.analyticsTitle}>LTV Revenue</Text>
-            <Text style={styles.analyticsValue}>{selectedLead.revenue}</Text>
-            <Text style={styles.analyticsSub}>Lifetime</Text>
+        {/* Activity Timeline */}
+        <View style={{ marginBottom: 28 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <Text style={{ fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5 }}>Activity</Text>
+            <TouchableOpacity style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.secondaryBackground, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ color: colors.textPrimary, fontSize: 20, fontWeight: '500', marginTop: -2 }}>+</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.analyticsCard}>
-            <Text style={styles.analyticsTitle}>Profit Margin</Text>
-            <Text style={styles.analyticsValue}>{selectedLead.profitMargin}%</Text>
-            <View style={styles.progressTrack}>
-              <View style={[styles.progressFill, { width: `${selectedLead.profitMargin}%` }]} />
-            </View>
-          </View>
-          <View style={styles.analyticsCard}>
-            <Text style={styles.analyticsTitle}>MoM Growth</Text>
-            <Text style={styles.analyticsValue}>{selectedLead.growth > 0 ? '+' : ''}{selectedLead.growth}%</Text>
-            <Text style={[styles.analyticsSub, { color: selectedLead.growth > 0 ? colors.success : colors.danger }]}>
-              {selectedLead.growth > 0 ? 'Trending Up' : 'Trending Down'}
-            </Text>
-          </View>
-          <View style={styles.analyticsCard}>
-            <Text style={styles.analyticsTitle}>Payment Status</Text>
-            <View style={{ alignItems: 'flex-start', marginTop: 4 }}>
-              <View style={[
-                styles.statusBadge, 
-                { backgroundColor: selectedLead.paymentStatus === 'Paid' ? '#E6F4EA' : '#FEF3C7' }
-              ]}>
-                <Text style={[
-                  styles.statusBadgeText, 
-                  { color: selectedLead.paymentStatus === 'Paid' ? colors.success : colors.warning }
-                ]}>{selectedLead.paymentStatus}</Text>
+          <View style={{ backgroundColor: colors.cardBackground, borderRadius: 16, padding: 20, borderWidth: 1, borderColor: colors.border }}>
+            {selectedLead.activities.map((act: any, idx: number) => (
+              <View key={act.id} style={{ flexDirection: 'row', marginBottom: idx === selectedLead.activities.length - 1 ? 0 : 24 }}>
+                <View style={{ alignItems: 'center', marginRight: 16 }}>
+                  <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: colors.primary, marginTop: 4, borderWidth: 2, borderColor: '#FFF', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }} />
+                  {idx !== selectedLead.activities.length - 1 && (
+                    <View style={{ width: 2, flex: 1, backgroundColor: colors.secondaryBackground, marginTop: 4, borderRadius: 1 }} />
+                  )}
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                    <Text style={{ fontSize: 15, fontWeight: '700', color: colors.textPrimary }}>{act.title}</Text>
+                    <Text style={{ fontSize: 13, color: colors.textMuted, fontWeight: '500' }}>{act.date}</Text>
+                  </View>
+                  <Text style={{ fontSize: 14, color: colors.textSecondary, marginBottom: 6, lineHeight: 20 }}>{act.description}</Text>
+                  <Text style={{ fontSize: 12, color: colors.textMuted, fontWeight: '600' }}>{act.time}</Text>
+                </View>
               </View>
-            </View>
-            <Text style={[styles.analyticsSub, { marginTop: 8 }]}>Since {selectedLead.contractSince}</Text>
+            ))}
+            <TouchableOpacity 
+              activeOpacity={0.6}
+              onPress={() => setTimelineVisible(true)}
+              style={{ marginTop: 24, alignItems: 'center', paddingVertical: 12, backgroundColor: colors.secondaryBackground, borderRadius: 12 }}>
+              <Text style={{ color: colors.textPrimary, fontSize: 14, fontWeight: '700' }}>View full timeline</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
+        {/* Notes */}
+        <View style={{ marginBottom: 40 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+            <Text style={{ fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5 }}>Notes</Text>
+            <TouchableOpacity 
+              activeOpacity={0.6}
+              onPress={() => { setEditNotesValue(selectedLead.notes); setEditNotesVisible(true); }}
+              style={{ paddingVertical: 4, paddingHorizontal: 8, backgroundColor: colors.secondaryBackground, borderRadius: 8 }}>
+              <Text style={{ color: colors.primary, fontSize: 13, fontWeight: '700' }}>Edit</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ backgroundColor: '#FFFBEB', borderRadius: 16, padding: 20, borderWidth: 1, borderColor: '#FEF3C7' }}>
+            <Text style={{ fontSize: 15, color: colors.textPrimary, lineHeight: 24, fontWeight: '500' }}>{selectedLead.notes}</Text>
+          </View>
+        </View>
 
       </Animated.ScrollView>
+
+      {/* Edit Notes Modal */}
+      <Modal visible={isEditNotesVisible} animationType="slide" transparent={true}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={{ backgroundColor: colors.background, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, minHeight: 300 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <Text style={{ fontSize: 18, fontWeight: '700', color: colors.textPrimary }}>Edit Notes</Text>
+              <TouchableOpacity onPress={() => setEditNotesVisible(false)}><Text style={{ fontSize: 16, color: colors.textSecondary }}>Cancel</Text></TouchableOpacity>
+            </View>
+            <TextInput
+              style={{ backgroundColor: colors.cardBackground, borderRadius: 12, padding: 16, paddingTop: 16, fontSize: 16, color: colors.textPrimary, minHeight: 120, borderWidth: 1, borderColor: colors.border }}
+              multiline
+              autoFocus
+              value={editNotesValue}
+              onChangeText={setEditNotesValue}
+              placeholder="Enter notes..."
+              placeholderTextColor={colors.textMuted}
+            />
+            <TouchableOpacity 
+              style={{ backgroundColor: colors.primary, borderRadius: 12, height: 48, justifyContent: 'center', alignItems: 'center', marginTop: 24 }}
+              onPress={() => {
+                setLeadsData(prev => prev.map(l => l.id === selectedLead.id ? { ...l, notes: editNotesValue } : l));
+                setEditNotesVisible(false);
+              }}
+            >
+              <Text style={{ color: '#FFF', fontSize: 16, fontWeight: '700' }}>Save Notes</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+
+      {/* Timeline Modal */}
+      <Modal visible={isTimelineVisible} animationType="slide" presentationStyle="pageSheet">
+        <View style={{ flex: 1, backgroundColor: colors.background }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, borderBottomWidth: 1, borderBottomColor: colors.border }}>
+            <Text style={{ fontSize: 18, fontWeight: '700', color: colors.textPrimary }}>Full Timeline</Text>
+            <TouchableOpacity onPress={() => setTimelineVisible(false)} style={{ padding: 4 }}>
+              <View style={{ transform: [{ rotate: '45deg' }] }}>
+                <Text style={{ fontSize: 24, color: colors.textSecondary, fontWeight: '300' }}>+</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <ScrollView contentContainerStyle={{ padding: 24 }}>
+            {selectedLead.activities.map((act: any, idx: number) => (
+              <View key={act.id} style={{ flexDirection: 'row', marginBottom: 24 }}>
+                <View style={{ alignItems: 'center', marginRight: 16 }}>
+                  <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: colors.primary, marginTop: 4, borderWidth: 2, borderColor: '#FFF', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }} />
+                  {idx !== selectedLead.activities.length - 1 && (
+                    <View style={{ width: 2, flex: 1, backgroundColor: colors.border, marginTop: 4, borderRadius: 1 }} />
+                  )}
+                </View>
+                <View style={{ flex: 1 }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                    <Text style={{ fontSize: 15, fontWeight: '700', color: colors.textPrimary }}>{act.title}</Text>
+                    <Text style={{ fontSize: 13, color: colors.textMuted, fontWeight: '500' }}>{act.date}</Text>
+                  </View>
+                  <Text style={{ fontSize: 14, color: colors.textSecondary, marginBottom: 6, lineHeight: 20 }}>{act.description}</Text>
+                  <Text style={{ fontSize: 12, color: colors.textMuted, fontWeight: '600' }}>{act.time}</Text>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      </Modal>
+
+      </View>
     );
   }
 
@@ -447,7 +581,7 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
   };
 
   const renderItem = ({ item }: { item: typeof DUMMY_LEADS[0] }) => (
-    <LeadItem item={item} colors={colors} styles={styles} onPress={setSelectedLead} />
+    <LeadItem item={item} colors={colors} styles={styles} onPress={(lead: any) => setSelectedLeadId(lead.id)} />
   );
 
   return (
