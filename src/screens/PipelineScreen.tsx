@@ -7,37 +7,16 @@ import { ThemeColors } from '../constants/colors';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '../hooks/useCurrency';
 import { TabType } from '../components/BottomNavBar';
+import { PipelineLead, MOCK_LEADS } from '../data/mockLeads';
 
 interface PipelineScreenProps {
   onNavigate?: (screen: TabType) => void;
+  onSelectLead?: (leadId: string) => void;
 }
-
-interface PipelineLead {
-  id: string;
-  name: string;
-  avatarUri: string;
-  days: string;
-  value: number;
-  progress: number;
-  status: string;
-  colorType: 'primary' | 'lime';
-  lat: number;
-  lng: number;
-}
-
-const MOCK_LEADS: PipelineLead[] = [
-  { id: '1', name: 'Vandelay Industries', avatarUri: 'https://randomuser.me/api/portraits/men/32.jpg', days: '1 day', value: 15.5, progress: 36, status: 'Contacted', colorType: 'primary', lat: 40.7128, lng: -74.0060 }, // NY
-  { id: '2', name: 'Globax Corporation', avatarUri: 'https://randomuser.me/api/portraits/women/44.jpg', days: '3 day', value: 12.5, progress: 34, status: 'Contacted', colorType: 'lime', lat: 34.0522, lng: -118.2437 }, // LA
-  { id: '3', name: 'Wayne Enterprises', avatarUri: 'https://randomuser.me/api/portraits/men/45.jpg', days: '2 hr', value: 25.0, progress: 10, status: 'New', colorType: 'primary', lat: 41.8781, lng: -87.6298 }, // Chicago
-  { id: '4', name: 'Stark Industries', avatarUri: 'https://randomuser.me/api/portraits/men/46.jpg', days: '5 day', value: 45.0, progress: 60, status: 'Proposal Sent', colorType: 'lime', lat: 37.7749, lng: -122.4194 }, // SF
-  { id: '5', name: 'Acme Corp', avatarUri: 'https://randomuser.me/api/portraits/women/32.jpg', days: '1 week', value: 10.0, progress: 80, status: 'Negotiation', colorType: 'primary', lat: 51.5074, lng: -0.1278 }, // London
-  { id: '6', name: 'Cyberdyne', avatarUri: 'https://randomuser.me/api/portraits/women/33.jpg', days: '1 day', value: 100.0, progress: 100, status: 'Closed Won', colorType: 'lime', lat: 48.8566, lng: 2.3522 }, // Paris
-  { id: '7', name: 'Initech', avatarUri: 'https://randomuser.me/api/portraits/men/22.jpg', days: '2 weeks', value: 5.5, progress: 0, status: 'Closed Lost', colorType: 'primary', lat: 30.2672, lng: -97.7431 }, // Austin
-];
 
 const STATUSES = ['New', 'Contacted', 'Proposal Sent', 'Negotiation', 'Closed Won', 'Closed Lost'];
 
-const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate }) => {
+const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLead }) => {
   const { t } = useTranslation();
   const currency = useCurrency();
   const { colors, isDark } = useTheme();
@@ -94,9 +73,17 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate }) => {
   const renderLeadCard = (lead: PipelineLead) => {
     const barColor = lead.colorType === 'primary' ? colors.textPrimary : colors.limeAccent;
     return (
-      <View key={lead.id} style={styles.pipelineCard}>
-        <View style={styles.pipelineCardTop}>
-          <View style={styles.pipelineProfile}>
+      <TouchableOpacity 
+        key={lead.id} 
+        activeOpacity={0.8}
+        onPress={() => {
+          onSelectLead?.(lead.id);
+          onNavigate?.('lead_details');
+        }}
+      >
+        <View style={styles.pipelineCard}>
+          <View style={styles.pipelineCardTop}>
+            <View style={styles.pipelineProfile}>
             <Image source={{ uri: lead.avatarUri }} style={styles.pipelineAvatar} />
             <View>
               <Text style={styles.pipelineName}>{lead.name}</Text>
@@ -131,6 +118,7 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate }) => {
           <Text style={styles.pipelinePercent}>{lead.progress}%</Text>
         </View>
       </View>
+      </TouchableOpacity>
     );
   };
 

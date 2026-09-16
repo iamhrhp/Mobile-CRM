@@ -24,6 +24,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import TotalLeadsScreen from './src/screens/TotalLeadsScreen';
 import ConversionRateScreen from './src/screens/ConversionRateScreen';
 import RevenueGrowthScreen from './src/screens/RevenueGrowthScreen';
+import LeadDetailsScreen from './src/screens/LeadDetailsScreen';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function AppContent() {
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [authScreen, setAuthScreen] = useState<'login' | 'signup'>('login');
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
 
   const styles = getStyles(colors);
 
@@ -136,7 +138,9 @@ function AppContent() {
       case 'users':
         return <UsersScreen onNavigate={handleTabChange} />;
       case 'pie':
-        return <PipelineScreen onNavigate={handleTabChange} />;
+        return <PipelineScreen onNavigate={handleTabChange} onSelectLead={setSelectedLeadId} />;
+      case 'lead_details':
+        return <LeadDetailsScreen leadId={selectedLeadId} />;
       case 'bar':
         return <RevenueForecastScreen />;
       case 'lightbulb':
@@ -201,7 +205,14 @@ function AppContent() {
   return (
     <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={colors.background} />
-      {!isHeaderHidden && <Header title={getHeaderTitle()} onNavigate={handleTabChange} showBack={activeTab !== 'key'} onBack={() => handleTabChange(previousTab)} />}
+      {!isHeaderHidden && (
+        <Header 
+          title={getHeaderTitle()} 
+          onNavigate={handleTabChange} 
+          showBack={!['key', 'users', 'pie', 'bar', 'lightbulb'].includes(activeTab)} 
+          onBack={() => handleTabChange(previousTab)} 
+        />
+      )}
       <Animated.View style={{ flex: 1, opacity: fadeAnim, backgroundColor: colors.background }}>
         {renderScreen()}
       </Animated.View>

@@ -64,7 +64,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     marginLeft: -8,
   },
   headerTitle: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: '700',
     color: colors.textPrimary,
     letterSpacing: -0.4,
