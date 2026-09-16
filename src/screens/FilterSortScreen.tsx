@@ -198,8 +198,8 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
     borderColor: colors.border,
   },
   pillActive: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
+    backgroundColor: colors.limeAccent,
+    borderColor: colors.limeAccent,
   },
   pillText: {
     fontSize: 15,
@@ -207,8 +207,8 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
     fontWeight: '500',
   },
   pillTextActive: {
-    color: colors.cardBackground,
-    fontWeight: '600',
+    color: '#111318',
+    fontWeight: '700',
   },
   footer: {
     flexDirection: 'row',

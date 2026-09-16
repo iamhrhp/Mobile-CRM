@@ -309,7 +309,6 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
     shadowRadius: 6,
-    elevation: 2,
   },
   addLeadBtn: {
     backgroundColor: colors.cardBackground,
@@ -323,7 +322,6 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.06,
     shadowRadius: 8,
-    elevation: 3,
   },
   addLeadText: {
     fontSize: 13,

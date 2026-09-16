@@ -174,7 +174,7 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   markReadText: {
     fontSize: 14,
     fontWeight: '600',
-    color: colors.limeAccent,
+    color: colors.textPrimary,
   },
   scrollContent: {
     paddingHorizontal: 20,

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, Animated } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, Animated, Linking, Platform, Alert } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
 import { MOCK_LEADS } from '../data/mockLeads';
@@ -45,6 +45,38 @@ const LeadDetailsScreen: React.FC<LeadDetailsScreenProps> = ({ leadId }) => {
   const primaryColor = lead.colorType === 'primary' ? colors.textPrimary : colors.limeAccent;
   const textColorOnPrimary = lead.colorType === 'primary' ? colors.background : colors.textPrimary;
 
+  const handleCall = () => {
+    if (lead.phone) {
+      Linking.openURL(`tel:${lead.phone}`).catch(() => {
+        Alert.alert('Error', 'Unable to open dialer.');
+      });
+    } else {
+      Alert.alert('No Phone Number', 'This lead does not have a phone number.');
+    }
+  };
+
+  const handleEmail = () => {
+    if (lead.email) {
+      Linking.openURL(`mailto:${lead.email}`).catch(() => {
+        Alert.alert('Error', 'Unable to open mail client.');
+      });
+    } else {
+      Alert.alert('No Email', 'This lead does not have an email address.');
+    }
+  };
+
+  const handleSchedule = () => {
+    const title = encodeURIComponent(`Meeting with ${lead.name}`);
+    const url = `https://calendar.google.com/calendar/r/eventedit?text=${title}`;
+    Linking.openURL(url).catch(() => {
+      if (Platform.OS === 'ios') {
+        Linking.openURL('calshow://');
+      } else {
+        Linking.openURL('content://com.android.calendar/time/');
+      }
+    });
+  };
+
   return (
     <Animated.ScrollView 
       style={styles.container} 
@@ -82,15 +114,15 @@ const LeadDetailsScreen: React.FC<LeadDetailsScreenProps> = ({ leadId }) => {
       </Animated.View>
 
       <Animated.View style={[styles.actionsRow, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-        <TouchableOpacity activeOpacity={0.7} style={styles.actionBtn}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.actionBtn} onPress={handleCall}>
           <PhoneIcon size={20} color={colors.textPrimary} />
           <Text style={styles.actionBtnText}>Call</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7} style={styles.actionBtn}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.actionBtn} onPress={handleEmail}>
           <MailIcon size={20} color={colors.textPrimary} />
           <Text style={styles.actionBtnText}>Email</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7} style={styles.actionBtn}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.actionBtn} onPress={handleSchedule}>
           <CalendarIcon size={20} color={colors.textPrimary} />
           <Text style={styles.actionBtnText}>Schedule</Text>
         </TouchableOpacity>

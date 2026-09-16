@@ -74,6 +74,9 @@ const LanguageSwitcher = () => {
                   </Text>
                 </TouchableOpacity>
               ))}
+              <View style={styles.brandingContainer}>
+                <Text style={styles.brandingText}>Parvej CRM</Text>
+              </View>
             </ScrollView>
           </View>
         </SafeAreaView>
@@ -131,6 +134,7 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   },
   langItem: {
     paddingVertical: 16,
+    paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
@@ -143,7 +147,6 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
     elevation: isDark ? 0 : 2,
     borderRadius: 12,
     borderBottomWidth: 0,
-    paddingHorizontal: 16,
   },
   langText: {
     fontSize: 15,
@@ -153,6 +156,19 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   langTextActive: {
     color: colors.textPrimary,
     fontWeight: '700',
+  },
+  brandingContainer: {
+    paddingTop: 30,
+    paddingBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  brandingText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.textPrimary,
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   }
 });
 

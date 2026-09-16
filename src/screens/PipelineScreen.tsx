@@ -20,7 +20,7 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
   const { t } = useTranslation();
   const currency = useCurrency();
   const { colors, isDark } = useTheme();
-  const styles = getStyles(colors);
+  const styles = getStyles(colors, isDark);
   
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const barAnim = useRef(new Animated.Value(0)).current;
@@ -172,27 +172,26 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
             <View style={{ position: 'relative', zIndex: 100 }}>
               <TouchableOpacity 
                 activeOpacity={0.7} 
-                style={styles.kanbanDropdownBtn} 
+                style={[styles.dropdownButton, dropdownVisible && styles.dropdownButtonActive]} 
                 onPress={() => setDropdownVisible(!dropdownVisible)}
               >
-                <Text style={styles.kanbanDropdownText}>{selectedStatus}</Text>
+                <Text style={styles.dropdownText}>{selectedStatus}</Text>
                 <ChevronDownIcon size={12} color={colors.textPrimary} />
               </TouchableOpacity>
               
               {dropdownVisible && (
-                <View style={[styles.dropdownMenu, { backgroundColor: colors.cardBackground, shadowColor: isDark ? '#000' : '#888' }]}>
+                <View style={[styles.inlineDropdown, { top: 45, right: 0, width: 160 }]}>
                   {STATUSES.map(status => (
                     <TouchableOpacity 
                       key={status} 
-                      style={[styles.dropdownItem, selectedStatus === status && { backgroundColor: isDark ? colors.secondaryBackground : '#F0F0F0' }]}
+                      style={[styles.dropdownOption, selectedStatus === status && styles.dropdownOptionSelected]}
                       onPress={() => {
                         setSelectedStatus(status);
                         setDropdownVisible(false);
                       }}
                     >
-                      <Text style={[styles.dropdownItemText, { color: selectedStatus === status ? colors.textPrimary : colors.textSecondary }]}>
-                        {status}
-                      </Text>
+                      <Text style={[styles.dropdownOptionText, selectedStatus === status && styles.dropdownOptionTextSelected]}>{status}</Text>
+                      {selectedStatus === status && <Text style={styles.checkmark}>✓</Text>}
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -231,7 +230,7 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
   );
 };
 
-const getStyles = (colors: ThemeColors) => StyleSheet.create({
+const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   scrollContent: {
     paddingBottom: 110,
   },
@@ -300,31 +299,33 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
   kanbanFilterBtn: {
     width: 36,
     height: 36,
-    borderRadius: 10,
+    borderRadius: 18,
     backgroundColor: colors.cardBackground,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 1,
+    shadowRadius: 6,
   },
-  kanbanDropdownBtn: {
-    backgroundColor: colors.cardBackground,
-    paddingHorizontal: 12,
-    height: 36,
-    borderRadius: 10,
+  dropdownButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: colors.cardBackground,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 20,
     gap: 6,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 1,
+    shadowRadius: 6,
   },
-  kanbanDropdownText: {
+  dropdownButtonActive: {
+    borderWidth: 1.5,
+    borderColor: colors.limeAccent,
+  },
+  dropdownText: {
     fontSize: 13,
     fontWeight: '500',
     color: colors.textPrimary,
@@ -450,27 +451,12 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     color: colors.textMuted,
     marginBottom: 4,
   },
-  dropdownMenu: {
-    position: 'absolute',
-    top: 45,
-    right: 0,
-    width: 160,
-    borderRadius: 12,
-    paddingVertical: 8,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 5,
-    zIndex: 100,
-  },
-  dropdownItem: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-  },
-  dropdownItemText: {
-    fontSize: 14,
-    fontWeight: '500',
-  }
+  inlineDropdown: { position: 'absolute', backgroundColor: colors.cardBackground, borderRadius: 16, padding: 8, shadowColor: isDark ? '#000' : '#888', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.1, shadowRadius: 24, elevation: 10, zIndex: 1000 },
+  dropdownOption: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 10, marginBottom: 2 },
+  dropdownOptionSelected: { backgroundColor: isDark ? colors.secondaryBackground : '#F0F0F0' },
+  dropdownOptionText: { fontSize: 13, fontWeight: '500', color: colors.textSecondary },
+  dropdownOptionTextSelected: { fontWeight: '700', color: colors.textPrimary },
+  checkmark: { fontSize: 14, color: colors.textPrimary, fontWeight: '700' },
 });
 
 export default PipelineScreen;

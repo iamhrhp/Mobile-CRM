@@ -25,6 +25,7 @@ import TotalLeadsScreen from './src/screens/TotalLeadsScreen';
 import ConversionRateScreen from './src/screens/ConversionRateScreen';
 import RevenueGrowthScreen from './src/screens/RevenueGrowthScreen';
 import LeadDetailsScreen from './src/screens/LeadDetailsScreen';
+import SplashScreen from './src/screens/SplashScreen';
 
 function App() {
   return (
@@ -62,8 +63,6 @@ function AppContent() {
         }
       } catch (e) {
         // error reading value
-      } finally {
-        setIsAuthLoading(false);
       }
     };
     checkAuth();
@@ -142,7 +141,7 @@ function AppContent() {
       case 'lead_details':
         return <LeadDetailsScreen leadId={selectedLeadId} />;
       case 'bar':
-        return <RevenueForecastScreen />;
+        return <RevenueForecastScreen onNavigate={handleTabChange} />;
       case 'lightbulb':
         return <ClientInsightsScreen />;
       case 'add_lead':
@@ -180,11 +179,7 @@ function AppContent() {
   };
 
   if (isAuthLoading) {
-    return (
-      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    );
+    return <SplashScreen onFinish={() => setIsAuthLoading(false)} />;
   }
 
   if (!isAuthenticated) {
