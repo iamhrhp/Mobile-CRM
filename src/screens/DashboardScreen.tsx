@@ -48,7 +48,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onNavigate }) => {
       <View style={styles.heroRow}>
         <View style={styles.buildingContainer}>
           <Image
-            source={require('../../assets/building.jpg')}
+            source={require('../../assets/building.png')}
             style={styles.buildingImage}
             resizeMode="contain"
           />
