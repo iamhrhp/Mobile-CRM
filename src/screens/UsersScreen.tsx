@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, TouchableWithoutFeedback, Modal, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, TouchableWithoutFeedback, Modal, TextInput, KeyboardAvoidingView, Platform, RefreshControl } from 'react-native';
 import { FilterIcon, PlusIcon, UsersIcon, FireIcon, ArrowUpRightIcon, MailIcon, PhoneIcon, ChevronDownIcon, VideoCameraIcon } from '../components/icons/Icons';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
@@ -208,6 +208,12 @@ const UsersScreen: React.FC<UsersScreenProps> = ({ onNavigate }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = getStyles(colors);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => setRefreshing(false), 1500);
+  }, []);
   
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const barAnim = useRef(new Animated.Value(0)).current;
@@ -241,10 +247,19 @@ const UsersScreen: React.FC<UsersScreenProps> = ({ onNavigate }) => {
   return (
     <View style={{ flex: 1 }}>
       <Animated.ScrollView
+        style={[styles.container, { opacity: fadeAnim }]}
         showsVerticalScrollIndicator={false}
-        style={{ opacity: fadeAnim }}
+        contentContainerStyle={styles.scrollContent}
         onScrollBeginDrag={handleOutsidePress}
         scrollEventThrottle={16}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.limeAccent}
+            colors={[colors.limeAccent]}
+          />
+        }
       >
         <TouchableWithoutFeedback onPress={handleOutsidePress}>
           <View style={styles.scrollContent}>

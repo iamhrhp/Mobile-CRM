@@ -47,7 +47,9 @@ const LeadDetailsScreen: React.FC<LeadDetailsScreenProps> = ({ leadId }) => {
 
   const handleCall = () => {
     if (lead.phone) {
-      Linking.openURL(`tel:${lead.phone}`).catch(() => {
+      // Strip out spaces, dashes, and parentheses to ensure the dialer accepts the tel: URL
+      const sanitizedPhone = lead.phone.replace(/[^0-9+]/g, '');
+      Linking.openURL(`tel:${sanitizedPhone}`).catch(() => {
         Alert.alert('Error', 'Unable to open dialer.');
       });
     } else {
@@ -123,7 +125,7 @@ const LeadDetailsScreen: React.FC<LeadDetailsScreenProps> = ({ leadId }) => {
           <Text style={styles.actionBtnText}>Email</Text>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.7} style={styles.actionBtn} onPress={handleSchedule}>
-          <CalendarIcon size={20} color={colors.textPrimary} />
+          <CalendarIcon size={20} color={colors.textPrimary} date={new Date().getDate()} />
           <Text style={styles.actionBtnText}>Schedule</Text>
         </TouchableOpacity>
       </Animated.View>

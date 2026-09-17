@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, Modal, TouchableWithoutFeedback } from 'react-native';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, Modal, TouchableWithoutFeedback, RefreshControl } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FilterIcon, ChevronDownIcon, CalendarIcon, PencilIcon, MoreHorizontalIcon, PlusIcon } from '../components/icons/Icons';
 import { useTheme } from '../context/ThemeContext';
@@ -22,6 +22,13 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
   const { colors, isDark } = useTheme();
   const styles = getStyles(colors, isDark);
   
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => setRefreshing(false), 1500);
+  }, []);
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const barAnim = useRef(new Animated.Value(0)).current;
   const mapRef = useRef<MapView>(null);
@@ -128,6 +135,14 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
         style={{ opacity: fadeAnim }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.limeAccent}
+            colors={[colors.limeAccent]}
+          />
+        }
       >
         {/* Map Section */}
         <View style={styles.mapSection}>

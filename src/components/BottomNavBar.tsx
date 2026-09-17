@@ -5,53 +5,37 @@ import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
 
 // Nav Bar Icons
-const DashboardNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
-  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
-    <View style={{ width: size * 0.8, height: size * 0.8, borderRadius: size * 0.25, borderWidth: 1.8, borderColor: color }} />
-    <View style={{ position: 'absolute', width: size * 0.8, height: 1.8, backgroundColor: color }} />
-    <View style={{ position: 'absolute', width: 1.8, height: size * 0.8, backgroundColor: color }} />
+const HomeNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
+  <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+    {/* Roof */}
+    <View style={{ width: size * 0.6, height: size * 0.6, borderWidth: 1.8, borderColor: color, transform: [{ rotate: '45deg' }], borderBottomWidth: 0, borderRightWidth: 0, position: 'absolute', top: size * 0.15, borderRadius: 2 }} />
+    {/* Base */}
+    <View style={{ width: size * 0.65, height: size * 0.4, borderWidth: 1.8, borderColor: color, borderTopWidth: 0, position: 'absolute', bottom: size * 0.1, borderBottomLeftRadius: 2, borderBottomRightRadius: 2 }} />
   </View>
 );
 
-const UsersIcon = ({ size = 18, color = '#A0A3BD' }) => (
+const AINavIcon = ({ size = 20, color = '#A0A3BD' }) => (
   <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
-    <View
-      style={{
-        width: size * 0.45,
-        height: size * 0.45,
-        borderRadius: size * 0.225,
-        borderWidth: 1.6,
-        borderColor: color,
-        marginBottom: 1,
-      }}
-    />
-    <View
-      style={{
-        width: size * 0.75,
-        height: size * 0.3,
-        borderTopLeftRadius: size * 0.35,
-        borderTopRightRadius: size * 0.35,
-        borderWidth: 1.6,
-        borderColor: color,
-        borderBottomWidth: 0,
-      }}
-    />
+    <View style={{ width: size * 0.6, height: size * 0.6, borderWidth: 1.8, borderColor: color, transform: [{ rotate: '45deg' }], borderRadius: 2 }} />
+    <View style={{ width: size * 0.25, height: size * 0.25, backgroundColor: color, transform: [{ rotate: '45deg' }], position: 'absolute', top: size * 0.1, right: size * 0.1 }} />
+    <View style={{ width: size * 0.15, height: size * 0.15, backgroundColor: color, transform: [{ rotate: '45deg' }], position: 'absolute', bottom: size * 0.15, left: size * 0.15 }} />
   </View>
 );
 
-const PieChartNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
-  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
-    <View style={{ width: size * 0.8, height: size * 0.8, borderRadius: size * 0.4, borderWidth: 1.8, borderColor: color }} />
-    <View style={{ width: size * 0.4, height: 1.8, backgroundColor: color, position: 'absolute', top: size * 0.4, right: size * 0.1 }} />
-    <View style={{ width: 1.8, height: size * 0.4, backgroundColor: color, position: 'absolute', top: size * 0.1, left: size * 0.4 }} />
+const PipelineNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
+  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center', gap: 4 }}>
+    <View style={{ width: size * 0.9, height: 2, backgroundColor: color, borderRadius: 1 }} />
+    <View style={{ width: size * 0.6, height: 2, backgroundColor: color, borderRadius: 1 }} />
+    <View style={{ width: size * 0.3, height: 2, backgroundColor: color, borderRadius: 1 }} />
   </View>
 );
 
-const BarChartNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
-  <View style={{ width: size, height: size, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: 2.5 }}>
-    <View style={{ width: 3, height: size * 0.4, backgroundColor: color, borderRadius: 1 }} />
-    <View style={{ width: 3, height: size * 0.75, backgroundColor: color, borderRadius: 1 }} />
-    <View style={{ width: 3, height: size * 0.55, backgroundColor: color, borderRadius: 1 }} />
+const ForecastNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
+  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ width: size * 0.9, height: size * 0.9, borderRadius: size * 0.45, borderWidth: 1.8, borderColor: color, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ width: size * 0.4, height: 1.8, backgroundColor: color, transform: [{ rotate: '-45deg' }], marginLeft: -1, marginTop: 1 }} />
+      <View style={{ width: size * 0.2, height: size * 0.2, borderTopWidth: 1.8, borderRightWidth: 1.8, borderColor: color, position: 'absolute', top: size * 0.2, right: size * 0.2 }} />
+    </View>
   </View>
 );
 
@@ -95,7 +79,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
         onPress={() => handleTabPress('key')}
         style={currentTab === 'key' ? styles.navItemActive : styles.navItem}
       >
-        <DashboardNavIcon size={18} color={currentTab === 'key' ? colors.textPrimary : colors.textSecondary} />
+        <HomeNavIcon size={20} color={currentTab === 'key' ? colors.textPrimary : colors.textSecondary} />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -103,7 +87,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
         onPress={() => handleTabPress('users')}
         style={currentTab === 'users' ? styles.navItemActive : styles.navItem}
       >
-        <UsersIcon size={20} color={colors.textPrimary} />
+        <AINavIcon size={20} color={currentTab === 'users' ? colors.textPrimary : colors.textSecondary} />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -111,7 +95,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
         onPress={() => handleTabPress('pie')}
         style={currentTab === 'pie' ? styles.navItemActive : styles.navItem}
       >
-        <PieChartNavIcon size={20} color={currentTab === 'pie' ? colors.textPrimary : colors.textSecondary} />
+        <PipelineNavIcon size={18} color={currentTab === 'pie' ? colors.textPrimary : colors.textSecondary} />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -119,7 +103,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
         onPress={() => handleTabPress('bar')}
         style={currentTab === 'bar' ? styles.navItemActive : styles.navItem}
       >
-        <BarChartNavIcon size={20} color={currentTab === 'bar' ? colors.textPrimary : colors.textSecondary} />
+        <ForecastNavIcon size={20} color={currentTab === 'bar' ? colors.textPrimary : colors.textSecondary} />
       </TouchableOpacity>
 
       <TouchableOpacity

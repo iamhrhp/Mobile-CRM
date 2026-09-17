@@ -154,15 +154,19 @@ export const TrendingIcon = ({ size = 16, color = colors.textSecondary }) => (
   </View>
 );
 
-export const CalendarIcon = ({ size = 18, color = colors.textSecondary }) => (
+export const CalendarIcon = ({ size = 18, color = colors.textSecondary, date = null as string | number | null }) => (
   <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
-    <View style={{ width: size * 0.8, height: size * 0.75, borderWidth: 1.6, borderColor: color, borderRadius: 3, padding: 2 }}>
-      <View style={{ width: '100%', height: 2, backgroundColor: color, marginBottom: 2 }} />
-      <View style={{ flexDirection: 'row', gap: 2, flexWrap: 'wrap' }}>
-        <View style={{ width: 2, height: 2, backgroundColor: color, borderRadius: 1 }} />
-        <View style={{ width: 2, height: 2, backgroundColor: color, borderRadius: 1 }} />
-        <View style={{ width: 2, height: 2, backgroundColor: color, borderRadius: 1 }} />
-      </View>
+    <View style={{ width: size * 0.8, height: size * 0.75, borderWidth: 1.6, borderColor: color, borderRadius: 3, paddingTop: size * 0.2, alignItems: 'center' }}>
+      <View style={{ width: '100%', height: 2, backgroundColor: color, position: 'absolute', top: 1 }} />
+      {date ? (
+        <Text style={{ fontSize: size * 0.4, color, fontWeight: '800', lineHeight: size * 0.45 }}>{date}</Text>
+      ) : (
+        <View style={{ flexDirection: 'row', gap: 2, flexWrap: 'wrap', paddingHorizontal: 2 }}>
+          <View style={{ width: 2, height: 2, backgroundColor: color, borderRadius: 1 }} />
+          <View style={{ width: 2, height: 2, backgroundColor: color, borderRadius: 1 }} />
+          <View style={{ width: 2, height: 2, backgroundColor: color, borderRadius: 1 }} />
+        </View>
+      )}
     </View>
   </View>
 );

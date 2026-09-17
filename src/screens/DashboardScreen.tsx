@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated } from 'react-native';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, RefreshControl } from 'react-native';
 import { FilterIcon, PlusIcon, UsersIcon, ConversionIcon } from '../components/icons/Icons';
 import MetricCard from '../components/MetricCard';
 import RevenueChart from '../components/RevenueChart';
@@ -16,6 +16,12 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onNavigate }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = getStyles(colors);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => setRefreshing(false), 1500);
+  }, []);
   
   // Animation Values
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -43,6 +49,14 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ onNavigate }) => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.scrollContent}
       style={{ opacity: fadeAnim }}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={colors.limeAccent}
+          colors={[colors.limeAccent]}
+        />
+      }
     >
       {/* Hero Row with 3D Building & Add Lead Button */}
       <View style={styles.heroRow}>

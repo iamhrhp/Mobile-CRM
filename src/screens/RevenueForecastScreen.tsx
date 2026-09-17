@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, TouchableOpacity, Easing, Modal, TouchableWithoutFeedback } from 'react-native';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, TouchableOpacity, Easing, Modal, TouchableWithoutFeedback, RefreshControl } from 'react-native';
 import Svg, { Path, Circle, Defs, LinearGradient, Stop, Rect, Line } from 'react-native-svg';
 import { ThemeColors } from '../constants/colors';
 import { useTheme } from '../context/ThemeContext';
@@ -30,6 +30,13 @@ const RevenueForecastScreen: React.FC<RevenueForecastScreenProps> = ({ onNavigat
   const { colors, isDark } = useTheme();
   const styles = getStyles(colors, isDark);
   
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => setRefreshing(false), 1500);
+  }, []);
+
   const [selectedTime, setSelectedTime] = useState('This Year');
   const [selectedRegion, setSelectedRegion] = useState('All Regions');
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
@@ -104,7 +111,19 @@ const RevenueForecastScreen: React.FC<RevenueForecastScreenProps> = ({ onNavigat
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+      <ScrollView 
+        style={styles.container} 
+        showsVerticalScrollIndicator={false} 
+        contentContainerStyle={styles.scrollContent}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.limeAccent}
+            colors={[colors.limeAccent]}
+          />
+        }
+      >
         
         {/* Sub Header */}
         <Animated.View style={[styles.subHeader, { opacity: fadeAnim, transform: [{ translateY: slideAnim }], zIndex: 100 }]}>
