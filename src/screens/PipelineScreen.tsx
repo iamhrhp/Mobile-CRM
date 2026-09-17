@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, Modal, TouchableWithoutFeedback, RefreshControl } from 'react-native';
+import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, Modal, TouchableWithoutFeedback, RefreshControl, TextInput } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FilterIcon, ChevronDownIcon, CalendarIcon, PencilIcon, MoreHorizontalIcon, PlusIcon } from '../components/icons/Icons';
 import { useTheme } from '../context/ThemeContext';
@@ -48,6 +48,19 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
   const [selectedStatus, setSelectedStatus] = useState('Contacted');
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  // New features state
+  const [localLeads, setLocalLeads] = useState<PipelineLead[]>(MOCK_LEADS);
+  
+  // Sort state
+  const [showSortMenu, setShowSortMenu] = useState(false);
+  const [sortBy, setSortBy] = useState<'default' | 'value' | 'days'>('default');
+  
+  // Quick Add state
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newLeadName, setNewLeadName] = useState('');
+  const [newLeadValue, setNewLeadValue] = useState('');
+  const [newLeadCompany, setNewLeadCompany] = useState('');
+
   useEffect(() => {
     fadeAnim.setValue(0);
     barAnim.setValue(0);
@@ -65,7 +78,18 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
     ]).start();
   }, [fadeAnim, barAnim, selectedStatus]);
 
-  const filteredLeads = MOCK_LEADS.filter(lead => lead.status === selectedStatus);
+  let filteredLeads = localLeads.filter(lead => lead.status === selectedStatus);
+  
+  // Apply sorting
+  if (sortBy === 'value') {
+    filteredLeads = filteredLeads.sort((a, b) => b.value - a.value);
+  } else if (sortBy === 'days') {
+    filteredLeads = filteredLeads.sort((a, b) => {
+      const daysA = parseInt(a.days) || 0;
+      const daysB = parseInt(b.days) || 0;
+      return daysB - daysA; // Oldest first (highest days)
+    });
+  }
 
   useEffect(() => {
     if (mapRef.current && filteredLeads.length > 0) {
@@ -233,10 +257,45 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
           <View style={styles.columnHeaderRow}>
             <Text style={styles.columnHeaderText}>{t(getStatusTranslationKey(selectedStatus), selectedStatus)} ({filteredLeads.length})</Text>
             <View style={styles.columnActions}>
-              <TouchableOpacity activeOpacity={0.7}>
-                <MoreHorizontalIcon size={16} />
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.7}>
+              <View style={{ position: 'relative', zIndex: 100 }}>
+                {showSortMenu && (
+                  <TouchableWithoutFeedback onPress={() => setShowSortMenu(false)}>
+                    <View style={{ position: 'absolute', top: -2000, bottom: -2000, left: -2000, right: -2000, zIndex: 90 }} />
+                  </TouchableWithoutFeedback>
+                )}
+                
+                <TouchableOpacity activeOpacity={0.7} onPress={() => setShowSortMenu(!showSortMenu)} style={{ zIndex: 100 }}>
+                  <MoreHorizontalIcon size={16} color={showSortMenu ? colors.primary : colors.textPrimary} />
+                </TouchableOpacity>
+
+                {showSortMenu && (
+                  <View style={[styles.inlineDropdown, { top: 25, right: 0, width: 180, zIndex: 100 }]}>
+                    <TouchableOpacity 
+                      style={[styles.dropdownOption, sortBy === 'default' && styles.dropdownOptionSelected]}
+                      onPress={() => { setSortBy('default'); setShowSortMenu(false); }}
+                    >
+                      <Text style={[styles.dropdownOptionText, sortBy === 'default' && styles.dropdownOptionTextSelected]}>Default Order</Text>
+                      {sortBy === 'default' && <Text style={styles.checkmark}>✓</Text>}
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                      style={[styles.dropdownOption, sortBy === 'value' && styles.dropdownOptionSelected]}
+                      onPress={() => { setSortBy('value'); setShowSortMenu(false); }}
+                    >
+                      <Text style={[styles.dropdownOptionText, sortBy === 'value' && styles.dropdownOptionTextSelected]}>Value: High to Low</Text>
+                      {sortBy === 'value' && <Text style={styles.checkmark}>✓</Text>}
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                      style={[styles.dropdownOption, sortBy === 'days' && styles.dropdownOptionSelected]}
+                      onPress={() => { setSortBy('days'); setShowSortMenu(false); }}
+                    >
+                      <Text style={[styles.dropdownOptionText, sortBy === 'days' && styles.dropdownOptionTextSelected]}>Stale: Oldest First</Text>
+                      {sortBy === 'days' && <Text style={styles.checkmark}>✓</Text>}
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+
+              <TouchableOpacity activeOpacity={0.7} onPress={() => setShowAddModal(true)}>
                 <PlusIcon size={16} color={colors.textSecondary} />
               </TouchableOpacity>
             </View>
@@ -253,6 +312,77 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
 
         </View>
       </Animated.ScrollView>
+
+      {/* Quick Add Modal */}
+      <Modal visible={showAddModal} transparent animationType="slide" onRequestClose={() => setShowAddModal(false)}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Quick Add Lead</Text>
+              <TouchableOpacity onPress={() => setShowAddModal(false)}>
+                <Text style={styles.modalCloseText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.modalBody}>
+              <Text style={styles.inputLabel}>Lead Name</Text>
+              <TextInput 
+                style={styles.textInput} 
+                placeholder="e.g. John Doe" 
+                placeholderTextColor={colors.textMuted}
+                value={newLeadName}
+                onChangeText={setNewLeadName}
+              />
+
+              <Text style={styles.inputLabel}>Company (Optional)</Text>
+              <TextInput 
+                style={styles.textInput} 
+                placeholder="e.g. Acme Corp" 
+                placeholderTextColor={colors.textMuted}
+                value={newLeadCompany}
+                onChangeText={setNewLeadCompany}
+              />
+
+              <Text style={styles.inputLabel}>Estimated Value (K)</Text>
+              <TextInput 
+                style={styles.textInput} 
+                placeholder="e.g. 15.5" 
+                placeholderTextColor={colors.textMuted}
+                keyboardType="decimal-pad"
+                value={newLeadValue}
+                onChangeText={setNewLeadValue}
+              />
+
+              <TouchableOpacity 
+                style={styles.primaryButton}
+                onPress={() => {
+                  if (newLeadName && newLeadValue) {
+                    const newLead: PipelineLead = {
+                      id: `lead_${Date.now()}`,
+                      name: newLeadCompany ? `${newLeadName} (${newLeadCompany})` : newLeadName,
+                      value: parseFloat(newLeadValue) || 0,
+                      progress: 10,
+                      status: selectedStatus,
+                      colorType: 'secondary',
+                      avatarUri: 'https://i.pravatar.cc/150?u=' + Date.now(),
+                      days: '0 days',
+                      lat: 39.0,
+                      lng: -34.0,
+                    };
+                    setLocalLeads([newLead, ...localLeads]);
+                    setNewLeadName('');
+                    setNewLeadValue('');
+                    setNewLeadCompany('');
+                    setShowAddModal(false);
+                  }
+                }}
+              >
+                <Text style={styles.primaryButtonText}>Add to {t(getStatusTranslationKey(selectedStatus), selectedStatus)}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -484,6 +614,18 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   dropdownOptionText: { fontSize: 13, fontWeight: '500', color: colors.textSecondary },
   dropdownOptionTextSelected: { fontWeight: '700', color: colors.textPrimary },
   checkmark: { fontSize: 14, color: colors.textPrimary, fontWeight: '700' },
+  
+  // Modal styles
+  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'flex-end' },
+  modalContent: { backgroundColor: colors.background, borderTopLeftRadius: 24, borderTopRightRadius: 24, paddingBottom: 40, maxHeight: '80%' },
+  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, borderBottomWidth: 1, borderBottomColor: colors.border },
+  modalTitle: { fontSize: 18, fontWeight: '700', color: colors.textPrimary },
+  modalCloseText: { fontSize: 16, color: colors.primary, fontWeight: '600' },
+  modalBody: { padding: 20 },
+  inputLabel: { fontSize: 13, fontWeight: '600', color: colors.textSecondary, marginBottom: 8 },
+  textInput: { backgroundColor: colors.cardBackground, borderWidth: 1, borderColor: colors.border, borderRadius: 12, paddingHorizontal: 16, paddingVertical: 14, fontSize: 16, color: colors.textPrimary, marginBottom: 20 },
+  primaryButton: { backgroundColor: colors.primary, paddingVertical: 16, borderRadius: 16, alignItems: 'center', marginTop: 10 },
+  primaryButtonText: { color: '#FFF', fontSize: 16, fontWeight: '600' },
 });
 
 export default PipelineScreen;
