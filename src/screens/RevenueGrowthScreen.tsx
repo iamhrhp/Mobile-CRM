@@ -217,7 +217,7 @@ const RevenueGrowthScreen = () => {
           </View>
 
         <View style={styles.legendContainer}>
-          {currentPieData.slice(0, 3).map((item, i) => (
+          {currentPieData.slice(1).map((item, i) => (
             <View key={i} style={styles.legendItem}>
               <View style={styles.legendHeader}>
                 <View style={[styles.legendDot, { backgroundColor: item.color }]} />
@@ -411,9 +411,12 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 16,
+    flexWrap: 'wrap',
   },
   legendItem: {
     alignItems: 'flex-start',
+    width: '30%',
+    marginBottom: 12,
   },
   legendHeader: {
     flexDirection: 'row',
