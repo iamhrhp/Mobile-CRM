@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, TouchableOpacity, Easing, Modal, TouchableWithoutFeedback } from 'react-native';
-import Svg, { Circle, Rect, Line } from 'react-native-svg';
+import Svg, { Circle, Rect, Line, Path, G, Text as SvgText } from 'react-native-svg';
 import { ChevronDownIcon, FilterIcon, UsersIcon, UserIcon, TrendUpIcon, CalendarIcon, XIcon } from '../components/icons/Icons';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '../hooks/useCurrency';
@@ -8,28 +8,30 @@ import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
 import { TabType } from "../components/BottomNavBar";
 
-interface ClientInsightsScreenProps {
-  onNavigate?: (screen: TabType) => void;
-}
+interface TotalClientsScreenProps {}
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 52) / 2;
 const AnimatedLine = Animated.createAnimatedComponent(Line);
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
+// Total Clients growth chart data — steadily rising acquisition trend
 const chartData = [
-  { ltv: 60, eng: 30 }, { ltv: 50, eng: 25 }, { ltv: 70, eng: 40 }, { ltv: 65, eng: 35 },
-  { ltv: 80, eng: 45 }, { ltv: 75, eng: 40 }, { ltv: 90, eng: 50 }, { ltv: 85, eng: 45 },
-  { ltv: 100, eng: 55 }, { ltv: 90, eng: 50 }, { ltv: 110, eng: 60 }, { ltv: 95, eng: 55 },
-  { ltv: 50, eng: 25 }, { ltv: 40, eng: 20 }, { ltv: 120, eng: 50 }, { ltv: 80, eng: 30 },
-  { ltv: 150, eng: 60 }, { ltv: 140, eng: 55 }, { ltv: 90, eng: 40 }, { ltv: 110, eng: 45 },
-  { ltv: 130, eng: 65 }, { ltv: 100, eng: 45 }, { ltv: 80, eng: 35 }, { ltv: 70, eng: 30 },
-  { ltv: 160, eng: 70 }, { ltv: 150, eng: 65 }, { ltv: 90, eng: 40 }, { ltv: 85, eng: 35 },
-  { ltv: 120, eng: 60 }, { ltv: 110, eng: 55 }, { ltv: 130, eng: 65 }, { ltv: 140, eng: 70 },
-  { ltv: 90, eng: 45 }, { ltv: 80, eng: 40 }, { ltv: 100, eng: 50 }, { ltv: 110, eng: 55 },
-  { ltv: 140, eng: 65 }, { ltv: 130, eng: 60 }, { ltv: 150, eng: 70 }, { ltv: 160, eng: 75 },
-  { ltv: 110, eng: 50 }, { ltv: 100, eng: 45 }, { ltv: 120, eng: 55 }, { ltv: 130, eng: 60 },
-  { ltv: 150, eng: 70 }, { ltv: 140, eng: 65 }, { ltv: 160, eng: 75 }, { ltv: 170, eng: 80 },
+  { ltv: 30, eng: 15 }, { ltv: 35, eng: 18 }, { ltv: 40, eng: 20 }, { ltv: 38, eng: 19 },
+  { ltv: 45, eng: 22 }, { ltv: 50, eng: 25 }, { ltv: 48, eng: 24 }, { ltv: 55, eng: 28 },
+  { ltv: 60, eng: 30 }, { ltv: 58, eng: 29 }, { ltv: 65, eng: 33 }, { ltv: 70, eng: 35 },
+  { ltv: 75, eng: 38 }, { ltv: 72, eng: 36 }, { ltv: 80, eng: 40 }, { ltv: 85, eng: 43 },
+  { ltv: 90, eng: 45 }, { ltv: 95, eng: 48 }, { ltv: 100, eng: 50 }, { ltv: 98, eng: 49 },
+  { ltv: 110, eng: 55 }, { ltv: 115, eng: 58 }, { ltv: 120, eng: 60 }, { ltv: 118, eng: 59 },
+  { ltv: 130, eng: 65 }, { ltv: 135, eng: 68 }, { ltv: 140, eng: 70 }, { ltv: 145, eng: 73 },
+  { ltv: 150, eng: 75 }, { ltv: 155, eng: 78 }, { ltv: 160, eng: 80 }, { ltv: 158, eng: 79 },
+  { ltv: 165, eng: 83 }, { ltv: 160, eng: 80 }, { ltv: 170, eng: 85 }, { ltv: 175, eng: 88 },
+  { ltv: 180, eng: 90 }, { ltv: 178, eng: 89 }, { ltv: 185, eng: 93 }, { ltv: 190, eng: 95 },
+  { ltv: 195, eng: 98 }, { ltv: 200, eng: 100 }, { ltv: 198, eng: 99 }, { ltv: 205, eng: 103 },
+  { ltv: 210, eng: 105 }, { ltv: 208, eng: 104 }, { ltv: 215, eng: 108 }, { ltv: 220, eng: 110 },
 ];
+
+const MINI_CHART_VALUES = [35, 55, 40, 80, 65, 90, 70, 45, 60, 85, 50, 75, 60];
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const CHART_WIDTH = chartData.length * 16.5 + 40;
@@ -133,7 +135,7 @@ const METRICS: Record<string, Record<string, MetricSet>> = {
 
 };
 
-const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate }) => {
+const TotalClientsScreen: React.FC<TotalClientsScreenProps> = () => {
   const { t } = useTranslation();
   const currency = useCurrency();
   const { colors, isDark } = useTheme();
@@ -144,6 +146,11 @@ const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate 
   const slideAnim = useRef(new Animated.Value(20)).current;
   const chartProgress = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<any>(null);
+
+  // Optimize interpolations to prevent recreation on every render
+  const miniChartHeights = useMemo(() => 
+    MINI_CHART_VALUES.map(val => chartProgress.interpolate({ inputRange: [0, 1], outputRange: ['0%', `${val}%`] }))
+  , [chartProgress]);
 
   const [selectedTime, setSelectedTime] = useState('This Week');
   const [selectedRegion, setSelectedRegion] = useState('All Regions');
@@ -183,6 +190,12 @@ const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate 
     setShowFilterModal(false);
     triggerAnimations(false);
   };
+
+  const donutCircumference = 2 * Math.PI * 70;
+  const donut1Offset = chartProgress.interpolate({ inputRange: [0, 1], outputRange: [donutCircumference, 0.25 * donutCircumference] });
+  const donut2Offset = chartProgress.interpolate({ inputRange: [0, 1], outputRange: [donutCircumference, (0.25 - 0.38) * donutCircumference] });
+  const donut3Offset = chartProgress.interpolate({ inputRange: [0, 1], outputRange: [donutCircumference, (0.25 - 0.38 - 0.30) * donutCircumference] });
+  const donut4Offset = chartProgress.interpolate({ inputRange: [0, 1], outputRange: [donutCircumference, (0.25 - 0.38 - 0.30 - 0.20) * donutCircumference] });
 
   const openFilter = () => {
     setFilterTime(selectedTime);
@@ -229,98 +242,71 @@ const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate 
           </TouchableOpacity>
         </Animated.View>
 
-        {/* Inline Time Dropdown */}
-        {showTimeDropdown && (
-          <View style={[styles.inlineDropdown, { top: 60, right: 140 }]}>
-            {TIME_OPTIONS.map(opt => (
-              <TouchableOpacity
-                key={opt}
-                style={[styles.dropdownOption, selectedTime === opt && styles.dropdownOptionSelected]}
-                onPress={() => { setSelectedTime(opt); setFilterTime(opt); setShowTimeDropdown(false); triggerAnimations(false); }}
-              >
-                <Text style={[styles.dropdownOptionText, selectedTime === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
-                {selectedTime === opt && <Text style={styles.checkmark}>✓</Text>}
-              </TouchableOpacity>
-            ))}
+        {/* Metric Header */}
+        <Animated.View style={[styles.metricHeader, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+          <Text style={styles.metricValue}>{metrics.totalClients}</Text>
+          <Text style={styles.headerMetricLabel}>{t('insights.totalClients', 'Total Clients')}</Text>
+          <View style={styles.metricChangeContainer}>
+            <Text style={styles.positiveChange}>{metrics.totalChange}</Text>
           </View>
-        )}
+        </Animated.View>
 
-        {/* Inline Region Dropdown */}
-        {showRegionDropdown && (
-          <View style={[styles.inlineDropdown, { top: 60, right: 20, width: 160 }]}>
-            {REGION_OPTIONS.map(opt => (
-              <TouchableOpacity
-                key={opt}
-                style={[styles.dropdownOption, selectedRegion === opt && styles.dropdownOptionSelected]}
-                onPress={() => { setSelectedRegion(opt); setFilterRegion(opt); setShowRegionDropdown(false); triggerAnimations(false); }}
-              >
-                <Text style={[styles.dropdownOptionText, selectedRegion === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
-                {selectedRegion === opt && <Text style={styles.checkmark}>✓</Text>}
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
-
-        {/* Grid */}
+        {/* Mini Stat Cards */}
         <View style={styles.grid}>
-          {/* Total Clients */}
+          {/* New Clients Card */}
           <Animated.View style={[styles.card, styles.smallCard, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => onNavigate?.('total_clients')} style={{ flex: 1 }}>
-              <View style={styles.cardHeader}>
-                <UsersIcon size={14} color={colors.textSecondary} />
-                <Text style={styles.cardTitle}>{t('insights.totalClients', 'Total Clients')}</Text>
+            <View style={styles.cardHeader}>
+              <UsersIcon size={14} color={colors.textSecondary} />
+              <Text style={styles.cardTitle}>{t('clientInsights.newClients', 'New Clients')}</Text>
+            </View>
+            <View style={styles.valueRow}>
+              <Text style={styles.cardValue}>+{Math.floor(parseInt(metrics.totalClients.replace(/[^0-9]/g, '')) * 0.12)}</Text>
+              <Text style={styles.positiveChange}>+12%</Text>
+            </View>
+            <View style={styles.miniChartContainer}>
+              <View style={styles.miniBars}>
+                {MINI_CHART_VALUES.map((_, i) => (
+                  <View key={i} style={styles.miniBarTrack}>
+                    <Animated.View style={[styles.miniBarFill, {
+                      height: miniChartHeights[i],
+                      backgroundColor: i === 5 || i === 9 ? colors.limeAccent : colors.border,
+                    }]} />
+                  </View>
+                ))}
               </View>
-              <View style={styles.valueRow}>
-                <Text style={styles.cardValue}>{metrics.totalClients}</Text>
-                <Text style={styles.positiveChange}>{metrics.totalChange}</Text>
-              </View>
-              <View style={styles.progressBarContainer}>
-                <View style={styles.progressTrack}>
-                  <Animated.View style={[styles.progressFill, { width: topBarWidth }]} />
-                  <View style={styles.progressThumb} />
-                </View>
-              </View>
-            </TouchableOpacity>
+            </View>
           </Animated.View>
 
-          {/* Active Clients */}
+          {/* Retention Rate Card */}
           <Animated.View style={[styles.card, styles.smallCard, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => onNavigate?.('active_clients')} style={{ flex: 1 }}>
-              <View style={styles.cardHeader}>
-                <UserIcon size={14} color={colors.textSecondary} />
-                <Text style={styles.cardTitle}>{t('insights.activeClients', 'Active Clients')}</Text>
+            <View style={styles.cardHeader}>
+              <TrendUpIcon size={14} color={colors.textSecondary} />
+              <Text style={styles.cardTitle}>{t('clientInsights.retentionRate', 'Retention Rate')}</Text>
+            </View>
+            <View style={styles.valueRow}>
+              <Text style={styles.cardValue}>92%</Text>
+              <Text style={styles.positiveChange}>+5%</Text>
+            </View>
+            <View style={styles.progressBarContainer}>
+              <View style={styles.progressTrack}>
+                <Animated.View style={[styles.progressFill, { width: chartProgress.interpolate({ inputRange: [0, 1], outputRange: ['0%', '92%'] }) }]} />
+                <View style={styles.progressThumb} />
               </View>
-              <View style={styles.valueRow}>
-                <Text style={styles.cardValue}>{metrics.activeClients}</Text>
-                <Text style={styles.positiveChange}>{metrics.activeChange}</Text>
-              </View>
-              <View style={styles.miniChartContainer}>
-                <View style={styles.miniBars}>
-                  {[20, 45, 60, 30, 80, 50, 40, 20, 10, 60, 30, 45, 20].map((val, i) => (
-                    <View key={i} style={styles.miniBarTrack}>
-                      <Animated.View style={[styles.miniBarFill, {
-                        height: chartProgress.interpolate({ inputRange: [0, 1], outputRange: ['0%', `${val}%`] }),
-                        backgroundColor: i === 4 || i === 5 || i === 9 ? colors.limeAccent : colors.border,
-                      }]} />
-                    </View>
-                  ))}
-                </View>
-              </View>
-            </TouchableOpacity>
+            </View>
           </Animated.View>
         </View>
 
         {/* Engagement vs LTV */}
         <Animated.View style={[styles.card, styles.largeCard, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => onNavigate?.('engagement_ltv')} style={styles.largeCardHeader}>
+          <View style={styles.largeCardHeader}>
             <View style={styles.cardHeader}>
               <TrendUpIcon size={14} color={colors.textSecondary} />
               <Text style={styles.cardTitle}>{t('clientInsights.engagementVsLtvTitle', 'Engagement vs Lifetime Value')}</Text>
             </View>
-            <View style={styles.calendarButton}>
+            <TouchableOpacity style={styles.calendarButton}>
               <CalendarIcon size={16} color={colors.textSecondary} />
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.largeValueRow}>
             <View style={styles.metricColumn}>
@@ -385,6 +371,97 @@ const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate 
             </ScrollView>
           </View>
         </Animated.View>
+
+        {/* Client Acquisition Sources - Donut Chart */}
+        <Animated.View style={[styles.card, styles.largeCard, { opacity: fadeAnim, transform: [{ translateY: slideAnim }], marginTop: 12 }]}>
+          <Text style={styles.sectionTitle}>{t('clientInsights.clientAcquisition', 'Client Acquisition Sources')}</Text>
+
+          {/* Donut Chart */}
+          <View style={styles.donutWrapper}>
+            <Svg width={180} height={180} viewBox="0 0 180 180">
+              {/* Background circle */}
+              <Circle cx="90" cy="90" r="70" fill="none" stroke="#F0F0F0" strokeWidth="28" />
+              {/* Referrals 38% */}
+              <AnimatedCircle
+                cx="90" cy="90" r="70"
+                fill="none" stroke="#42B6F5"
+                strokeWidth="28"
+                strokeDasharray={`${0.38 * donutCircumference} ${donutCircumference}`}
+                strokeDashoffset={donut1Offset}
+                strokeLinecap="butt"
+                transform="rotate(-90 90 90)"
+              />
+              {/* Organic Search 30% */}
+              <AnimatedCircle
+                cx="90" cy="90" r="70"
+                fill="none" stroke="#34C98A"
+                strokeWidth="28"
+                strokeDasharray={`${0.30 * donutCircumference} ${donutCircumference}`}
+                strokeDashoffset={donut2Offset}
+                strokeLinecap="butt"
+                transform="rotate(-90 90 90)"
+              />
+              {/* Direct 20% */}
+              <AnimatedCircle
+                cx="90" cy="90" r="70"
+                fill="none" stroke="#9B59B6"
+                strokeWidth="28"
+                strokeDasharray={`${0.20 * donutCircumference} ${donutCircumference}`}
+                strokeDashoffset={donut3Offset}
+                strokeLinecap="butt"
+                transform="rotate(-90 90 90)"
+              />
+              {/* Paid Ads 12% */}
+              <AnimatedCircle
+                cx="90" cy="90" r="70"
+                fill="none" stroke="#FF6B35"
+                strokeWidth="28"
+                strokeDasharray={`${0.12 * donutCircumference} ${donutCircumference}`}
+                strokeDashoffset={donut4Offset}
+                strokeLinecap="butt"
+                transform="rotate(-90 90 90)"
+              />
+              {/* Center white circle to create donut hole */}
+              <Circle cx="90" cy="90" r="56" fill="white" />
+              {/* Center text */}
+              <SvgText x="90" y="83" textAnchor="middle" fontSize="11" fill="#999" fontWeight="400">Referrals</SvgText>
+              <SvgText x="90" y="102" textAnchor="middle" fontSize="22" fill="#1A1A1A" fontWeight="700">38%</SvgText>
+            </Svg>
+          </View>
+
+          {/* Legend */}
+          <View style={styles.legendGrid}>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#42B6F5' }]} />
+              <View>
+                <Text style={styles.legendLabel}>{t('clientInsights.referrals', 'Referrals')}</Text>
+                <Text style={styles.legendValue}>38%</Text>
+              </View>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#34C98A' }]} />
+              <View>
+                <Text style={styles.legendLabel}>{t('clientInsights.organicSearch', 'Organic Search')}</Text>
+                <Text style={styles.legendValue}>30%</Text>
+              </View>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#9B59B6' }]} />
+              <View>
+                <Text style={styles.legendLabel}>{t('clientInsights.direct', 'Direct')}</Text>
+                <Text style={styles.legendValue}>20%</Text>
+              </View>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#FF6B35' }]} />
+              <View>
+                <Text style={styles.legendLabel}>{t('clientInsights.paidAds', 'Paid Ads')}</Text>
+                <Text style={styles.legendValue}>12%</Text>
+              </View>
+            </View>
+          </View>
+        </Animated.View>
+
       </ScrollView>
 
       {/* Backdrop to close inline dropdowns */}
@@ -392,6 +469,38 @@ const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate 
         <TouchableWithoutFeedback onPress={closeDropdowns}>
           <View style={StyleSheet.absoluteFill} />
         </TouchableWithoutFeedback>
+      )}
+
+      {/* Inline Time Dropdown */}
+      {showTimeDropdown && (
+        <View style={[styles.inlineDropdown, { top: 80, right: 160 }]}>
+          {TIME_OPTIONS.map(opt => (
+            <TouchableOpacity
+              key={opt}
+              style={[styles.dropdownOption, selectedTime === opt && styles.dropdownOptionSelected]}
+              onPress={() => { setSelectedTime(opt); setFilterTime(opt); setShowTimeDropdown(false); triggerAnimations(false); }}
+            >
+              <Text style={[styles.dropdownOptionText, selectedTime === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
+              {selectedTime === opt && <Text style={styles.checkmark}>✓</Text>}
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+
+      {/* Inline Region Dropdown */}
+      {showRegionDropdown && (
+        <View style={[styles.inlineDropdown, { top: 80, right: 40, width: 160 }]}>
+          {REGION_OPTIONS.map(opt => (
+            <TouchableOpacity
+              key={opt}
+              style={[styles.dropdownOption, selectedRegion === opt && styles.dropdownOptionSelected]}
+              onPress={() => { setSelectedRegion(opt); setFilterRegion(opt); setShowRegionDropdown(false); triggerAnimations(false); }}
+            >
+              <Text style={[styles.dropdownOptionText, selectedRegion === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
+              {selectedRegion === opt && <Text style={styles.checkmark}>✓</Text>}
+            </TouchableOpacity>
+          ))}
+        </View>
       )}
 
       {/* Filter Bottom Sheet */}
@@ -437,7 +546,11 @@ const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate 
 
 const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
-  scrollContent: { padding: 20, paddingTop: 10, paddingBottom: 100 },
+  scrollContent: { padding: 20, paddingTop: 40, paddingBottom: 100 },
+  metricHeader: { marginBottom: 32 },
+  metricValue: { fontSize: 48, fontWeight: '700', color: colors.textPrimary },
+  headerMetricLabel: { fontSize: 16, color: colors.textSecondary, marginTop: 4 },
+  metricChangeContainer: { marginTop: 8, alignSelf: 'flex-start', backgroundColor: 'rgba(164, 255, 66, 0.15)', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12 },
   subHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', marginBottom: 20, gap: 8, zIndex: 100 },
   iconButton: { width: 36, height: 36, borderRadius: 18, backgroundColor: colors.cardBackground, justifyContent: 'center', alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 6 },
   dropdownButton: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.cardBackground, paddingHorizontal: 14, paddingVertical: 10, borderRadius: 20, gap: 6, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 6 },
@@ -508,6 +621,13 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   chipTextSelected: { color: '#000', fontWeight: '700' },
   applyButton: { backgroundColor: colors.limeAccent, borderRadius: 16, paddingVertical: 16, alignItems: 'center', marginTop: 4 },
   applyButtonText: { fontSize: 16, fontWeight: '700', color: '#000' },
+  sectionTitle: { fontSize: 17, fontWeight: '700', color: colors.textPrimary, marginBottom: 20 },
+  donutWrapper: { alignItems: 'center', marginVertical: 16 },
+  legendGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 20, marginTop: 8 },
+  legendItem: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, width: '45%' },
+  legendDot: { width: 10, height: 10, borderRadius: 5, marginTop: 3 },
+  legendLabel: { fontSize: 12, color: colors.textSecondary, marginBottom: 2 },
+  legendValue: { fontSize: 16, fontWeight: '700', color: colors.textPrimary },
 });
 
-export default ClientInsightsScreen;
+export default TotalClientsScreen;

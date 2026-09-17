@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, TouchableOpacity, Easing, Modal, TouchableWithoutFeedback, RefreshControl } from 'react-native';
-import Svg, { Path, Circle, Defs, LinearGradient, Stop, Rect, Line } from 'react-native-svg';
+import Svg, { Path, Circle, Defs, LinearGradient, Stop, Rect, Line, Text as SvgText } from 'react-native-svg';
 import { ThemeColors } from '../constants/colors';
 import { useTheme } from '../context/ThemeContext';
 import { ChevronDownIcon, FilterIcon, TrendUpIcon, EyeIcon, UsersIcon, WarningTriangleIcon, CalendarIcon, CheckCircleIcon } from '../components/icons/Icons';
@@ -69,6 +69,10 @@ const RevenueForecastScreen: React.FC<RevenueForecastScreenProps> = ({ onNavigat
   const slideAnim = useRef(new Animated.Value(20)).current;
   const chartProgress = useRef(new Animated.Value(0)).current;
 
+  const barHeights = useMemo(() => {
+    return Array.from({ length: 45 }).map(() => 20 + Math.random() * 120);
+  }, [selectedTime, selectedRegion]);
+
   const triggerAnimations = () => {
     fadeAnim.setValue(0);
     slideAnim.setValue(20);
@@ -103,6 +107,16 @@ const RevenueForecastScreen: React.FC<RevenueForecastScreenProps> = ({ onNavigat
 
   const dotCx = chartProgress.interpolate({ inputRange, outputRange: dotCxOutput });
   const dotCy = chartProgress.interpolate({ inputRange, outputRange: dotCyOutput });
+
+  const donutCircumference = 2 * Math.PI * 70;
+  // Product A 45%
+  const donut1Offset = chartProgress.interpolate({ inputRange: [0, 1], outputRange: [donutCircumference, 0.25 * donutCircumference] });
+  // Product B 30%
+  const donut2Offset = chartProgress.interpolate({ inputRange: [0, 1], outputRange: [donutCircumference, (0.25 - 0.45) * donutCircumference] });
+  // Services 15%
+  const donut3Offset = chartProgress.interpolate({ inputRange: [0, 1], outputRange: [donutCircumference, (0.25 - 0.45 - 0.30) * donutCircumference] });
+  // Other 10%
+  const donut4Offset = chartProgress.interpolate({ inputRange: [0, 1], outputRange: [donutCircumference, (0.25 - 0.45 - 0.30 - 0.15) * donutCircumference] });
 
   const applyFilter = () => {
     setSelectedTime(filterTime);
@@ -168,46 +182,6 @@ const RevenueForecastScreen: React.FC<RevenueForecastScreenProps> = ({ onNavigat
             <ChevronDownIcon size={12} color={colors.textPrimary} />
           </TouchableOpacity>
         </Animated.View>
-
-        {showTimeDropdown && (
-          <View style={[styles.inlineDropdown, { top: 60, right: 130 }]}>
-            {TIME_OPTIONS.map(opt => (
-              <TouchableOpacity
-                key={opt}
-                style={[styles.dropdownOption, selectedTime === opt && styles.dropdownOptionSelected]}
-                onPress={() => { 
-                  setSelectedTime(opt); 
-                  setFilterTime(opt); 
-                  setShowTimeDropdown(false); 
-                  triggerAnimations();
-                }}
-              >
-                <Text style={[styles.dropdownOptionText, selectedTime === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
-                {selectedTime === opt && <Text style={styles.checkmark}>✓</Text>}
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
-
-        {showRegionDropdown && (
-          <View style={[styles.inlineDropdown, { top: 60, right: 20, width: 160 }]}>
-            {REGION_OPTIONS.map(opt => (
-              <TouchableOpacity
-                key={opt}
-                style={[styles.dropdownOption, selectedRegion === opt && styles.dropdownOptionSelected]}
-                onPress={() => { 
-                  setSelectedRegion(opt); 
-                  setFilterRegion(opt); 
-                  setShowRegionDropdown(false); 
-                  triggerAnimations();
-                }}
-              >
-                <Text style={[styles.dropdownOptionText, selectedRegion === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
-                {selectedRegion === opt && <Text style={styles.checkmark}>✓</Text>}
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
 
         {/* Grid Layout */}
         <View style={styles.grid}>
@@ -305,8 +279,7 @@ const RevenueForecastScreen: React.FC<RevenueForecastScreenProps> = ({ onNavigat
              <View style={{ width: 550 }}>
                <View style={styles.mainChartContainer}>
                   <Svg width="100%" height="200" viewBox="0 0 550 200">
-                     {Array.from({ length: 45 }).map((_, i) => {
-                       const h = 20 + Math.random() * 120;
+                     {barHeights.map((h, i) => {
                        const isCenter = i > 15 && i < 25;
                        return (
                          <AnimatedLine key={i} x1={i * 12 + 3} y1="200" x2={i * 12 + 3} y2={chartProgress.interpolate({ inputRange: [0, 1], outputRange: [200, 200 - h] })} stroke={isCenter ? '#000000' : colors.progressInactive} strokeWidth="6" strokeLinecap="round" />
@@ -335,6 +308,67 @@ const RevenueForecastScreen: React.FC<RevenueForecastScreenProps> = ({ onNavigat
              </View>
            </ScrollView>
         </Animated.View>
+
+        {/* Revenue Breakdown - Donut Chart */}
+        <Animated.View style={[styles.card, styles.largeCard, { opacity: fadeAnim, transform: [{ translateY: slideAnim }], marginTop: 12 }]}>
+          <Text style={styles.sectionTitle}>{t('forecast.revenueBreakdown', 'Revenue Breakdown')}</Text>
+
+          <View style={styles.donutWrapper}>
+            <Svg width={180} height={180} viewBox="0 0 180 180">
+              <Circle cx="90" cy="90" r="70" fill="none" stroke="#F0F0F0" strokeWidth="28" />
+              {/* Product A 45% */}
+              <AnimatedCircle cx="90" cy="90" r="70" fill="none" stroke="#42B6F5" strokeWidth="28"
+                strokeDasharray={`${0.45 * donutCircumference} ${donutCircumference}`}
+                strokeDashoffset={donut1Offset} strokeLinecap="butt" transform="rotate(-90 90 90)" />
+              {/* Product B 30% */}
+              <AnimatedCircle cx="90" cy="90" r="70" fill="none" stroke="#34C98A" strokeWidth="28"
+                strokeDasharray={`${0.30 * donutCircumference} ${donutCircumference}`}
+                strokeDashoffset={donut2Offset} strokeLinecap="butt" transform="rotate(-90 90 90)" />
+              {/* Services 15% */}
+              <AnimatedCircle cx="90" cy="90" r="70" fill="none" stroke="#9B59B6" strokeWidth="28"
+                strokeDasharray={`${0.15 * donutCircumference} ${donutCircumference}`}
+                strokeDashoffset={donut3Offset} strokeLinecap="butt" transform="rotate(-90 90 90)" />
+              {/* Other 10% */}
+              <AnimatedCircle cx="90" cy="90" r="70" fill="none" stroke="#FF6B35" strokeWidth="28"
+                strokeDasharray={`${0.10 * donutCircumference} ${donutCircumference}`}
+                strokeDashoffset={donut4Offset} strokeLinecap="butt" transform="rotate(-90 90 90)" />
+              <Circle cx="90" cy="90" r="56" fill="white" />
+              <SvgText x="90" y="83" textAnchor="middle" fontSize="11" fill="#999" fontWeight="400">Software</SvgText>
+              <SvgText x="90" y="102" textAnchor="middle" fontSize="22" fill="#1A1A1A" fontWeight="700">45%</SvgText>
+            </Svg>
+          </View>
+
+          <View style={styles.legendGrid}>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#42B6F5' }]} />
+              <View>
+                <Text style={styles.legendLabel}>{t('forecast.software', 'Software')}</Text>
+                <Text style={styles.legendValue}>45%</Text>
+              </View>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#34C98A' }]} />
+              <View>
+                <Text style={styles.legendLabel}>{t('forecast.hardware', 'Hardware')}</Text>
+                <Text style={styles.legendValue}>30%</Text>
+              </View>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#9B59B6' }]} />
+              <View>
+                <Text style={styles.legendLabel}>{t('forecast.services', 'Services')}</Text>
+                <Text style={styles.legendValue}>15%</Text>
+              </View>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#FF6B35' }]} />
+              <View>
+                <Text style={styles.legendLabel}>{t('forecast.other', 'Other')}</Text>
+                <Text style={styles.legendValue}>10%</Text>
+              </View>
+            </View>
+          </View>
+        </Animated.View>
         
         <View style={{ height: 100 }} />
       </ScrollView>
@@ -343,6 +377,46 @@ const RevenueForecastScreen: React.FC<RevenueForecastScreenProps> = ({ onNavigat
         <TouchableWithoutFeedback onPress={closeDropdowns}>
           <View style={StyleSheet.absoluteFill} />
         </TouchableWithoutFeedback>
+      )}
+
+      {showTimeDropdown && (
+        <View style={[styles.inlineDropdown, { top: 80, right: 150 }]}>
+          {TIME_OPTIONS.map(opt => (
+            <TouchableOpacity
+              key={opt}
+              style={[styles.dropdownOption, selectedTime === opt && styles.dropdownOptionSelected]}
+              onPress={() => { 
+                setSelectedTime(opt); 
+                setFilterTime(opt); 
+                setShowTimeDropdown(false); 
+                triggerAnimations();
+              }}
+            >
+              <Text style={[styles.dropdownOptionText, selectedTime === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
+              {selectedTime === opt && <Text style={styles.checkmark}>✓</Text>}
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+
+      {showRegionDropdown && (
+        <View style={[styles.inlineDropdown, { top: 80, right: 40, width: 160 }]}>
+          {REGION_OPTIONS.map(opt => (
+            <TouchableOpacity
+              key={opt}
+              style={[styles.dropdownOption, selectedRegion === opt && styles.dropdownOptionSelected]}
+              onPress={() => { 
+                setSelectedRegion(opt); 
+                setFilterRegion(opt); 
+                setShowRegionDropdown(false); 
+                triggerAnimations();
+              }}
+            >
+              <Text style={[styles.dropdownOptionText, selectedRegion === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
+              {selectedRegion === opt && <Text style={styles.checkmark}>✓</Text>}
+            </TouchableOpacity>
+          ))}
+        </View>
       )}
 
       {/* Filter Bottom Sheet */}
@@ -450,6 +524,13 @@ const getStyles = (colors: ThemeColors, isDark?: boolean) => StyleSheet.create({
   chipTextSelected: { color: '#000', fontWeight: '700' },
   applyButton: { backgroundColor: colors.limeAccent, borderRadius: 16, paddingVertical: 16, alignItems: 'center', marginTop: 4 },
   applyButtonText: { fontSize: 16, fontWeight: '700', color: '#000' },
+  sectionTitle: { fontSize: 17, fontWeight: '700', color: colors.textPrimary, marginBottom: 20 },
+  donutWrapper: { alignItems: 'center', marginVertical: 16 },
+  legendGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 20, marginTop: 8 },
+  legendItem: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, width: '45%' },
+  legendDot: { width: 10, height: 10, borderRadius: 5, marginTop: 3 },
+  legendLabel: { fontSize: 12, color: colors.textSecondary, marginBottom: 2 },
+  legendValue: { fontSize: 16, fontWeight: '700', color: colors.textPrimary },
 });
 
 export default RevenueForecastScreen;

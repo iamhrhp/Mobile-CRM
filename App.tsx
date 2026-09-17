@@ -22,10 +22,13 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import TotalLeadsScreen from './src/screens/TotalLeadsScreen';
+import TotalClientsScreen from './src/screens/TotalClientsScreen';
+import ActiveClientsScreen from './src/screens/ActiveClientsScreen';
 import ConversionRateScreen from './src/screens/ConversionRateScreen';
 import RevenueGrowthScreen from './src/screens/RevenueGrowthScreen';
 import LeadDetailsScreen from './src/screens/LeadDetailsScreen';
 import SplashScreen from './src/screens/SplashScreen';
+import EngagementLTVScreen from './src/screens/EngagementLTVScreen';
 
 function App() {
   return (
@@ -143,11 +146,17 @@ function AppContent() {
       case 'bar':
         return <RevenueForecastScreen onNavigate={handleTabChange} />;
       case 'lightbulb':
-        return <ClientInsightsScreen />;
+        return <ClientInsightsScreen onNavigate={handleTabChange} />;
       case 'add_lead':
         return <AddNewLeadScreen onCancel={() => handleTabChange(previousTab)} onSave={() => handleTabChange(previousTab)} />;
       case 'total_leads':
         return <TotalLeadsScreen onHideHeader={setIsHeaderHidden} />;
+      case 'total_clients':
+        return <TotalClientsScreen />;
+      case 'active_clients':
+        return <ActiveClientsScreen />;
+      case 'engagement_ltv':
+        return <EngagementLTVScreen />;
       case 'conversion_rate':
         return <ConversionRateScreen />;
       case 'revenue_growth':
@@ -172,6 +181,9 @@ function AppContent() {
       case 'lightbulb': return t('header.clientInsights', 'Client Insights');
       case 'settings': return t('header.settings', 'Settings');
       case 'total_leads': return t('header.totalLeads', 'Total Leads');
+      case 'total_clients': return t('header.totalClients', 'Total Clients');
+      case 'active_clients': return t('header.activeClients', 'Active Clients');
+      case 'engagement_ltv': return t('header.engagementLtv', 'Engagement & LTV');
       case 'conversion_rate': return t('header.conversionRate', 'Conversion Rate');
       case 'revenue_growth': return t('header.revenueGrowth', 'Revenue Growth');
       default: return '';

@@ -47,7 +47,7 @@ const LightbulbNavIcon = ({ size = 20, color = '#A0A3BD' }) => (
   </View>
 );
 
-export type TabType = 'key' | 'users' | 'pie' | 'bar' | 'lightbulb' | 'add_lead' | 'total_leads' | 'conversion_rate' | 'revenue_growth' | 'notifications' | 'settings' | 'sort' | 'lead_details';
+export type TabType = 'key' | 'users' | 'pie' | 'bar' | 'lightbulb' | 'add_lead' | 'total_leads' | 'conversion_rate' | 'revenue_growth' | 'notifications' | 'settings' | 'sort' | 'lead_details' | 'total_clients' | 'active_clients' | 'engagement_ltv';
 interface BottomNavBarProps {
   activeTab?: TabType;
   onTabChange?: (tab: TabType) => void;
