@@ -155,7 +155,7 @@ const RevenueGrowthScreen = () => {
           opacity: chartAnim, 
           transform: [{ translateY: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [15, 0] }) }] 
         }}>
-          <Text style={styles.cardTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${selectedMonth} ${selectedYear}`} sales</Text>
+          <Text style={styles.cardTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${t(`timeFilter.months.${selectedMonth}`, selectedMonth)} ${selectedYear}`} {t('revenue.sales', 'sales')}</Text>
           <View style={styles.salesRow}>
             <Text style={styles.salesBig}>
               {isCurrentYear ? '$ 6,254,490' : '$ 75,053,880'}
@@ -166,7 +166,7 @@ const RevenueGrowthScreen = () => {
             </View>
             <View style={{ flex: 1 }} />
             <Text style={styles.lastMonthText}>
-              Previous : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
+              {t('revenue.previous', 'Previous')} : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
             </Text>
           </View>
         </Animated.View>
@@ -174,7 +174,7 @@ const RevenueGrowthScreen = () => {
 
       {/* Card 2: Revenue by lead source */}
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Revenue by lead source</Text>
+        <Text style={styles.cardTitle}>{t('revenue.revenueByLeadSource', 'Revenue by lead source')}</Text>
         
         <View style={styles.pieContainer}>
           <Animated.View style={{ 
@@ -209,7 +209,7 @@ const RevenueGrowthScreen = () => {
           <View style={styles.tooltip}>
             <View style={styles.tooltipHeader}>
               <View style={[styles.legendDot, { backgroundColor: '#FF7F50' }]} />
-              <Text style={styles.tooltipLabel}>Partners</Text>
+              <Text style={styles.tooltipLabel}>{t('users.sourceTags.Partners', 'Partners')}</Text>
             </View>
             <Text style={styles.tooltipValue}>
               {isCurrentYear ? '$ 154,768' : '$ 1,850,000'}
@@ -221,7 +221,7 @@ const RevenueGrowthScreen = () => {
             <View key={i} style={styles.legendItem}>
               <View style={styles.legendHeader}>
                 <View style={[styles.legendDot, { backgroundColor: item.color }]} />
-                <Text style={styles.legendLabel}>{item.label}</Text>
+                <Text style={styles.legendLabel}>{t(`users.sourceTags.${item.label.replace(' ', '')}`, item.label)}</Text>
               </View>
               <Text style={styles.legendValue}>${Math.round(item.value).toLocaleString()}</Text>
             </View>
@@ -232,15 +232,15 @@ const RevenueGrowthScreen = () => {
       {/* Card 3: Lead Conversion */}
       <View style={styles.card}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-          <Text style={[styles.cardTitle, { marginBottom: 0 }]}>Lead Conversion</Text>
+          <Text style={[styles.cardTitle, { marginBottom: 0 }]}>{t('revenue.leadConversion', 'Lead Conversion')}</Text>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
               <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#26C6DA', marginRight: 4 }} />
-              <Text style={{ fontSize: 10, color: colors.textMuted }}>Current</Text>
+              <Text style={{ fontSize: 10, color: colors.textMuted }}>{t('revenue.current', 'Current')}</Text>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#FF7F50', marginRight: 4 }} />
-              <Text style={{ fontSize: 10, color: colors.textMuted }}>Previous</Text>
+              <Text style={{ fontSize: 10, color: colors.textMuted }}>{t('revenue.previous', 'Previous')}</Text>
             </View>
           </View>
         </View>
@@ -284,7 +284,7 @@ const RevenueGrowthScreen = () => {
           opacity: chartAnim, 
           transform: [{ translateY: chartAnim.interpolate({ inputRange: [0, 1], outputRange: [15, 0] }) }] 
         }}>
-          <Text style={styles.cardTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${selectedMonth} ${selectedYear}`} sales</Text>
+          <Text style={styles.cardTitle}>{selectedMonth === 'All' ? `${selectedYear} Total` : `${t(`timeFilter.months.${selectedMonth}`, selectedMonth)} ${selectedYear}`} {t('revenue.sales', 'sales')}</Text>
           <View style={styles.salesRow}>
             <Text style={styles.salesBig}>
               {isCurrentYear ? '$ 6,254,490' : '$ 75,053,880'}
@@ -295,7 +295,7 @@ const RevenueGrowthScreen = () => {
             </View>
             <View style={{ flex: 1 }} />
             <Text style={styles.lastMonthText}>
-              Previous : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
+              {t('revenue.previous', 'Previous')} : {isCurrentYear ? '$ 5,685,960' : '$ 68,230,000'}
             </Text>
           </View>
         </Animated.View>

@@ -23,7 +23,8 @@
     "conversionRate": "معدل التحويل",
     "revenueGrowth": "نمو الإيرادات",
     "monthlyRecurring": "الإيرادات المتكررة الشهرية",
-    "overview": "نظرة عامة"
+    "overview": "نظرة عامة",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "users": {
     "newLeads": "عملاء محتملون جدد",
@@ -54,7 +55,8 @@
   "insights": {
     "topNewLead": "أهم عميل محتمل جديد",
     "newMessages": "رسائل جديدة",
-    "needsAttention": "بحاجة للاهتمام"
+    "needsAttention": "بحاجة للاهتمام",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "placeholders": {
     "addNewLead": "إضافة عميل محتمل جديد",

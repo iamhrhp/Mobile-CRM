@@ -190,7 +190,7 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
     gap: 10,
   },
   pill: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
     backgroundColor: colors.cardBackground,

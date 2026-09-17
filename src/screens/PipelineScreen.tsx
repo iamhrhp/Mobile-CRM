@@ -16,6 +16,18 @@ interface PipelineScreenProps {
 
 const STATUSES = ['New', 'Contacted', 'Proposal Sent', 'Negotiation', 'Closed Won', 'Closed Lost'];
 
+const getStatusTranslationKey = (status: string) => {
+  switch (status) {
+    case 'New': return 'status.new';
+    case 'Contacted': return 'status.contacted';
+    case 'Proposal Sent': return 'status.proposalSent';
+    case 'Negotiation': return 'status.negotiation';
+    case 'Closed Won': return 'status.closedWon';
+    case 'Closed Lost': return 'status.closedLost';
+    default: return status;
+  }
+};
+
 const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLead }) => {
   const { t } = useTranslation();
   const currency = useCurrency();
@@ -190,7 +202,7 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
                 style={[styles.dropdownButton, dropdownVisible && styles.dropdownButtonActive]} 
                 onPress={() => setDropdownVisible(!dropdownVisible)}
               >
-                <Text style={styles.dropdownText}>{selectedStatus}</Text>
+                <Text style={styles.dropdownText}>{t(getStatusTranslationKey(selectedStatus), selectedStatus)}</Text>
                 <ChevronDownIcon size={12} color={colors.textPrimary} />
               </TouchableOpacity>
               
@@ -205,7 +217,7 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
                         setDropdownVisible(false);
                       }}
                     >
-                      <Text style={[styles.dropdownOptionText, selectedStatus === status && styles.dropdownOptionTextSelected]}>{status}</Text>
+                      <Text style={[styles.dropdownOptionText, selectedStatus === status && styles.dropdownOptionTextSelected]}>{t(getStatusTranslationKey(status), status)}</Text>
                       {selectedStatus === status && <Text style={styles.checkmark}>✓</Text>}
                     </TouchableOpacity>
                   ))}
@@ -219,7 +231,7 @@ const PipelineScreen: React.FC<PipelineScreenProps> = ({ onNavigate, onSelectLea
         <View style={styles.kanbanBoardContainer}>
           {/* Column Header */}
           <View style={styles.columnHeaderRow}>
-            <Text style={styles.columnHeaderText}>{selectedStatus} ({filteredLeads.length})</Text>
+            <Text style={styles.columnHeaderText}>{t(getStatusTranslationKey(selectedStatus), selectedStatus)} ({filteredLeads.length})</Text>
             <View style={styles.columnActions}>
               <TouchableOpacity activeOpacity={0.7}>
                 <MoreHorizontalIcon size={16} />

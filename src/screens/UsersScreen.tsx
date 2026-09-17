@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { TabType } from "../components/BottomNavBar";
+
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, TouchableWithoutFeedback, Modal, TextInput, KeyboardAvoidingView, Platform, RefreshControl } from 'react-native';
 import { FilterIcon, PlusIcon, UsersIcon, FireIcon, ArrowUpRightIcon, MailIcon, PhoneIcon, ChevronDownIcon, VideoCameraIcon } from '../components/icons/Icons';
 import { useTheme } from '../context/ThemeContext';
@@ -70,7 +72,7 @@ const StatusDropdown = ({ initialStatus, avatarUri, direction = 'down', isOpen, 
   const { t } = useTranslation();
   const [statusId, setStatusId] = React.useState(initialStatus);
   const options = [
-    { id: 'New', label: 'New' },
+    { id: 'New', label: t('status.new', 'New') },
     { id: 'Call Scheduled', label: t('users.callScheduled', 'Call Scheduled') },
     { id: 'Follow-up Email', label: t('users.followUpEmail', 'Follow-up Email') },
     { id: 'Proposal Sent', label: t('users.proposalSent', 'Proposal Sent') },
@@ -111,7 +113,7 @@ const LeadCard = ({ lead, barAnim, openDropdownId, setOpenDropdownId, colors, st
         {lead.isHotLead && (
           <View style={styles.hotLeadBadge}>
             <FireIcon size={14} />
-            <Text style={styles.hotLeadText}>HOT LEAD</Text>
+            <Text style={styles.hotLeadText}>{t('users.hotLead', 'HOT LEAD')}</Text>
           </View>
         )}
         <TouchableOpacity activeOpacity={0.7} style={styles.openBtn}>
@@ -135,11 +137,11 @@ const LeadCard = ({ lead, barAnim, openDropdownId, setOpenDropdownId, colors, st
         </View>
       </View>
 
-      <Text style={styles.subtext}>{lead.subtext}</Text>
+      <Text style={styles.subtext}>{t(`users.subtexts.${lead.id}`, lead.subtext)}</Text>
 
       <View style={styles.interestSection}>
         <View style={styles.interestRow}>
-          <Text style={styles.interestLabel}>{lead.interestLabel}</Text>
+          <Text style={styles.interestLabel}>{t(`users.interest.${lead.interestLabel.replace(' ', '')}`, lead.interestLabel)}</Text>
           <Text style={styles.interestValue}>{lead.interestValue}%</Text>
         </View>
         <Animated.View style={[styles.progressContainer, { opacity: barAnim }]}>
@@ -166,7 +168,7 @@ const LeadCard = ({ lead, barAnim, openDropdownId, setOpenDropdownId, colors, st
         <View style={styles.badgesRow}>
           {lead.sources.map((src: string, idx: number) => (
             <View key={idx} style={styles.badge}>
-              <Text style={styles.badgeText}>{src}</Text>
+              <Text style={styles.badgeText}>{t(`users.sourceTags.${src.replace(' ', '')}`, src)}</Text>
             </View>
           ))}
         </View>
@@ -201,7 +203,7 @@ const LeadCard = ({ lead, barAnim, openDropdownId, setOpenDropdownId, colors, st
 };
 
 interface UsersScreenProps {
-  onNavigate?: (screen: string) => void;
+  onNavigate?: (screen: TabType) => void;
 }
 
 const UsersScreen: React.FC<UsersScreenProps> = ({ onNavigate }) => {
@@ -262,7 +264,7 @@ const UsersScreen: React.FC<UsersScreenProps> = ({ onNavigate }) => {
         }
       >
         <TouchableWithoutFeedback onPress={handleOutsidePress}>
-          <View style={styles.scrollContent}>
+          <View style={{ flex: 1 }}>
             {/* Top Actions Row */}
             <View style={styles.topActionsRow}>
               <TouchableOpacity activeOpacity={0.7} style={styles.filterBtn} onPress={() => onNavigate?.('sort')}>
@@ -302,6 +304,9 @@ const UsersScreen: React.FC<UsersScreenProps> = ({ onNavigate }) => {
 };
 
 const getStyles = (colors: ThemeColors) => StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   scrollContent: {
     paddingBottom: 110,
     paddingHorizontal: 20,
@@ -327,7 +332,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
   },
   addLeadBtn: {
     backgroundColor: colors.cardBackground,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 22,
     flexDirection: 'row',

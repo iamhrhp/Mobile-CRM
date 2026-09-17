@@ -19,7 +19,11 @@ const LANGUAGES = [
   { code: 'ml', name: 'Malayalam (മലയാളം)' }
 ];
 
-const LanguageSwitcher = () => {
+interface LanguageSwitcherProps {
+  customTrigger?: (onPress: () => void, currentCode: string) => React.ReactNode;
+}
+
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ customTrigger }) => {
   const { i18n } = useTranslation();
   const { colors, isDark } = useTheme();
   const styles = getStyles(colors, isDark);
@@ -34,12 +38,16 @@ const LanguageSwitcher = () => {
 
   return (
     <>
-      <TouchableOpacity 
-        style={styles.triggerButton} 
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.triggerText}>{currentLang.code.toUpperCase()}</Text>
-      </TouchableOpacity>
+      {customTrigger ? (
+        customTrigger(() => setModalVisible(true), currentLang.code)
+      ) : (
+        <TouchableOpacity 
+          style={styles.triggerButton} 
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.triggerText}>{currentLang.code.toUpperCase()}</Text>
+        </TouchableOpacity>
+      )}
 
       <Modal
         visible={modalVisible}

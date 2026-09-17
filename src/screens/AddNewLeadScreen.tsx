@@ -130,7 +130,7 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
     backgroundColor: colors.background,
   },
   content: {
-    paddingHorizontal: 24,
+    paddingHorizontal: 20,
     paddingTop: 16,
     paddingBottom: 100,
     maxWidth: 500,
@@ -176,7 +176,7 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingVertical: 16,
     fontSize: 16,
     color: colors.textPrimary,

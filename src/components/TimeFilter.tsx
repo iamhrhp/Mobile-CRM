@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, FlatList, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeColors } from '../constants/colors';
 
@@ -16,6 +17,7 @@ interface TimeFilterProps {
 const TimeFilter: React.FC<TimeFilterProps> = ({ selectedMonth, onMonthChange, selectedYear, onYearChange }) => {
   const { colors } = useTheme();
   const styles = getStyles(colors);
+  const { t } = useTranslation();
   
   const [modalVisible, setModalVisible] = useState<'month' | 'year' | null>(null);
 
@@ -36,7 +38,7 @@ const TimeFilter: React.FC<TimeFilterProps> = ({ selectedMonth, onMonthChange, s
           <View style={styles.modalOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>Select {modalVisible === 'month' ? 'Month' : 'Year'}</Text>
+                <Text style={styles.modalTitle}>{modalVisible === 'month' ? t('timeFilter.selectMonth', 'Select Month') : t('timeFilter.selectYear', 'Select Year')}</Text>
                 <FlatList
                   data={data}
                   keyExtractor={item => item}
@@ -47,7 +49,7 @@ const TimeFilter: React.FC<TimeFilterProps> = ({ selectedMonth, onMonthChange, s
                       onPress={() => onSelect(item)}
                     >
                       <Text style={[styles.modalItemText, selected === item && styles.modalItemTextSelected]}>
-                        {item}
+                        {modalVisible === 'month' ? t(`timeFilter.months.${item}`, item) : item}
                       </Text>
                       {selected === item && <Text style={styles.checkIcon}>✓</Text>}
                     </TouchableOpacity>
@@ -64,7 +66,7 @@ const TimeFilter: React.FC<TimeFilterProps> = ({ selectedMonth, onMonthChange, s
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => setModalVisible('month')}>
-        <Text style={styles.buttonText}>{selectedMonth}</Text>
+        <Text style={styles.buttonText}>{t(`timeFilter.months.${selectedMonth}`, selectedMonth)}</Text>
         <Text style={styles.chevron}>▼</Text>
       </TouchableOpacity>
       

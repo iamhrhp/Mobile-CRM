@@ -134,7 +134,7 @@ const createSmoothLine = (data: number[], width: number, height: number) => {
 
 
 
-const LeadItem = ({ item, colors, styles, onPress }: any) => {
+const LeadItem = ({ item, colors, styles, onPress, t }: any) => {
   const [imageError, setImageError] = useState(false);
   
   const initials = item.name
@@ -160,8 +160,8 @@ const LeadItem = ({ item, colors, styles, onPress }: any) => {
         </View>
       )}
       <View style={styles.listInfo}>
-        <Text style={styles.listTitle}>{item.name}</Text>
-        <Text style={styles.listSubtitle}>{item.source}</Text>
+        <Text style={styles.listTitle}>{item.name.replace('Lead', t('dashboard.lead', 'Lead'))}</Text>
+        <Text style={styles.listSubtitle}>{t(`users.sourceTags.${item.source.replace(' ', '')}`, item.source)}</Text>
       </View>
       <Text style={styles.listTime}>{item.time}</Text>
     </TouchableOpacity>
@@ -312,7 +312,7 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
         {/* Next Follow-up - Direct Action Focus */}
         <View style={{ marginBottom: 28 }}>
           <Text style={{ fontSize: 13, fontWeight: '700', color: colors.textMuted, textTransform: 'uppercase', marginBottom: 12, letterSpacing: 0.5 }}>Next Action</Text>
-          <View style={{ padding: 16, backgroundColor: colors.cardBackground, borderRadius: 16, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: colors.primary + '20', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 10 }}>
+          <View style={{ padding: 20, backgroundColor: colors.cardBackground, borderRadius: 16, flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: colors.primary + '20', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 10 }}>
             <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: colors.secondaryBackground, justifyContent: 'center', alignItems: 'center', marginRight: 16 }}>
               <CalendarIcon size={20} color={colors.primary} />
             </View>
@@ -387,7 +387,7 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
               <Text style={{ color: colors.primary, fontSize: 13, fontWeight: '700' }}>Edit</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ backgroundColor: colors.cardBackground, borderRadius: 16, padding: 16, borderWidth: 1, borderColor: colors.border }}>
+          <View style={{ backgroundColor: colors.cardBackground, borderRadius: 16, padding: 20, borderWidth: 1, borderColor: colors.border }}>
             {[
               { label: 'Source', value: selectedLead.source },
               { label: 'Owner', value: selectedLead.owner },
@@ -461,13 +461,13 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
       {/* Edit Notes Modal */}
       <Modal visible={isEditNotesVisible} animationType="slide" transparent={true}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ backgroundColor: colors.background, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 24, minHeight: 300 }}>
+          <View style={{ backgroundColor: colors.background, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20, minHeight: 300 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
               <Text style={{ fontSize: 18, fontWeight: '700', color: colors.textPrimary }}>Edit Notes</Text>
               <TouchableOpacity onPress={() => setEditNotesVisible(false)}><Text style={{ fontSize: 16, color: colors.textSecondary }}>Cancel</Text></TouchableOpacity>
             </View>
             <TextInput
-              style={{ backgroundColor: colors.cardBackground, borderRadius: 12, padding: 16, paddingTop: 16, fontSize: 16, color: colors.textPrimary, minHeight: 120, borderWidth: 1, borderColor: colors.border }}
+              style={{ backgroundColor: colors.cardBackground, borderRadius: 12, padding: 20, paddingTop: 16, fontSize: 16, color: colors.textPrimary, minHeight: 120, borderWidth: 1, borderColor: colors.border }}
               multiline
               autoFocus
               value={editNotesValue}
@@ -499,7 +499,7 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
               </View>
             </TouchableOpacity>
           </View>
-          <ScrollView contentContainerStyle={{ padding: 24 }}>
+          <ScrollView contentContainerStyle={{ padding: 20 }}>
             {selectedLead.activities.map((act: any, idx: number) => (
               <View key={act.id} style={{ flexDirection: 'row', marginBottom: 24 }}>
                 <View style={{ alignItems: 'center', marginRight: 16 }}>
@@ -536,30 +536,30 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
         <View style={styles.statRow}>
           <View style={styles.statItem}>
             <Text style={styles.statValue}>840</Text>
-            <Text style={styles.statLabel}>Organic</Text>
+            <Text style={styles.statLabel}>{t('users.sourceTags.Organic', 'Organic')}</Text>
           </View>
           <View style={styles.divider} />
           <View style={styles.statItem}>
             <Text style={styles.statValue}>210</Text>
-            <Text style={styles.statLabel}>Referrals</Text>
+            <Text style={styles.statLabel}>{t('users.sourceTags.Referrals', 'Referrals')}</Text>
           </View>
           <View style={styles.divider} />
           <View style={styles.statItem}>
             <Text style={styles.statValue}>182</Text>
-            <Text style={styles.statLabel}>Outbound</Text>
+            <Text style={styles.statLabel}>{t('users.sourceTags.Outbound', 'Outbound')}</Text>
           </View>
         </View>
       </View>
 
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Recent Acquisition</Text>
+        <Text style={styles.sectionTitle}>{t('dashboard.recentAcquisition', 'Recent Acquisition')}</Text>
       </View>
 
       <View style={styles.searchContainer}>
         <SearchIcon size={18} color={colors.textSecondary} />
         <TextInput
           style={styles.searchInput}
-          placeholder="Search leads..."
+          placeholder={t('dashboard.searchLeads', 'Search leads...')}
           placeholderTextColor={colors.textMuted}
           value={searchQuery}
           onChangeText={(text) => {
@@ -581,7 +581,7 @@ const TotalLeadsScreen = ({ onHideHeader }: { onHideHeader?: (hidden: boolean) =
   };
 
   const renderItem = ({ item }: { item: typeof DUMMY_LEADS[0] }) => (
-    <LeadItem item={item} colors={colors} styles={styles} onPress={(lead: any) => setSelectedLeadId(lead.id)} />
+    <LeadItem item={item} colors={colors} styles={styles} onPress={(lead: any) => setSelectedLeadId(lead.id)} t={t} />
   );
 
   return (
@@ -605,7 +605,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     backgroundColor: colors.background,
   },
   content: {
-    padding: 24,
+    padding: 20,
     paddingBottom: 100,
   },
   headerContainer: {
@@ -627,7 +627,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
     borderRadius: 20,
-    padding: 24,
+    padding: 20,
     marginBottom: 32,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -691,7 +691,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.cardBackground,
-    padding: 16,
+    padding: 20,
     borderRadius: 16,
     marginBottom: 12,
     shadowColor: '#000',
@@ -728,7 +728,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
   },
   loadMoreBtn: {
     backgroundColor: colors.cardBackground,
-    padding: 16,
+    padding: 20,
     borderRadius: 16,
     alignItems: 'center',
     marginTop: 8,
@@ -790,7 +790,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
   detailsCard: {
     backgroundColor: colors.cardBackground,
     borderRadius: 20,
-    padding: 24,
+    padding: 20,
     marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

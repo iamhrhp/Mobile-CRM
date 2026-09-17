@@ -76,13 +76,19 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ onLogout }) => {
             </View>
           </TouchableOpacity>
           <View style={styles.divider} />
-          <View style={[styles.row, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
-            <View style={styles.textContainer}>
-              <Text style={styles.rowTitle}>{t('settings.language', 'Language')}</Text>
-              <Text style={styles.rowSubtitle}>{t('settings.changeLanguage', 'Change application language')}</Text>
-            </View>
-            <LanguageSwitcher />
-          </View>
+          <LanguageSwitcher 
+            customTrigger={(onPress, code) => (
+              <TouchableOpacity activeOpacity={0.7} style={[styles.row, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]} onPress={onPress}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.rowTitle}>{t('settings.language', 'Language')}</Text>
+                  <Text style={styles.rowSubtitle}>{t('settings.changeLanguage', 'Change application language')}</Text>
+                </View>
+                <View style={{ paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, backgroundColor: colors.cardBackground, borderWidth: 1, borderColor: colors.border, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ fontSize: 12, fontWeight: '700', color: colors.textPrimary }}>{code.toUpperCase()}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
         </View>
       </View>
 
@@ -177,7 +183,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     backgroundColor: colors.background,
   },
   content: {
-    padding: 24,
+    padding: 20,
     paddingBottom: 100,
   },
   section: {
@@ -258,7 +264,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     backgroundColor: colors.cardBackground,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    padding: 24,
+    padding: 20,
     paddingBottom: 40, // safe area padding
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },

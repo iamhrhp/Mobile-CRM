@@ -80,7 +80,7 @@ const ThemeEmojiOverlay = forwardRef<ThemeEmojiOverlayRef, {}>((props, ref) => {
 
 const styles = StyleSheet.create({
   emojiContainer: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 9999,

@@ -145,7 +145,7 @@ const ConversionRateScreen = () => {
         <Text style={styles.heroValue}>{isCurrentYear ? '32.5%' : '35.8%'}</Text>
         <View style={[styles.heroBadge, !isCurrentYear && { backgroundColor: '#E6F4EA' }]}>
           <Text style={[styles.heroBadgeText, !isCurrentYear && { color: colors.success }]}>
-            {isCurrentYear ? '-1.2% vs previous' : '+4.5% vs previous'}
+            {isCurrentYear ? `-1.2% ${t('conversion.vsPrevious', 'vs previous')}` : `+4.5% ${t('conversion.vsPrevious', 'vs previous')}`}
           </Text>
         </View>
         <View style={styles.progressBarContainer}>
@@ -155,18 +155,18 @@ const ConversionRateScreen = () => {
 
       <View style={styles.rowCards}>
         <View style={styles.halfCard}>
-          <Text style={styles.cardSmallTitle}>Avg. Time to Convert</Text>
-          <Text style={styles.cardLargeValue}>14<Text style={styles.cardUnit}> days</Text></Text>
-          <Text style={styles.cardTrend}>+2 days vs last month</Text>
+          <Text style={styles.cardSmallTitle}>{t('conversion.avgTimeToConvert', 'Avg. Time to Convert')}</Text>
+          <Text style={styles.cardLargeValue}>14<Text style={styles.cardUnit}> {t('conversion.days', 'days')}</Text></Text>
+          <Text style={styles.cardTrend}>+2 {t('conversion.days', 'days')} {t('conversion.vsLastMonth', 'vs last month')}</Text>
         </View>
         <View style={styles.halfCard}>
-          <Text style={styles.cardSmallTitle}>Highest Converting</Text>
-          <Text style={styles.cardLargeValue}>Tech</Text>
-          <Text style={[styles.cardTrend, { color: colors.success }]}>48% win rate</Text>
+          <Text style={styles.cardSmallTitle}>{t('conversion.highestConverting', 'Highest Converting')}</Text>
+          <Text style={styles.cardLargeValue}>{t('conversion.tech', 'Tech')}</Text>
+          <Text style={[styles.cardTrend, { color: colors.success }]}>48% {t('conversion.winRate', 'win rate')}</Text>
         </View>
       </View>
 
-      <Text style={styles.sectionTitle}>Conversion by Source</Text>
+      <Text style={styles.sectionTitle}>{t('conversion.conversionBySource', 'Conversion by Source')}</Text>
       <View style={styles.card}>
         <Animated.View style={{ 
           alignItems: 'center', marginVertical: 20, position: 'relative', 
@@ -197,7 +197,7 @@ const ConversionRateScreen = () => {
 
           <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ alignItems: 'center', backgroundColor: colors.cardBackground, borderRadius: 40, width: 80, height: 80, justifyContent: 'center', shadowColor: '#000', shadowOffset: {width:0, height:2}, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3 }}>
-              <Text style={{ fontSize: 10, color: colors.textSecondary, marginBottom: 2 }}>Referrals</Text>
+              <Text style={{ fontSize: 10, color: colors.textSecondary, marginBottom: 2 }}>{t('users.sourceTags.Referrals', 'Referrals')}</Text>
               <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textPrimary }}>
                 {isCurrentYear ? '45%' : '38%'}
               </Text>
@@ -210,7 +210,7 @@ const ConversionRateScreen = () => {
             <View key={i} style={{ alignItems: 'flex-start', minWidth: '45%' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
                 <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: item.color, marginRight: 6 }} />
-                <Text style={{ fontSize: 10, color: colors.textSecondary }}>{item.label}</Text>
+                <Text style={{ fontSize: 10, color: colors.textSecondary }}>{t(`users.sourceTags.${item.label.replace(' ', '')}`, item.label)}</Text>
               </View>
               <Text style={{ fontSize: 12, fontWeight: '700', color: colors.textPrimary }}>{Math.round(item.value)}%</Text>
             </View>
@@ -219,7 +219,7 @@ const ConversionRateScreen = () => {
       </View>
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, paddingHorizontal: 4 }}>
-        <Text style={[styles.sectionTitle, { marginBottom: 0 }]}>{selectedMonth === 'All' ? 'Yearly' : `${selectedMonth}`} Trend</Text>
+        <Text style={[styles.sectionTitle, { marginBottom: 0 }]}>{selectedMonth === 'All' ? t('conversion.yearly', 'Yearly') : `${selectedMonth}`} {t('conversion.trend', 'Trend')}</Text>
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
             <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#26C6DA', marginRight: 4 }} />
@@ -273,7 +273,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
     backgroundColor: colors.background,
   },
   content: {
-    padding: 24,
+    padding: 20,
     paddingBottom: 100,
   },
   header: {
@@ -377,7 +377,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
     borderRadius: 20,
-    padding: 24,
+    padding: 20,
     marginBottom: 32,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

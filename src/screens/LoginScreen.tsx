@@ -96,7 +96,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateSignUp }) 
           <View style={styles.dividerLine} />
         </View>
 
-        <TouchableOpacity activeOpacity={0.8} style={styles.googleButton} onPress={onLogin}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.googleButton} onPress={() => onLogin()}>
           <GoogleIcon size={20} />
           <Text style={styles.googleButtonText}>Continue with Google</Text>
         </TouchableOpacity>

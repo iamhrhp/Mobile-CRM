@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import colors from '../constants/colors';
 
-const PlaceholderScreen = ({ title }) => {
+const PlaceholderScreen = ({ title }: { title: string }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

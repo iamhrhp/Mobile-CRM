@@ -17,7 +17,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({ barAnim, onPress }) => {
   const { t } = useTranslation();
   const currency = useCurrency();
   const [isTooltipVisible, setIsTooltipVisible] = useState(true);
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<any>(null);
 
   useEffect(() => {
     // Auto-scroll to show the tooltip (around May/Jun)
@@ -131,7 +131,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({ barAnim, onPress }) => {
                   <XIcon size={10} color={colors.textMuted} />
                 </TouchableOpacity>
               </View>
-              <Text style={styles.tooltipSubtext}>Growth to end the half-year</Text>
+              <Text style={styles.tooltipSubtext}>{t('dashboard.growthHalfYear', 'Growth to end the half-year')}</Text>
               
               {/* Scrubber / Tick slider at bottom */}
               <View style={styles.scrubberRow}>

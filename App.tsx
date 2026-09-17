@@ -199,7 +199,7 @@ function AppContent() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} backgroundColor={colors.background} />
+      <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'}  />
       {!isHeaderHidden && (
         <Header 
           title={getHeaderTitle()} 

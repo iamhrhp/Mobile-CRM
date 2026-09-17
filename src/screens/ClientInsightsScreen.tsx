@@ -32,6 +32,26 @@ const CHART_WIDTH = chartData.length * 16.5 + 40;
 const TIME_OPTIONS = ['This Week', 'This Month', 'This Quarter', 'This Year', 'Last 6 Months', '2025', '2024', '2023'];
 const REGION_OPTIONS = ['All Regions', 'North America', 'Europe', 'Asia Pacific', 'Middle East', 'Africa'];
 
+const getFilterTranslationKey = (filterName: string) => {
+  const map: Record<string, string> = {
+    'This Week': 'filters.thisWeek',
+    'This Month': 'filters.thisMonth',
+    'This Quarter': 'filters.thisQuarter',
+    'This Year': 'filters.thisYear',
+    'Last 6 Months': 'filters.last6Months',
+    'All Regions': 'filters.allRegions',
+    'North America': 'filters.northAmerica',
+    'Europe': 'filters.europe',
+    'Asia Pacific': 'filters.asiaPacific',
+    'Middle East': 'filters.middleEast',
+    'Africa': 'filters.africa',
+    '2023': 'filters.2023',
+    '2024': 'filters.2024',
+    '2025': 'filters.2025'
+  };
+  return map[filterName] || filterName;
+};
+
 type MetricSet = {
   totalClients: string; totalChange: string;
   activeClients: string; activeChange: string;
@@ -117,7 +137,7 @@ const ClientInsightsScreen = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(20)).current;
   const chartProgress = useRef(new Animated.Value(0)).current;
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<any>(null);
 
   const [selectedTime, setSelectedTime] = useState('This Week');
   const [selectedRegion, setSelectedRegion] = useState('All Regions');
@@ -183,20 +203,22 @@ const ClientInsightsScreen = () => {
           </TouchableOpacity>
 
           {/* This Week dropdown */}
-          <TouchableOpacity
-            style={[styles.dropdownButton, showTimeDropdown && styles.dropdownButtonActive]}
+          <TouchableOpacity 
+            activeOpacity={0.7} 
+            style={[styles.dropdownButton, showTimeDropdown && styles.dropdownButtonActive]} 
             onPress={() => { setShowRegionDropdown(false); setShowTimeDropdown(v => !v); }}
           >
-            <Text style={styles.dropdownText}>{selectedTime}</Text>
+            <Text style={styles.dropdownText}>{t(getFilterTranslationKey(selectedTime), selectedTime)}</Text>
             <ChevronDownIcon size={12} color={colors.textPrimary} />
           </TouchableOpacity>
 
           {/* All Regions dropdown */}
-          <TouchableOpacity
-            style={[styles.dropdownButton, showRegionDropdown && styles.dropdownButtonActive]}
+          <TouchableOpacity 
+            activeOpacity={0.7} 
+            style={[styles.dropdownButton, showRegionDropdown && styles.dropdownButtonActive]} 
             onPress={() => { setShowTimeDropdown(false); setShowRegionDropdown(v => !v); }}
           >
-            <Text style={styles.dropdownText}>{selectedRegion}</Text>
+            <Text style={styles.dropdownText}>{t(getFilterTranslationKey(selectedRegion), selectedRegion)}</Text>
             <ChevronDownIcon size={12} color={colors.textPrimary} />
           </TouchableOpacity>
         </Animated.View>
@@ -210,7 +232,7 @@ const ClientInsightsScreen = () => {
                 style={[styles.dropdownOption, selectedTime === opt && styles.dropdownOptionSelected]}
                 onPress={() => { setSelectedTime(opt); setFilterTime(opt); setShowTimeDropdown(false); triggerAnimations(false); }}
               >
-                <Text style={[styles.dropdownOptionText, selectedTime === opt && styles.dropdownOptionTextSelected]}>{opt}</Text>
+                <Text style={[styles.dropdownOptionText, selectedTime === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
                 {selectedTime === opt && <Text style={styles.checkmark}>✓</Text>}
               </TouchableOpacity>
             ))}
@@ -226,7 +248,7 @@ const ClientInsightsScreen = () => {
                 style={[styles.dropdownOption, selectedRegion === opt && styles.dropdownOptionSelected]}
                 onPress={() => { setSelectedRegion(opt); setFilterRegion(opt); setShowRegionDropdown(false); triggerAnimations(false); }}
               >
-                <Text style={[styles.dropdownOptionText, selectedRegion === opt && styles.dropdownOptionTextSelected]}>{opt}</Text>
+                <Text style={[styles.dropdownOptionText, selectedRegion === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
                 {selectedRegion === opt && <Text style={styles.checkmark}>✓</Text>}
               </TouchableOpacity>
             ))}
@@ -257,7 +279,7 @@ const ClientInsightsScreen = () => {
           <Animated.View style={[styles.card, styles.smallCard, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
             <View style={styles.cardHeader}>
               <UserIcon size={14} color={colors.textSecondary} />
-              <Text style={styles.cardTitle}>Active Clients</Text>
+              <Text style={styles.cardTitle}>{t('insights.activeClients', 'Active Clients')}</Text>
             </View>
             <View style={styles.valueRow}>
               <Text style={styles.cardValue}>{metrics.activeClients}</Text>
@@ -283,7 +305,7 @@ const ClientInsightsScreen = () => {
           <View style={styles.largeCardHeader}>
             <View style={styles.cardHeader}>
               <TrendUpIcon size={14} color={colors.textSecondary} />
-              <Text style={styles.cardTitle}>Engagement vs Lifetime Value</Text>
+              <Text style={styles.cardTitle}>{t('clientInsights.engagementVsLtvTitle', 'Engagement vs Lifetime Value')}</Text>
             </View>
             <TouchableOpacity style={styles.calendarButton}>
               <CalendarIcon size={16} color={colors.textSecondary} />
@@ -292,14 +314,14 @@ const ClientInsightsScreen = () => {
 
           <View style={styles.largeValueRow}>
             <View style={styles.metricColumn}>
-              <Text style={styles.metricLabel}>Engagement</Text>
+              <Text style={styles.metricLabel}>{t('clientInsights.engagementLabel', 'Engagement')}</Text>
               <View style={styles.metricValueWrapper}>
                 <Text style={styles.largeCardValue}>{metrics.engagement}</Text>
                 <View style={styles.badgeLime}><Text style={styles.badgeLimeText}>{metrics.engChange}</Text></View>
               </View>
             </View>
             <View style={styles.metricColumnRight}>
-              <Text style={styles.metricLabel}>Lifetime Value</Text>
+              <Text style={styles.metricLabel}>{t('clientInsights.ltvLabel', 'Lifetime Value')}</Text>
               <View style={styles.metricValueWrapper}>
                 <Text style={styles.largeCardValue}>{metrics.ltv}</Text>
                 <View style={styles.badgeGrey}><Text style={styles.badgeGreyText}>{metrics.ltvChange}</Text></View>
@@ -333,7 +355,7 @@ const ClientInsightsScreen = () => {
                   })}
                 </Svg>
                 {months.map((month, i) => (
-                  <Text key={i} style={[styles.xAxisText, { position: 'absolute', top: 185, left: 20 + (i * 4 * 16.5) + (1.5 * 16.5) - 6 }]}>{month}</Text>
+                  <Text key={i} style={[styles.xAxisText, { position: 'absolute', top: 185, left: 20 + (i * 4 * 16.5) + (1.5 * 16.5) - 6 }]}>{t(`clientInsights.months.${month}`, month)}</Text>
                 ))}
                 {showTooltip && (
                   <Animated.View style={[styles.tooltip, { opacity: chartProgress, left: 244 }]}>
@@ -346,7 +368,7 @@ const ClientInsightsScreen = () => {
                         <XIcon size={10} color={colors.textSecondary} />
                       </TouchableOpacity>
                     </View>
-                    <Text style={styles.tooltipSubtext}>Growth to end the half-year</Text>
+                    <Text style={styles.tooltipSubtext}>{t('clientInsights.tooltipGrowthText', 'Growth to end the half-year')}</Text>
                   </Animated.View>
                 )}
               </View>
@@ -358,7 +380,7 @@ const ClientInsightsScreen = () => {
       {/* Backdrop to close inline dropdowns */}
       {(showTimeDropdown || showRegionDropdown) && (
         <TouchableWithoutFeedback onPress={closeDropdowns}>
-          <View style={StyleSheet.absoluteFillObject} />
+          <View style={StyleSheet.absoluteFill} />
         </TouchableWithoutFeedback>
       )}
 
@@ -370,32 +392,32 @@ const ClientInsightsScreen = () => {
         <View style={styles.filterSheet}>
           <View style={styles.filterHandle} />
           <View style={styles.filterHeader}>
-            <Text style={styles.filterTitle}>Filters</Text>
-            <TouchableOpacity onPress={() => { setFilterTime('This Week'); setFilterRegion('All Regions'); }}>
-              <Text style={styles.filterReset}>Reset</Text>
+            <Text style={styles.filterTitle}>{t('common.filters', 'Filters')}</Text>
+            <TouchableOpacity onPress={() => { setFilterTime('This Year'); setFilterRegion('All Regions'); }}>
+              <Text style={styles.filterReset}>{t('common.reset', 'Reset')}</Text>
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.filterSectionLabel}>Time Period</Text>
+          <Text style={styles.filterSectionLabel}>{t('common.timePeriod', 'TIME PERIOD')}</Text>
           <View style={styles.chipRow}>
             {TIME_OPTIONS.map(opt => (
               <TouchableOpacity key={opt} style={[styles.chip, filterTime === opt && styles.chipSelected]} onPress={() => setFilterTime(opt)}>
-                <Text style={[styles.chipText, filterTime === opt && styles.chipTextSelected]}>{opt}</Text>
+                <Text style={[styles.chipText, filterTime === opt && styles.chipTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
-          <Text style={styles.filterSectionLabel}>Region</Text>
+          <Text style={[styles.filterSectionLabel, { marginTop: 8 }]}>{t('common.region', 'REGION')}</Text>
           <View style={styles.chipRow}>
             {REGION_OPTIONS.map(opt => (
               <TouchableOpacity key={opt} style={[styles.chip, filterRegion === opt && styles.chipSelected]} onPress={() => setFilterRegion(opt)}>
-                <Text style={[styles.chipText, filterRegion === opt && styles.chipTextSelected]}>{opt}</Text>
+                <Text style={[styles.chipText, filterRegion === opt && styles.chipTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
           <TouchableOpacity style={styles.applyButton} onPress={applyFilter}>
-            <Text style={styles.applyButtonText}>Apply Filters</Text>
+            <Text style={styles.applyButtonText}>{t('common.applyFilters', 'Apply Filters')}</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -467,7 +489,7 @@ const getStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create({
   filterHandle: { width: 40, height: 4, borderRadius: 2, backgroundColor: colors.border, alignSelf: 'center', marginBottom: 20 },
   filterHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 },
   filterTitle: { fontSize: 18, fontWeight: '700', color: colors.textPrimary },
-  filterReset: { fontSize: 14, fontWeight: '600', color: colors.limeAccent },
+  filterReset: { fontSize: 14, fontWeight: '600', color: colors.textPrimary },
   filterSectionLabel: { fontSize: 12, fontWeight: '600', color: colors.textSecondary, marginBottom: 12, textTransform: 'uppercase', letterSpacing: 0.6 },
   chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 24 },
   chip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, backgroundColor: colors.background, borderWidth: 1, borderColor: colors.border },

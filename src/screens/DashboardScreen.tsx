@@ -155,7 +155,7 @@ const getStyles = (colors: ThemeColors) => StyleSheet.create({
   },
   addLeadBtn: {
     backgroundColor: colors.cardBackground,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 22,
     flexDirection: 'row',

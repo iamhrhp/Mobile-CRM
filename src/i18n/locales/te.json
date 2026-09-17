@@ -23,7 +23,8 @@
     "conversionRate": "మార్పిడి రేటు",
     "revenueGrowth": "ఆదాయ వృద్ధి",
     "monthlyRecurring": "నెలవారీ పునరావృత ఆదాయం",
-    "overview": "అవలోకనం"
+    "overview": "అవలోకనం",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "users": {
     "newLeads": "కొత్త లీడ్స్",
@@ -54,7 +55,8 @@
   "insights": {
     "topNewLead": "టాప్ కొత్త లీడ్",
     "newMessages": "కొత్త సందేశాలు",
-    "needsAttention": "శ్రద్ధ అవసరం"
+    "needsAttention": "శ్రద్ధ అవసరం",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "placeholders": {
     "addNewLead": "కొత్త లీడ్‌ను జోడించండి",

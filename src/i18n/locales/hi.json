@@ -15,7 +15,8 @@
     "aiClientOverview": "एआई क्लाइंट अवलोकन",
     "settings": "सेटिंग्स",
     "totalLeads": "कुल लीड्स",
-    "conversionRate": "रूपांतरण दर"
+    "conversionRate": "रूपांतरण दर",
+    "revenueGrowth": "राजस्व वृद्धि"
   },
   "dashboard": {
     "addNewLead": "नया लीड जोड़ें",
@@ -23,7 +24,12 @@
     "conversionRate": "रूपांतरण दर",
     "revenueGrowth": "राजस्व वृद्धि",
     "monthlyRecurring": "मासिक आवर्ती राजस्व",
-    "overview": "अवलोकन"
+    "overview": "अवलोकन",
+    "growthHalfYear": "छमाही के अंत तक वृद्धि",
+    "lead": "लीड",
+    "recentAcquisition": "हाल ही में अधिग्रहण",
+    "searchLeads": "लीड्स खोजें...",
+    "activeLeads": "सक्रिय लीड्स"
   },
   "users": {
     "newLeads": "नए लीड्स",
@@ -42,7 +48,28 @@
     "proposalSent": "प्रस्ताव भेजा गया",
     "converted": "रूपांतरित",
     "inProgress": "प्रगति पर",
-    "closed": "बंद"
+    "closed": "बंद",
+    "hotLead": "हॉट लीड",
+    "subtexts": {
+      "daniel": "हाल ही में एक प्रस्ताव का अनुरोध किया",
+      "sarah": "एंटरप्राइज़ योजना में रुचि है"
+    },
+    "interest": {
+      "HighInterest": "उच्च रुचि",
+      "MediumInterest": "मध्यम रुचि"
+    },
+    "sourceTags": {
+      "Referral": "रेफरल",
+      "AgentAdded": "एजेंट द्वारा जोड़ा गया",
+      "OrganicSearch": "ऑर्गेनिक सर्च",
+      "Webinar": "वेबिनार",
+      "Organic": "ऑर्गेनिक",
+      "Referrals": "रेफरल",
+      "Outbound": "आउटबाउंड",
+      "Partners": "भागीदार",
+      "GoogleAdwords": "गूगल ऐडवर्ड्स",
+      "Googleadwords": "गूगल ऐडवर्ड्स"
+    }
   },
   "pipeline": {
     "europe": "यूरोप",
@@ -64,7 +91,10 @@
   "insights": {
     "topNewLead": "शीर्ष नया लीड",
     "newMessages": "नए संदेश",
-    "needsAttention": "ध्यान देने की आवश्यकता है"
+    "needsAttention": "ध्यान देने की आवश्यकता है",
+    "growthHalfYear": "छमाही के अंत तक वृद्धि",
+    "totalClients": "कुल ग्राहक",
+    "activeClients": "सक्रिय ग्राहक"
   },
   "placeholders": {
     "addNewLead": "नया लीड जोड़ें",
@@ -141,6 +171,9 @@
   "common": {
     "reset": "रीसेट",
     "applyFilters": "फ़िल्टर लागू करें",
+    "filters": "फ़िल्टर",
+    "timePeriod": "समय अवधि",
+    "region": "क्षेत्र",
     "cancel": "रद्द करें",
     "yes": "हाँ",
     "no": "नहीं"
@@ -157,5 +190,119 @@
     "expectedValue": "अपेक्षित मूल्य ({{currency}})",
     "expectedValuePlaceholder": "{{currency}}10,000",
     "save": "लीड सहेजें"
+  },
+  "conversion": {
+    "vsPrevious": "पिछले के मुकाबले",
+    "avgTimeToConvert": "रूपांतरण में औसत समय",
+    "days": "दिन",
+    "vsLastMonth": "पिछले महीने के मुकाबले",
+    "highestConverting": "सबसे अधिक रूपांतरण",
+    "winRate": "जीत दर",
+    "conversionBySource": "स्रोत द्वारा रूपांतरण",
+    "yearly": "वार्षिक",
+    "trend": "प्रवृत्ति",
+    "tech": "टेक"
+  },
+  "timeFilter": {
+    "selectMonth": "महीना चुनें",
+    "selectYear": "वर्ष चुनें",
+    "months": {
+      "All": "सभी",
+      "Jan": "जनवरी",
+      "Feb": "फ़रवरी",
+      "Mar": "मार्च",
+      "Apr": "अप्रैल",
+      "May": "मई",
+      "Jun": "जून",
+      "Jul": "जुलाई",
+      "Aug": "अगस्त",
+      "Sep": "सितंबर",
+      "Oct": "अक्टूबर",
+      "Nov": "नवंबर",
+      "Dec": "दिसंबर"
+    }
+  },
+  "revenue": {
+    "sales": "बिक्री",
+    "previous": "पिछला",
+    "revenueByLeadSource": "लीड स्रोत द्वारा राजस्व",
+    "leadConversion": "लीड रूपांतरण",
+    "current": "वर्तमान"
+  },
+  "leadDetails": {
+    "dealValue": "सौदा मूल्य",
+    "probability": "संभावना",
+    "call": "कॉल करें",
+    "email": "ईमेल करें",
+    "schedule": "निर्धारित करें",
+    "contactDetails": "संपर्क विवरण",
+    "noEmail": "कोई ईमेल नहीं",
+    "noPhone": "कोई फोन नहीं",
+    "recentActivity": "हाल की गतिविधि",
+    "ago": "पहले",
+    "notes": "नोट्स",
+    "noNotes": "कोई नोट्स उपलब्ध नहीं।"
+  },
+  "mock": {
+    "Emailed proposal details": "प्रस्ताव विवरण ईमेल किया गया",
+    "Scheduled follow-up call": "फॉलो-अप कॉल निर्धारित",
+    "Lead assigned": "लीड सौंपी गई",
+    "Sent final proposal package": "अंतिम प्रस्ताव पैकेज भेजा गया",
+    "Counter-offer received": "काउंटर-ऑफर प्राप्त हुआ",
+    "Contract signed": "अनुबंध पर हस्ताक्षर किए गए",
+    "Project cancelled": "प्रोजेक्ट रद्द",
+    "Interested in bulk latex exports.": "थोक लेटेक्स निर्यात में रुचि है।",
+    "Need to review Q3 pricing models.": "Q3 मूल्य निर्धारण मॉडल की समीक्षा करने की आवश्यकता है।",
+    "High value client, needs immediate attention.": "उच्च मूल्य ग्राहक, तत्काल ध्यान देने की आवश्यकता है।",
+    "Reviewing security compliance clause.": "सुरक्षा अनुपालन खंड की समीक्षा कर रहे हैं।",
+    "Pushing for a 5% discount on bulk.": "थोक पर 5% छूट के लिए जोर दे रहे हैं।",
+    "Initiate onboarding immediately.": "तुरंत ऑनबोर्डिंग शुरू करें।",
+    "Went with a cheaper competitor.": "एक सस्ते प्रतियोगी के पास गए।",
+    "1 day": "1 दिन",
+    "3 day": "3 दिन",
+    "2 hr": "2 घंटे",
+    "5 day": "5 दिन",
+    "1 week": "1 सप्ताह",
+    "2 weeks": "2 सप्ताह"
+  },
+  "filters": {
+    "thisWeek": "इस सप्ताह",
+    "thisMonth": "इस महीने",
+    "thisQuarter": "इस तिमाही",
+    "thisYear": "इस वर्ष",
+    "last6Months": "पिछले 6 महीने",
+    "allRegions": "सभी क्षेत्र",
+    "northAmerica": "उत्तरी अमेरिका",
+    "europe": "यूरोप",
+    "asiaPacific": "एशिया प्रशांत",
+    "middleEast": "मध्य पूर्व",
+    "africa": "अफ्रीका",
+    "2023": "2023",
+    "2024": "2024",
+    "2025": "2025"
+  },
+  "metrics": {
+    "improvement": "सुधार",
+    "risk": "जोखिम"
+  },
+  "clientInsights": {
+    "engagementVsLtvTitle": "सगाई बनाम आजीवन मूल्य",
+    "engagementLabel": "सगाई",
+    "ltvLabel": "आजीवन मूल्य",
+    "tooltipGrowthText": "छमाही के अंत तक वृद्धि",
+    "months": {
+      "Jan": "जनवरी",
+      "Feb": "फरवरी",
+      "Mar": "मार्च",
+      "Apr": "अप्रैल",
+      "May": "मई",
+      "Jun": "जून",
+      "Jul": "जुलाई",
+      "Aug": "अगस्त",
+      "Sep": "सितंबर",
+      "Oct": "अक्टूबर",
+      "Nov": "नवंबर",
+      "Dec": "दिसंबर"
+    }
   }
 }

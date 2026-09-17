@@ -23,7 +23,8 @@
     "conversionRate": "રૂપાંતરણ દર",
     "revenueGrowth": "આવક વૃદ્ધિ",
     "monthlyRecurring": "માસિક રિકરિંગ આવક",
-    "overview": "વિહંગાવલોકન"
+    "overview": "વિહંગાવલોકન",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "users": {
     "newLeads": "નવી લીડ્સ",
@@ -54,7 +55,8 @@
   "insights": {
     "topNewLead": "ટોચની નવી લીડ",
     "newMessages": "નવા સંદેશાઓ",
-    "needsAttention": "ધ્યાન આપવાની જરૂર છે"
+    "needsAttention": "ધ્યાન આપવાની જરૂર છે",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "placeholders": {
     "addNewLead": "નવી લીડ ઉમેરો",

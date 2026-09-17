@@ -23,7 +23,8 @@
     "conversionRate": "Conversion Rate",
     "revenueGrowth": "Revenue Growth",
     "monthlyRecurring": "Monthly Recurring Revenue",
-    "overview": "Overview"
+    "overview": "Overview",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "users": {
     "newLeads": "NEW LEADS",
@@ -69,7 +70,8 @@
     "activeClients": "Active Clients",
     "engagementVsLtv": "Engagement vs Lifetime Value",
     "thisWeek": "This Week",
-    "allRegions": "All Regions"
+    "allRegions": "All Regions",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "placeholders": {
     "addNewLead": "Add New Lead",

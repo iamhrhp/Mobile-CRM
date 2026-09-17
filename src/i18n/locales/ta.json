@@ -23,7 +23,8 @@
     "conversionRate": "மாற்று விகிதம்",
     "revenueGrowth": "வருவாய் வளர்ச்சி",
     "monthlyRecurring": "மாதாந்திர தொடர் வருவாய்",
-    "overview": "கண்ணோட்டம்"
+    "overview": "கண்ணோட்டம்",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "users": {
     "newLeads": "புதிய லீட்ஸ்",
@@ -54,7 +55,8 @@
   "insights": {
     "topNewLead": "சிறந்த புதிய லீட்",
     "newMessages": "புதிய செய்திகள்",
-    "needsAttention": "கவனம் தேவை"
+    "needsAttention": "கவனம் தேவை",
+    "growthHalfYear": "Growth to end the half-year"
   },
   "placeholders": {
     "addNewLead": "புதிய லீட்டைச் சேர்க்கவும்",
