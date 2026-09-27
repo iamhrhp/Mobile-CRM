@@ -24,7 +24,11 @@
     "revenueGrowth": "Revenue Growth",
     "monthlyRecurring": "Monthly Recurring Revenue",
     "overview": "Overview",
-    "growthHalfYear": "Growth to end the half-year"
+    "growthHalfYear": "Growth to end the half-year",
+    "lead": "Lead",
+    "activeLeads": "Active Leads",
+    "recentAcquisition": "Recent Acquisition",
+    "searchLeads": "Search leads..."
   },
   "users": {
     "newLeads": "NEW LEADS",
@@ -43,7 +47,14 @@
     "proposalSent": "Proposal Sent",
     "converted": "Converted",
     "inProgress": "In Progress",
-    "closed": "Closed"
+    "closed": "Closed",
+    "sourceTags": {
+      "Referrals": "Referrals",
+      "Organic": "Organic",
+      "Outbound": "Outbound",
+      "Partners": "Partners"
+    },
+    "hotLead": "HOT LEAD"
   },
   "pipeline": {
     "europe": "Europe",
@@ -60,7 +71,12 @@
     "increasedThisMonth": "Increased this month",
     "week1": "Week 1",
     "week2": "Week 2",
-    "week3": "Week 3"
+    "week3": "Week 3",
+    "revenueBreakdown": "Revenue Breakdown",
+    "software": "Software",
+    "hardware": "Hardware",
+    "services": "Services",
+    "other": "Other"
   },
   "insights": {
     "topNewLead": "Top New Lead",
@@ -98,7 +114,9 @@
     "logout": "Log Out",
     "logoutConfirm": "Are you sure you want to log out?",
     "language": "Language",
-    "changeLanguage": "Change application language"
+    "changeLanguage": "Change application language",
+    "selectLanguage": "Select Language",
+    "version": "Version 1.0.0"
   },
   "notifications": {
     "title": "Notifications",
@@ -150,7 +168,14 @@
     "applyFilters": "Apply Filters",
     "cancel": "Cancel",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "filters": "Filters",
+    "timePeriod": "TIME PERIOD",
+    "region": "REGION",
+    "Edit": "Edit lead information coming soon.",
+    "Error": "Unable to open mail client.",
+    "No PhoneNumber": "This lead does not have a phone number.",
+    "No Email": "This lead does not have an email address."
   },
   "addLead": {
     "title": "Add New Lead",
@@ -164,5 +189,72 @@
     "expectedValue": "Expected Value ({{currency}})",
     "expectedValuePlaceholder": "{{currency}}10,000",
     "save": "Save Lead"
+  },
+  "clientInsights": {
+    "engagementVsLtvTitle": "Engagement vs Lifetime Value",
+    "engagementLabel": "Engagement",
+    "ltvLabel": "Lifetime Value",
+    "tooltipGrowthText": "Growth to end the half-year",
+    "newClients": "New Clients",
+    "retentionRate": "Retention Rate",
+    "clientAcquisition": "Client Acquisition Sources",
+    "referrals": "Referrals",
+    "organicSearch": "Organic Search",
+    "direct": "Direct",
+    "paidAds": "Paid Ads",
+    "avgSession": "Avg. Session",
+    "engagementChannels": "Engagement Channels",
+    "email": "Email",
+    "inApp": "In-App",
+    "pushNotif": "Push Notif.",
+    "social": "Social",
+    "activeThisMonth": "Active This Month",
+    "churnRate": "Churn Rate",
+    "activityBreakdown": "Activity Breakdown",
+    "dailyActive": "Daily Active",
+    "weeklyActive": "Weekly Active",
+    "monthlyActive": "Monthly Active",
+    "dormant": "Dormant"
+  },
+  "conversion": {
+    "vsPrevious": "vs previous",
+    "avgTimeToConvert": "Avg. Time to Convert",
+    "days": "days",
+    "vsLastMonth": "vs last month",
+    "highestConverting": "Highest Converting",
+    "tech": "Tech",
+    "winRate": "win rate",
+    "conversionBySource": "Conversion by Source",
+    "yearly": "Yearly",
+    "trend": "Trend"
+  },
+  "revenue": {
+    "sales": "sales",
+    "previous": "Previous",
+    "revenueByLeadSource": "Revenue by lead source",
+    "leadConversion": "Lead Conversion",
+    "current": "Current"
+  },
+  "leadDetails": {
+    "dealValue": "Deal Value",
+    "probability": "Probability",
+    "call": "Call",
+    "email": "Email",
+    "schedule": "Schedule",
+    "contactDetails": "Contact Details",
+    "noEmail": "No email provided",
+    "noPhone": "No phone provided",
+    "recentActivity": "Recent Activity",
+    "ago": "ago",
+    "notes": "Notes",
+    "noNotes": "No notes available."
+  },
+  "metrics": {
+    "improvement": "Improvement",
+    "risk": "Risk"
+  },
+  "timeFilter": {
+    "selectMonth": "Select Month",
+    "selectYear": "Select Year"
   }
 }

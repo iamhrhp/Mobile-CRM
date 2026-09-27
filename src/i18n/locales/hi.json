@@ -12,11 +12,10 @@
     "pipelineOverview": "पाइपलाइन अवलोकन",
     "revenueForecast": "राजस्व पूर्वानुमान",
     "clientInsights": "ग्राहक अंतर्दृष्टि",
-    "aiClientOverview": "एआई क्लाइंट अवलोकन",
+    "aiClientOverview": "एआई ग्राहक अवलोकन",
     "settings": "सेटिंग्स",
     "totalLeads": "कुल लीड्स",
-    "conversionRate": "रूपांतरण दर",
-    "revenueGrowth": "राजस्व वृद्धि"
+    "conversionRate": "रूपांतरण दर"
   },
   "dashboard": {
     "addNewLead": "नया लीड जोड़ें",
@@ -27,74 +26,68 @@
     "overview": "अवलोकन",
     "growthHalfYear": "छमाही के अंत तक वृद्धि",
     "lead": "लीड",
-    "recentAcquisition": "हाल ही में अधिग्रहण",
-    "searchLeads": "लीड्स खोजें...",
-    "activeLeads": "सक्रिय लीड्स"
+    "activeLeads": "सक्रिय लीड्स",
+    "recentAcquisition": "हालिया अधिग्रहण",
+    "searchLeads": "लीड्स खोजें..."
   },
   "users": {
     "newLeads": "नए लीड्स",
     "recentlyRequested": "हाल ही में प्रस्ताव मांगा",
-    "interestedEnterprise": "एंटरप्राइज प्लान में रुचि",
+    "interestedEnterprise": "एंटरप्राइज योजना में रुचि",
     "highInterest": "उच्च रुचि",
     "mediumInterest": "मध्यम रुचि",
     "source": "स्रोत",
-    "referral": "रेफरल",
-    "agentAdded": "एजेंट जोड़ा गया",
+    "referral": "रेफ़रल",
+    "agentAdded": "एजेंट द्वारा जोड़ा गया",
     "organicSearch": "ऑर्गेनिक खोज",
     "webinar": "वेबिनार",
     "status": "स्थिति",
     "callScheduled": "कॉल निर्धारित",
-    "followUpEmail": "फॉलो-अप ईमेल",
+    "followUpEmail": "फ़ॉलो-अप ईमेल",
     "proposalSent": "प्रस्ताव भेजा गया",
     "converted": "रूपांतरित",
     "inProgress": "प्रगति पर",
     "closed": "बंद",
-    "hotLead": "हॉट लीड",
-    "subtexts": {
-      "daniel": "हाल ही में एक प्रस्ताव का अनुरोध किया",
-      "sarah": "एंटरप्राइज़ योजना में रुचि है"
-    },
-    "interest": {
-      "HighInterest": "उच्च रुचि",
-      "MediumInterest": "मध्यम रुचि"
-    },
     "sourceTags": {
-      "Referral": "रेफरल",
-      "AgentAdded": "एजेंट द्वारा जोड़ा गया",
-      "OrganicSearch": "ऑर्गेनिक सर्च",
-      "Webinar": "वेबिनार",
+      "Referrals": "रेफ़रल",
       "Organic": "ऑर्गेनिक",
-      "Referrals": "रेफरल",
       "Outbound": "आउटबाउंड",
-      "Partners": "भागीदार",
-      "GoogleAdwords": "गूगल ऐडवर्ड्स",
-      "Googleadwords": "गूगल ऐडवर्ड्स"
-    }
+      "Partners": "भागीदार"
+    },
+    "hotLead": "हॉट लीड"
   },
   "pipeline": {
     "europe": "यूरोप",
-    "kanbanView": "कानबन दृश्य",
-    "contacted": "संपर्क किया",
-    "marketingProposal": "विपणन प्रस्ताव",
-    "followUp": "फ़ॉलो अप"
+    "kanbanView": "कानबान दृश्य",
+    "contacted": "संपर्क किया गया",
+    "marketingProposal": "मार्केटिंग प्रस्ताव",
+    "followUp": "फ़ॉलो-अप"
   },
   "forecast": {
-    "projection90Day": "90-दिवसीय प्रक्षेपण",
+    "projection90Day": "90-दिवसीय अनुमान",
     "recurringRevenue": "आवर्ती राजस्व",
     "newCustomers": "नए ग्राहक",
-    "closedWon": "बंद/जीता",
-    "increasedThisMonth": "इस महीने में वृद्धि",
+    "closedWon": "जीता गया",
+    "increasedThisMonth": "इस महीने वृद्धि हुई",
     "week1": "सप्ताह 1",
     "week2": "सप्ताह 2",
-    "week3": "सप्ताह 3"
+    "week3": "सप्ताह 3",
+    "revenueBreakdown": "राजस्व विवरण",
+    "software": "सॉफ़्टवेयर",
+    "hardware": "हार्डवेयर",
+    "services": "सेवाएं",
+    "other": "अन्य"
   },
   "insights": {
     "topNewLead": "शीर्ष नया लीड",
     "newMessages": "नए संदेश",
-    "needsAttention": "ध्यान देने की आवश्यकता है",
-    "growthHalfYear": "छमाही के अंत तक वृद्धि",
+    "needsAttention": "ध्यान देने की आवश्यकता",
     "totalClients": "कुल ग्राहक",
-    "activeClients": "सक्रिय ग्राहक"
+    "activeClients": "सक्रिय ग्राहक",
+    "engagementVsLtv": "एंगेजमेंट बनाम लाइफटाइम वैल्यू",
+    "thisWeek": "इस सप्ताह",
+    "allRegions": "सभी क्षेत्र",
+    "growthHalfYear": "छमाही के अंत तक वृद्धि"
   },
   "placeholders": {
     "addNewLead": "नया लीड जोड़ें",
@@ -103,14 +96,14 @@
     "revenueGrowth": "राजस्व वृद्धि विवरण",
     "notifications": "सूचनाएं",
     "settings": "सेटिंग्स",
-    "filterSort": "फ़िल्टर और सॉर्ट करें"
+    "filterSort": "फ़िल्टर और सॉर्ट"
   },
   "settings": {
     "account": "खाता",
     "profileInfo": "प्रोफ़ाइल जानकारी",
-    "updateProfile": "अपना नाम और ईमेल अपडेट करें",
+    "updateProfile": "नाम और ईमेल अपडेट करें",
     "passwordSecurity": "पासवर्ड और सुरक्षा",
-    "manageSecurity": "अपनी सुरक्षा सेटिंग्स प्रबंधित करें",
+    "manageSecurity": "सुरक्षा सेटिंग्स प्रबंधित करें",
     "preferences": "प्राथमिकताएं",
     "notifications": "सूचनाएं",
     "emailPush": "ईमेल और पुश सूचनाएं",
@@ -121,27 +114,29 @@
     "logout": "लॉग आउट",
     "logoutConfirm": "क्या आप वाकई लॉग आउट करना चाहते हैं?",
     "language": "भाषा",
-    "changeLanguage": "एप्लिकेशन की भाषा बदलें"
+    "changeLanguage": "एप्लिकेशन की भाषा बदलें",
+    "selectLanguage": "भाषा चुनें",
+    "version": "संस्करण 1.0.0"
   },
   "notifications": {
     "title": "सूचनाएं",
-    "markAll": "सभी को पढ़ा हुआ चिह्नित करें",
+    "markAll": "सभी को पढ़ा हुआ मानें",
     "today": "आज",
     "earlier": "पहले",
-    "newLead": "नई लीड असाइन की गई",
-    "newLeadDesc": "Acme Corp से Sarah Jenkins आपको सौंपी गई हैं।",
+    "newLead": "नया लीड असाइन किया गया",
+    "newLeadDesc": "सारा जेनकिंस आपको असाइन की गई हैं।",
     "time2h": "2 घंटे पहले",
-    "dealClosed": "डील बंद हुई",
-    "dealClosedDesc": "TechFlow Enterprise अनुबंध पर हस्ताक्षर किए गए। मूल्य: {{currency}}45,000.",
+    "dealClosed": "सौदा पक्का",
+    "dealClosedDesc": "अनुबंध पर हस्ताक्षर किए गए। मूल्य: {{currency}}45,000।",
     "time4h": "4 घंटे पहले",
     "meetingReminder": "बैठक अनुस्मारक",
-    "meetingReminderDesc": "Alpha Team के साथ त्रैमासिक समीक्षा 15 मिनट में शुरू होगी।",
+    "meetingReminderDesc": "अल्फा टीम के साथ बैठक 15 मिनट में।",
     "time1d": "1 दिन पहले",
     "systemUpdate": "सिस्टम अपडेट",
-    "systemUpdateDesc": "CRM रखरखाव शनिवार सुबह 2:00 PST के लिए निर्धारित है।",
+    "systemUpdateDesc": "शनिवार को रखरखाव निर्धारित।",
     "time2d": "2 दिन पहले",
-    "leadFollowUp": "लीड फॉलो-अप",
-    "leadFollowUpDesc": "आपने 7 दिनों से Mark Johnson से संपर्क नहीं किया है।",
+    "leadFollowUp": "लीड फ़ॉलो-अप",
+    "leadFollowUpDesc": "आपने 7 दिनों से संपर्क नहीं किया है।",
     "time3d": "3 दिन पहले"
   },
   "filter": {
@@ -155,72 +150,83 @@
   },
   "status": {
     "new": "नया",
-    "contacted": "संपर्क किया",
+    "contacted": "संपर्क किया गया",
     "proposalSent": "प्रस्ताव भेजा गया",
     "negotiation": "बातचीत",
     "closedWon": "जीता गया",
-    "closedLost": "हारा गया"
+    "closedLost": "हार गया"
   },
   "timeframe": {
-    "thisWeek": "इस हफ़्ते",
+    "thisWeek": "इस सप्ताह",
     "thisMonth": "इस महीने",
     "last30Days": "पिछले 30 दिन",
-    "thisQuarter": "यह तिमाही",
+    "thisQuarter": "इस तिमाही",
     "thisYear": "इस वर्ष"
   },
   "common": {
-    "reset": "रीसेट",
+    "reset": "रीसेट करें",
     "applyFilters": "फ़िल्टर लागू करें",
-    "filters": "फ़िल्टर",
-    "timePeriod": "समय अवधि",
-    "region": "क्षेत्र",
     "cancel": "रद्द करें",
-    "yes": "हाँ",
-    "no": "नहीं"
+    "yes": "हां",
+    "no": "नहीं",
+    "filters": "फ़िल्टर",
+    "timePeriod": "समय सीमा",
+    "region": "क्षेत्र",
+    "Edit": "संपादित करें जल्द आ रहा है।",
+    "Error": "ईमेल खोलने में असमर्थ।",
+    "No PhoneNumber": "फ़ोन नंबर उपलब्ध नहीं।",
+    "No Email": "ईमेल उपलब्ध नहीं।"
   },
   "addLead": {
-    "title": "नई लीड जोड़ें",
-    "subtitle": "अपनी नई संभावना का विवरण दर्ज करें",
+    "title": "नया लीड जोड़ें",
+    "subtitle": "संभावित ग्राहक का विवरण दर्ज करें",
     "leadName": "लीड का नाम",
-    "leadNamePlaceholder": "John Doe",
+    "leadNamePlaceholder": "जॉन डो",
     "companyName": "कंपनी का नाम",
-    "companyNamePlaceholder": "Acme Corp",
+    "companyNamePlaceholder": "एक्मे कॉर्प",
     "email": "ईमेल पता",
     "emailPlaceholder": "john@example.com",
     "expectedValue": "अपेक्षित मूल्य ({{currency}})",
     "expectedValuePlaceholder": "{{currency}}10,000",
-    "save": "लीड सहेजें"
+    "save": "सहेजें"
+  },
+  "clientInsights": {
+    "engagementVsLtvTitle": "एंगेजमेंट बनाम लाइफटाइम वैल्यू",
+    "engagementLabel": "एंगेजमेंट",
+    "ltvLabel": "लाइफटाइम वैल्यू",
+    "tooltipGrowthText": "छमाही के अंत तक वृद्धि",
+    "newClients": "नए ग्राहक",
+    "retentionRate": "रिटेंशन दर",
+    "clientAcquisition": "ग्राहक अधिग्रहण स्रोत",
+    "referrals": "रेफ़रल",
+    "organicSearch": "ऑर्गेनिक खोज",
+    "direct": "डायरेक्ट",
+    "paidAds": "सशुल्क विज्ञापन",
+    "avgSession": "औसत सत्र",
+    "engagementChannels": "एंगेजमेंट चैनल",
+    "email": "ईमेल",
+    "inApp": "इन-ऐप",
+    "pushNotif": "पुश सूचना",
+    "social": "सोशल",
+    "activeThisMonth": "इस महीने सक्रिय",
+    "churnRate": "मंथन दर",
+    "activityBreakdown": "गतिविधि विवरण",
+    "dailyActive": "दैनिक सक्रिय",
+    "weeklyActive": "साप्ताहिक सक्रिय",
+    "monthlyActive": "मासिक सक्रिय",
+    "dormant": "निष्क्रिय"
   },
   "conversion": {
-    "vsPrevious": "पिछले के मुकाबले",
+    "vsPrevious": "पिछले बनाम",
     "avgTimeToConvert": "रूपांतरण में औसत समय",
     "days": "दिन",
-    "vsLastMonth": "पिछले महीने के मुकाबले",
-    "highestConverting": "सबसे अधिक रूपांतरण",
+    "vsLastMonth": "पिछले महीने बनाम",
+    "highestConverting": "उच्चतम रूपांतरण",
+    "tech": "टेक",
     "winRate": "जीत दर",
     "conversionBySource": "स्रोत द्वारा रूपांतरण",
     "yearly": "वार्षिक",
-    "trend": "प्रवृत्ति",
-    "tech": "टेक"
-  },
-  "timeFilter": {
-    "selectMonth": "महीना चुनें",
-    "selectYear": "वर्ष चुनें",
-    "months": {
-      "All": "सभी",
-      "Jan": "जनवरी",
-      "Feb": "फ़रवरी",
-      "Mar": "मार्च",
-      "Apr": "अप्रैल",
-      "May": "मई",
-      "Jun": "जून",
-      "Jul": "जुलाई",
-      "Aug": "अगस्त",
-      "Sep": "सितंबर",
-      "Oct": "अक्टूबर",
-      "Nov": "नवंबर",
-      "Dec": "दिसंबर"
-    }
+    "trend": "रुझान"
   },
   "revenue": {
     "sales": "बिक्री",
@@ -232,77 +238,23 @@
   "leadDetails": {
     "dealValue": "सौदा मूल्य",
     "probability": "संभावना",
-    "call": "कॉल करें",
-    "email": "ईमेल करें",
-    "schedule": "निर्धारित करें",
+    "call": "कॉल",
+    "email": "ईमेल",
+    "schedule": "शेड्यूल",
     "contactDetails": "संपर्क विवरण",
     "noEmail": "कोई ईमेल नहीं",
     "noPhone": "कोई फोन नहीं",
     "recentActivity": "हाल की गतिविधि",
     "ago": "पहले",
     "notes": "नोट्स",
-    "noNotes": "कोई नोट्स उपलब्ध नहीं।"
-  },
-  "mock": {
-    "Emailed proposal details": "प्रस्ताव विवरण ईमेल किया गया",
-    "Scheduled follow-up call": "फॉलो-अप कॉल निर्धारित",
-    "Lead assigned": "लीड सौंपी गई",
-    "Sent final proposal package": "अंतिम प्रस्ताव पैकेज भेजा गया",
-    "Counter-offer received": "काउंटर-ऑफर प्राप्त हुआ",
-    "Contract signed": "अनुबंध पर हस्ताक्षर किए गए",
-    "Project cancelled": "प्रोजेक्ट रद्द",
-    "Interested in bulk latex exports.": "थोक लेटेक्स निर्यात में रुचि है।",
-    "Need to review Q3 pricing models.": "Q3 मूल्य निर्धारण मॉडल की समीक्षा करने की आवश्यकता है।",
-    "High value client, needs immediate attention.": "उच्च मूल्य ग्राहक, तत्काल ध्यान देने की आवश्यकता है।",
-    "Reviewing security compliance clause.": "सुरक्षा अनुपालन खंड की समीक्षा कर रहे हैं।",
-    "Pushing for a 5% discount on bulk.": "थोक पर 5% छूट के लिए जोर दे रहे हैं।",
-    "Initiate onboarding immediately.": "तुरंत ऑनबोर्डिंग शुरू करें।",
-    "Went with a cheaper competitor.": "एक सस्ते प्रतियोगी के पास गए।",
-    "1 day": "1 दिन",
-    "3 day": "3 दिन",
-    "2 hr": "2 घंटे",
-    "5 day": "5 दिन",
-    "1 week": "1 सप्ताह",
-    "2 weeks": "2 सप्ताह"
-  },
-  "filters": {
-    "thisWeek": "इस सप्ताह",
-    "thisMonth": "इस महीने",
-    "thisQuarter": "इस तिमाही",
-    "thisYear": "इस वर्ष",
-    "last6Months": "पिछले 6 महीने",
-    "allRegions": "सभी क्षेत्र",
-    "northAmerica": "उत्तरी अमेरिका",
-    "europe": "यूरोप",
-    "asiaPacific": "एशिया प्रशांत",
-    "middleEast": "मध्य पूर्व",
-    "africa": "अफ्रीका",
-    "2023": "2023",
-    "2024": "2024",
-    "2025": "2025"
+    "noNotes": "कोई नोट नहीं।"
   },
   "metrics": {
     "improvement": "सुधार",
     "risk": "जोखिम"
   },
-  "clientInsights": {
-    "engagementVsLtvTitle": "सगाई बनाम आजीवन मूल्य",
-    "engagementLabel": "सगाई",
-    "ltvLabel": "आजीवन मूल्य",
-    "tooltipGrowthText": "छमाही के अंत तक वृद्धि",
-    "months": {
-      "Jan": "जनवरी",
-      "Feb": "फरवरी",
-      "Mar": "मार्च",
-      "Apr": "अप्रैल",
-      "May": "मई",
-      "Jun": "जून",
-      "Jul": "जुलाई",
-      "Aug": "अगस्त",
-      "Sep": "सितंबर",
-      "Oct": "अक्टूबर",
-      "Nov": "नवंबर",
-      "Dec": "दिसंबर"
-    }
+  "timeFilter": {
+    "selectMonth": "महीना चुनें",
+    "selectYear": "वर्ष चुनें"
   }
 }

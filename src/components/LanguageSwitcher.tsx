@@ -9,14 +9,14 @@ import { XIcon } from './icons/Icons';
 
 const LANGUAGES = [
   { code: 'en', name: 'English' },
-  { code: 'hi', name: 'Hindi (हिन्दी)' },
-  { code: 'te', name: 'Telugu (తెలుగు)' },
-  { code: 'ta', name: 'Tamil (தமிழ்)' },
-  { code: 'gu', name: 'Gujarati (ગુજરાતી)' },
-  { code: 'it', name: 'Italian (Italiano)' },
-  { code: 'fr', name: 'French (Français)' },
-  { code: 'ar', name: 'Arabic (العربية)' },
-  { code: 'ml', name: 'Malayalam (മലയാളം)' }
+  { code: 'hi', name: 'हिन्दी' },
+  { code: 'te', name: 'తెలుగు' },
+  { code: 'ta', name: 'தமிழ்' },
+  { code: 'gu', name: 'ગુજરાતી' },
+  { code: 'it', name: 'Italiano' },
+  { code: 'fr', name: 'Français' },
+  { code: 'ar', name: 'العربية' },
+  { code: 'ml', name: 'മലയാളം' }
 ];
 
 interface LanguageSwitcherProps {
@@ -24,7 +24,7 @@ interface LanguageSwitcherProps {
 }
 
 const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ customTrigger }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors, isDark } = useTheme();
   const styles = getStyles(colors, isDark);
   const [modalVisible, setModalVisible] = useState(false);
@@ -58,7 +58,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ customTrigger }) =>
         <SafeAreaView style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Select Language</Text>
+              <Text style={styles.modalTitle}>{t('settings.selectLanguage', 'Select Language')}</Text>
               <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
                 <XIcon size={14} color={colors.textPrimary} />
               </TouchableOpacity>
