@@ -69,3 +69,12 @@ npm run ios
 - React i18next (Internationalization)
 - React Native Maps
 - React Native Async Storage
+
+
+
+<img width="1206" height="2622" alt="Screenshot iPhone 17 Pro 27-09-2026 at 4 45 30 PM" src="https://github.com/user-attachments/assets/fd046a8f-627a-4335-9719-869b8d78a41f" />
+<img width="1206" height="2622" alt="Screenshot iPhone 17 Pro 27-09-2026 at 4 45 26 PM" src="https://github.com/user-attachments/assets/01a6c7d0-2bb4-49e2-9885-86dc1ef96280" />
+<img width="1206" height="2622" alt="Screenshot iPhone 17 Pro 27-09-2026 at 4 45 22 PM" src="https://github.com/user-attachments/assets/0a087728-03d0-4e5f-bb3d-3e418279206c" />
+<img width="1206" height="2622" alt="Screenshot iPhone 17 Pro 27-09-2026 at 4 45 20 PM" src="https://github.com/user-attachments/assets/6c72f3a3-c05f-4613-9c1f-0aabaa17d09b" />
+<img width="1206" height="2622" alt="Screenshot iPhone 17 Pro 27-09-2026 at 4 45 05 PM" src="https://github.com/user-attachments/assets/f88a88e2-03a7-4b56-9c68-acb5f7a5c7ea" />
+
