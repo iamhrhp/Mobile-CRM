@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Text, Animated, RefreshControl } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Text, Animated, RefreshControl } from 'react-native';
 import { FilterIcon, PlusIcon, UsersIcon, ConversionIcon } from '../components/icons/Icons';
 import MetricCard from '../components/MetricCard';
 import RevenueChart from '../components/RevenueChart';

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated, Dimensions, TouchableOpacity, Easing, Modal, TouchableWithoutFeedback } from 'react-native';
 import Svg, { Circle, Rect, Line, Path, G, Text as SvgText } from 'react-native-svg';
 import { ChevronDownIcon, FilterIcon, UsersIcon, UserIcon, TrendUpIcon, CalendarIcon, XIcon } from '../components/icons/Icons';

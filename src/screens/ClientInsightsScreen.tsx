@@ -229,37 +229,7 @@ const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate 
           </TouchableOpacity>
         </Animated.View>
 
-        {/* Inline Time Dropdown */}
-        {showTimeDropdown && (
-          <View style={[styles.inlineDropdown, { top: 60, right: 140 }]}>
-            {TIME_OPTIONS.map(opt => (
-              <TouchableOpacity
-                key={opt}
-                style={[styles.dropdownOption, selectedTime === opt && styles.dropdownOptionSelected]}
-                onPress={() => { setSelectedTime(opt); setFilterTime(opt); setShowTimeDropdown(false); triggerAnimations(false); }}
-              >
-                <Text style={[styles.dropdownOptionText, selectedTime === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
-                {selectedTime === opt && <Text style={styles.checkmark}>✓</Text>}
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
 
-        {/* Inline Region Dropdown */}
-        {showRegionDropdown && (
-          <View style={[styles.inlineDropdown, { top: 60, right: 20, width: 160 }]}>
-            {REGION_OPTIONS.map(opt => (
-              <TouchableOpacity
-                key={opt}
-                style={[styles.dropdownOption, selectedRegion === opt && styles.dropdownOptionSelected]}
-                onPress={() => { setSelectedRegion(opt); setFilterRegion(opt); setShowRegionDropdown(false); triggerAnimations(false); }}
-              >
-                <Text style={[styles.dropdownOptionText, selectedRegion === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
-                {selectedRegion === opt && <Text style={styles.checkmark}>✓</Text>}
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
 
         {/* Grid */}
         <View style={styles.grid}>
@@ -392,6 +362,38 @@ const ClientInsightsScreen: React.FC<ClientInsightsScreenProps> = ({ onNavigate 
         <TouchableWithoutFeedback onPress={closeDropdowns}>
           <View style={StyleSheet.absoluteFill} />
         </TouchableWithoutFeedback>
+      )}
+
+      {/* Inline Time Dropdown */}
+      {showTimeDropdown && (
+        <View style={[styles.inlineDropdown, { top: 60, right: 140 }]}>
+          {TIME_OPTIONS.map(opt => (
+            <TouchableOpacity
+              key={opt}
+              style={[styles.dropdownOption, selectedTime === opt && styles.dropdownOptionSelected]}
+              onPress={() => { setSelectedTime(opt); setFilterTime(opt); setShowTimeDropdown(false); triggerAnimations(false); }}
+            >
+              <Text style={[styles.dropdownOptionText, selectedTime === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
+              {selectedTime === opt && <Text style={styles.checkmark}>✓</Text>}
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+
+      {/* Inline Region Dropdown */}
+      {showRegionDropdown && (
+        <View style={[styles.inlineDropdown, { top: 60, right: 20, width: 160 }]}>
+          {REGION_OPTIONS.map(opt => (
+            <TouchableOpacity
+              key={opt}
+              style={[styles.dropdownOption, selectedRegion === opt && styles.dropdownOptionSelected]}
+              onPress={() => { setSelectedRegion(opt); setFilterRegion(opt); setShowRegionDropdown(false); triggerAnimations(false); }}
+            >
+              <Text style={[styles.dropdownOptionText, selectedRegion === opt && styles.dropdownOptionTextSelected]}>{t(getFilterTranslationKey(opt), opt)}</Text>
+              {selectedRegion === opt && <Text style={styles.checkmark}>✓</Text>}
+            </TouchableOpacity>
+          ))}
+        </View>
       )}
 
       {/* Filter Bottom Sheet */}
