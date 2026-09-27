@@ -2,6 +2,15 @@
 
 A sleek, professional Mobile CRM application built with React Native. It features dynamic and beautifully animated data visualizations for Revenue Growth, Conversion Rates, Total Leads, Client Insights, and Pipeline Management.
 
+
+
+https://github.com/user-attachments/assets/b7ad29f9-5a93-470e-8d2f-71893e27b7a1
+
+
+https://github.com/user-attachments/assets/137e7e67-7214-4580-abb5-a25d57b9c32d
+
+
+
 ## Features
 - **Dynamic Dashboards**: Interactive charts using `react-native-svg` to display pie charts and smooth line graphs.
 - **Time Filtering**: View data dynamically shifted by selecting specific months or the entire year with fluid scale and fade animations.
